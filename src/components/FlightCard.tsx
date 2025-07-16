@@ -42,7 +42,7 @@ export default function FlightCard({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Flight ID</Label>
             <Input
               {...form.register(`days.${dayIndex}.flights.${flightIndex}.id`)}
@@ -50,7 +50,7 @@ export default function FlightCard({
               placeholder="FLT001"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Airline</Label>
             <Input
               {...form.register(
@@ -60,7 +60,7 @@ export default function FlightCard({
               placeholder="Singapore Airlines"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Flight Number</Label>
             <Input
               {...form.register(
@@ -70,7 +70,7 @@ export default function FlightCard({
               placeholder="SQ123"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Class</Label>
             <Select
               onValueChange={(value) =>
@@ -91,7 +91,7 @@ export default function FlightCard({
               </SelectContent>
             </Select>
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">From Airport</Label>
             <Input
               {...form.register(`days.${dayIndex}.flights.${flightIndex}.from`)}
@@ -99,7 +99,7 @@ export default function FlightCard({
               placeholder="JFK"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">To Airport</Label>
             <Input
               {...form.register(`days.${dayIndex}.flights.${flightIndex}.to`)}
@@ -107,7 +107,7 @@ export default function FlightCard({
               placeholder="SIN"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Departure Time</Label>
             <Input
               type="datetime-local"
@@ -117,7 +117,7 @@ export default function FlightCard({
               className="border-[#936FE0] focus:border-[#541C9C]"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Arrival Time</Label>
             <Input
               type="datetime-local"
@@ -127,7 +127,7 @@ export default function FlightCard({
               className="border-[#936FE0] focus:border-[#541C9C]"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Price ($)</Label>
             <Input
               type="number"

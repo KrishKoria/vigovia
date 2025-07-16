@@ -118,14 +118,14 @@ export default function ItineraryForm() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <Card className="border-[#936FE0] shadow-lg">
             <CardHeader className="bg-gradient-to-r from-[#541C9C] to-[#680099] text-white">
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 p-1.5">
                 <MapPin className="h-5 w-5" />
                 Trip Information
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+            <CardContent className="p-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
                   <Label
                     htmlFor="tripTitle"
                     className="text-[#321E5D] font-medium"
@@ -144,7 +144,7 @@ export default function ItineraryForm() {
                     </p>
                   )}
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label
                     htmlFor="destination"
                     className="text-[#321E5D] font-medium"
@@ -165,8 +165,8 @@ export default function ItineraryForm() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="space-y-2">
                   <Label
                     htmlFor="startDate"
                     className="text-[#321E5D] font-medium"
@@ -185,7 +185,7 @@ export default function ItineraryForm() {
                     </p>
                   )}
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label
                     htmlFor="endDate"
                     className="text-[#321E5D] font-medium"
@@ -204,7 +204,7 @@ export default function ItineraryForm() {
                     </p>
                   )}
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label
                     htmlFor="numberOfDays"
                     className="text-[#321E5D] font-medium"
@@ -231,10 +231,10 @@ export default function ItineraryForm() {
                 </div>
               </div>
 
-              <Separator className="my-4" />
+              <Separator className="my-6" />
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="space-y-2">
                   <Label
                     htmlFor="customerName"
                     className="text-[#321E5D] font-medium"
@@ -253,7 +253,7 @@ export default function ItineraryForm() {
                     </p>
                   )}
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label
                     htmlFor="customerEmail"
                     className="text-[#321E5D] font-medium"
@@ -273,7 +273,7 @@ export default function ItineraryForm() {
                     </p>
                   )}
                 </div>
-                <div>
+                <div className="space-y-2">
                   <Label
                     htmlFor="customerPhone"
                     className="text-[#321E5D] font-medium"

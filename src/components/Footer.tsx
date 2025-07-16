@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
@@ -103,28 +104,130 @@ export default function Footer() {
       <div className="py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-            {/* Dynamic Footer Sections */}
-            {footerSections.map((section, index) => (
-              <div key={index}>
-                <h3 className="text-white font-semibold mb-4">
-                  {section.title}
-                </h3>
-                <ul className="space-y-2 text-sm text-gray-300">
-                  {section.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                      <Link
-                        href="#"
-                        className="hover:text-white transition-colors"
-                      >
-                        {link}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {/* Our Offerings */}
+            <div>
+              <h3 className="text-white font-semibold mb-4">Our offerings</h3>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Holidays
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Visa
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Forex
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Hotels
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Flights
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
-            {/* More & Contact */}
+            <div>
+              <h3 className="text-white font-semibold mb-4">
+                Popular destinations
+              </h3>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Dubai
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Bali
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Thailand
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Singapore
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Malaysia
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-white font-semibold mb-4">
+                Vigovia Specials
+              </h3>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Featured Experience
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Group Tours
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Backpackers Club
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Offline Events
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-white font-semibold mb-4">Company</h3>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Careers
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Vigovia Blog
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Partner Portal
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Accreditations
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
             <div>
               <h3 className="text-white font-semibold mb-4">More</h3>
               <ul className="space-y-2 text-sm text-gray-300 mb-6">
@@ -170,39 +273,23 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Logo and Payment Methods */}
-      <div className="border-t border-[#680099] py-8 px-4">
+      <div className="border-t bg-[#FBF4FF] border-[#680099] py-6 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between">
-            {/* Logo */}
             <div className="flex items-center gap-3 mb-6 md:mb-0">
               <div>
-                <h2 className="text-2xl font-bold text-white">vigovia</h2>
-                <p className="text-xs text-gray-300 font-medium tracking-wider">
-                  PLAN.PACK.GO
-                </p>
-              </div>
-              <div className="ml-2">
-                <svg width="40" height="20" viewBox="0 0 40 20" fill="none">
-                  <path
-                    d="M35 12L40 8L35 4"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M0 8H38"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
+                <Image
+                  src="/final-logo-2.png"
+                  alt="Vigovia Logo"
+                  width={200}
+                  height={200}
+                  className="bg-transparent"
+                />
               </div>
             </div>
 
-            {/* Payment Methods */}
-            <div className="text-center">
-              <p className="text-sm text-gray-300 mb-2">Payments</p>
+            <div className="text-center items-center">
+              <p className="text-sm text-gray-600 mb-2">Payments</p>
               <div className="flex items-center gap-4">
                 <div className="bg-white rounded px-3 py-1">
                   <span className="text-blue-600 font-bold text-sm">
@@ -220,7 +307,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
       <div className="bg-[#321E5D] py-6 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between">
@@ -229,30 +315,43 @@ export default function Footer() {
             </div>
 
             <div className="flex items-center gap-6">
-              {/* Social Media Icons */}
               <div className="flex items-center gap-3">
-                {socialMediaIcons.map((social, index) => (
-                  <Link
-                    key={index}
-                    href={social.href}
-                    className="bg-white rounded-full p-2 hover:bg-gray-100 transition-colors"
-                  >
-                    <social.Icon className="h-4 w-4 text-[#541C9C]" />
-                  </Link>
-                ))}
+                <Link
+                  href="#"
+                  className="bg-white rounded-full p-2 hover:bg-gray-100 transition-colors"
+                >
+                  <Facebook className="h-4 w-4 text-[#541C9C]" />
+                </Link>
+                <Link
+                  href="#"
+                  className="bg-white rounded-full p-2 hover:bg-gray-100 transition-colors"
+                >
+                  <Instagram className="h-4 w-4 text-[#541C9C]" />
+                </Link>
+                <Link
+                  href="#"
+                  className="bg-white rounded-full p-2 hover:bg-gray-100 transition-colors"
+                >
+                  <Linkedin className="h-4 w-4 text-[#541C9C]" />
+                </Link>
+                <Link
+                  href="#"
+                  className="bg-white rounded-full p-2 hover:bg-gray-100 transition-colors"
+                >
+                  <Youtube className="h-4 w-4 text-[#541C9C]" />
+                </Link>
               </div>
 
-              {/* Legal Links */}
               <div className="flex items-center gap-4 text-sm text-gray-300">
-                {legalLinks.map((link, index) => (
-                  <Link
-                    key={index}
-                    href={link.href}
-                    className="hover:text-white transition-colors"
-                  >
-                    {link.text}
-                  </Link>
-                ))}
+                <Link href="#" className="hover:text-white transition-colors">
+                  Privacy policy
+                </Link>
+                <Link href="#" className="hover:text-white transition-colors">
+                  Legal notice
+                </Link>
+                <Link href="#" className="hover:text-white transition-colors">
+                  Accessibility
+                </Link>
               </div>
             </div>
           </div>

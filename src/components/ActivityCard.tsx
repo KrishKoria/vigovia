@@ -40,7 +40,7 @@ export default function ActivityCard({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Activity ID</Label>
             <Input
               {...form.register(
@@ -50,7 +50,7 @@ export default function ActivityCard({
               placeholder="ACT001"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Activity Name</Label>
             <Input
               {...form.register(
@@ -60,7 +60,7 @@ export default function ActivityCard({
               placeholder="Gardens by the Bay"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Location</Label>
             <Input
               {...form.register(
@@ -70,7 +70,7 @@ export default function ActivityCard({
               placeholder="Singapore"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Duration</Label>
             <Input
               {...form.register(
@@ -80,7 +80,7 @@ export default function ActivityCard({
               placeholder="2 hours"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Price ($)</Label>
             <Input
               type="number"
@@ -93,7 +93,7 @@ export default function ActivityCard({
               placeholder="50.00"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">
               Image URL (optional)
             </Label>
@@ -107,7 +107,7 @@ export default function ActivityCard({
           </div>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-4 space-y-2">
           <Label className="text-[#321E5D] font-medium">Description</Label>
           <Textarea
             {...form.register(

@@ -42,7 +42,7 @@ export default function TransferCard({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Transfer ID</Label>
             <Input
               {...form.register(
@@ -52,7 +52,7 @@ export default function TransferCard({
               placeholder="TRF001"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Vehicle Type</Label>
             <Select
               onValueChange={(value) =>
@@ -73,7 +73,7 @@ export default function TransferCard({
               </SelectContent>
             </Select>
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">From</Label>
             <Input
               {...form.register(
@@ -83,7 +83,7 @@ export default function TransferCard({
               placeholder="Hotel"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">To</Label>
             <Input
               {...form.register(
@@ -93,7 +93,7 @@ export default function TransferCard({
               placeholder="Airport"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Pickup Time</Label>
             <Input
               type="time"
@@ -103,7 +103,7 @@ export default function TransferCard({
               className="border-[#936FE0] focus:border-[#541C9C]"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Dropoff Time</Label>
             <Input
               type="time"
@@ -113,7 +113,7 @@ export default function TransferCard({
               className="border-[#936FE0] focus:border-[#541C9C]"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Duration</Label>
             <Input
               {...form.register(
@@ -123,7 +123,7 @@ export default function TransferCard({
               placeholder="45 minutes"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Capacity</Label>
             <Input
               type="number"
@@ -136,7 +136,7 @@ export default function TransferCard({
               placeholder="4"
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label className="text-[#321E5D] font-medium">Price ($)</Label>
             <Input
               type="number"

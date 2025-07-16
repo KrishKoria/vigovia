@@ -47,14 +47,14 @@ export default function DayCard({
   return (
     <Card className="border-[#936FE0] shadow-lg">
       <CardHeader className="bg-gradient-to-r from-[#321E5D] to-[#541C9C] text-white">
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle className="flex items-center gap-2 p-1.5">
           <Calendar className="h-5 w-5" />
           Day {dayNumber}
         </CardTitle>
       </CardHeader>
       <CardContent className="p-6">
         {/* Day Date */}
-        <div className="mb-6">
+        <div className="mb-6 space-y-2">
           <Label
             htmlFor={`days.${dayIndex}.date`}
             className="text-[#321E5D] font-medium"
