@@ -70,7 +70,6 @@ export default function ItineraryForm() {
 
   const watchedDays = form.watch("numberOfDays");
 
-  // Update days array when number of days changes
   const handleDaysChange = (days: number) => {
     const currentDays = form.getValues("days");
 
