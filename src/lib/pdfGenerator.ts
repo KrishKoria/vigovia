@@ -1,80 +1,24 @@
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-
-interface Activity {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  duration: string;
-  image?: string;
-  location: string;
-}
-
-interface Transfer {
-  id: string;
-  type: string;
-  price: number;
-  duration: string;
-  capacity: number;
-  pickupTime: string;
-  dropoffTime: string;
-  from: string;
-  to: string;
-}
-
-interface Flight {
-  id: string;
-  airline: string;
-  flightNumber: string;
-  departure: string;
-  arrival: string;
-  from: string;
-  to: string;
-  price: number;
-  class: string;
-}
-
-interface Day {
-  dayNumber: number;
-  date: string;
-  activities: Activity[];
-  transfers?: Transfer[];
-  flights?: Flight[];
-}
-
-interface ItineraryData {
-  tripTitle: string;
-  destination: string;
-  startDate: string;
-  endDate: string;
-  numberOfDays: number;
-  customerName: string;
-  customerEmail: string;
-  customerPhone: string;
-  days: Day[];
-}
+import { ItineraryData } from "./types";
 
 export async function generateItineraryPDF(data: ItineraryData) {
-  // Create a hidden div to render the PDF content
   const pdfContainer = document.createElement("div");
   pdfContainer.style.position = "absolute";
   pdfContainer.style.left = "-9999px";
   pdfContainer.style.top = "0";
-  pdfContainer.style.width = "210mm"; // A4 width
-  pdfContainer.style.backgroundColor = "white";
-  pdfContainer.style.fontFamily = "Arial, sans-serif";
+  pdfContainer.style.width = "800px";
+  pdfContainer.style.backgroundColor = "#ffffff";
+  pdfContainer.style.fontFamily = "Arial, Helvetica, sans-serif";
   pdfContainer.style.fontSize = "12px";
   pdfContainer.style.lineHeight = "1.4";
-  pdfContainer.style.color = "#000";
+  pdfContainer.style.color = "#000000";
 
   document.body.appendChild(pdfContainer);
 
   try {
-    // Generate the HTML content
     pdfContainer.innerHTML = generatePDFHTML(data);
 
-    // Convert to canvas
     const canvas = await html2canvas(pdfContainer, {
       scale: 2,
       useCORS: true,
@@ -84,7 +28,6 @@ export async function generateItineraryPDF(data: ItineraryData) {
       height: pdfContainer.offsetHeight,
     });
 
-    // Create PDF
     const pdf = new jsPDF("p", "mm", "a4");
     const imgData = canvas.toDataURL("image/png");
 
@@ -96,11 +39,9 @@ export async function generateItineraryPDF(data: ItineraryData) {
     let heightLeft = imgHeight;
     let position = 0;
 
-    // Add first page
     pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
     heightLeft -= pdfHeight;
 
-    // Add additional pages if needed
     while (heightLeft >= 0) {
       position = heightLeft - imgHeight;
       pdf.addPage();
@@ -108,10 +49,8 @@ export async function generateItineraryPDF(data: ItineraryData) {
       heightLeft -= pdfHeight;
     }
 
-    // Download the PDF
     pdf.save(`${data.tripTitle.replace(/\s+/g, "_")}_Itinerary.pdf`);
   } finally {
-    // Clean up
     document.body.removeChild(pdfContainer);
   }
 }
@@ -152,15 +91,15 @@ function generatePDFHTML(data: ItineraryData): string {
   };
 
   return `
-    <div style="max-width: 210mm; margin: 0 auto; padding: 20px; background: white;">
+    <div style="max-width: 800px; margin: 0 auto; padding: 20px; background: #ffffff; font-family: Arial, Helvetica, sans-serif;">
       <!-- Header -->
       <div style="text-align: center; margin-bottom: 30px;">
-        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
-          <div>
+        <div style="display: inline-block; margin-bottom: 20px;">
+          <div style="display: inline-block; vertical-align: middle;">
             <h1 style="margin: 0; font-size: 28px; font-weight: bold; color: #321E5D;">vigovia</h1>
             <p style="margin: 0; font-size: 12px; color: #680099; font-weight: 500; letter-spacing: 2px;">PLAN.PACK.GO</p>
           </div>
-          <div style="margin-left: 10px;">
+          <div style="display: inline-block; vertical-align: middle; margin-left: 10px;">
             <svg width="40" height="20" viewBox="0 0 40 20" fill="none">
               <path d="M35 12L40 8L35 4" stroke="#321E5D" stroke-width="2" stroke-linecap="round"/>
               <path d="M0 8H38" stroke="#321E5D" stroke-width="2" stroke-linecap="round"/>
@@ -170,12 +109,12 @@ function generatePDFHTML(data: ItineraryData): string {
       </div>
 
       <!-- Trip Information -->
-      <div style="background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%); color: white; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+      <div style="background: #4A90E2; color: #ffffff; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
         <h2 style="margin: 0 0 15px 0; font-size: 20px; font-weight: bold;">${
           data.tripTitle
         }</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 14px;">
-          <div>
+        <div style="display: table; width: 100%; font-size: 14px;">
+          <div style="display: table-cell; width: 50%; vertical-align: top;">
             <p style="margin: 5px 0;"><strong>Destination:</strong> ${
               data.destination
             }</p>
@@ -186,7 +125,7 @@ function generatePDFHTML(data: ItineraryData): string {
               data.startDate
             )}</p>
           </div>
-          <div>
+          <div style="display: table-cell; width: 50%; vertical-align: top;">
             <p style="margin: 5px 0;"><strong>Customer:</strong> ${
               data.customerName
             }</p>
@@ -206,7 +145,7 @@ function generatePDFHTML(data: ItineraryData): string {
           (day) => `
         <div style="margin-bottom: 40px; page-break-inside: avoid;">
           <!-- Day Header -->
-          <div style="background: linear-gradient(135deg, #541C9C 0%, #680099 100%); color: white; padding: 15px; border-radius: 8px 8px 0 0;">
+          <div style="background: #541C9C; color: #ffffff; padding: 15px; border-radius: 8px 8px 0 0;">
             <h3 style="margin: 0; font-size: 18px; font-weight: bold;">Day ${
               day.dayNumber
             } - ${formatDate(day.date)}</h3>
@@ -221,17 +160,19 @@ function generatePDFHTML(data: ItineraryData): string {
               ${day.activities
                 .map(
                   (activity) => `
-                <div style="display: flex; gap: 15px; margin-bottom: 20px; padding: 15px; border: 1px solid #936FE0; border-radius: 8px; background: #FBF4FF;">
-                  <div style="flex: 1;">
+                <div style="display: table; width: 100%; margin-bottom: 20px; padding: 15px; border: 1px solid #936FE0; border-radius: 8px; background: #FBF4FF;">
+                  <div style="display: table-cell; width: 80%; vertical-align: top;">
                     <h5 style="margin: 0 0 8px 0; color: #321E5D; font-size: 14px; font-weight: bold;">${
                       activity.name
                     }</h5>
-                    <p style="margin: 0 0 8px 0; color: #666; font-size: 12px; line-height: 1.4;">${
+                    <p style="margin: 0 0 8px 0; color: #666666; font-size: 12px; line-height: 1.4;">${
                       activity.description
                     }</p>
-                    <div style="display: flex; gap: 15px; font-size: 12px; color: #666;">
-                      <span><strong>ID:</strong> ${activity.id}</span>
-                      <span><strong>Location:</strong> ${
+                    <div style="font-size: 12px; color: #666666;">
+                      <span style="margin-right: 15px;"><strong>ID:</strong> ${
+                        activity.id
+                      }</span>
+                      <span style="margin-right: 15px;"><strong>Location:</strong> ${
                         activity.location
                       }</span>
                       <span><strong>Duration:</strong> ${
@@ -239,8 +180,8 @@ function generatePDFHTML(data: ItineraryData): string {
                       }</span>
                     </div>
                   </div>
-                  <div style="text-align: right; min-width: 80px;">
-                    <div style="background: #541C9C; color: white; padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: bold;">
+                  <div style="display: table-cell; width: 20%; text-align: right; vertical-align: top;">
+                    <div style="background: #541C9C; color: #ffffff; padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: bold;">
                       $${activity.price.toFixed(2)}
                     </div>
                   </div>
@@ -262,20 +203,22 @@ function generatePDFHTML(data: ItineraryData): string {
               ${day.transfers
                 .map(
                   (transfer) => `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 15px; border: 1px solid #936FE0; border-radius: 8px; background: #FBF4FF;">
-                  <div style="flex: 1;">
+                <div style="display: table; width: 100%; margin-bottom: 15px; padding: 15px; border: 1px solid #936FE0; border-radius: 8px; background: #FBF4FF;">
+                  <div style="display: table-cell; width: 80%; vertical-align: top;">
                     <h5 style="margin: 0 0 8px 0; color: #321E5D; font-size: 14px; font-weight: bold;">${
                       transfer.type
                     } - ${transfer.from} to ${transfer.to}</h5>
-                    <div style="display: flex; gap: 15px; font-size: 12px; color: #666;">
-                      <span><strong>ID:</strong> ${transfer.id}</span>
-                      <span><strong>Pickup:</strong> ${formatTime(
+                    <div style="font-size: 12px; color: #666666;">
+                      <span style="margin-right: 15px;"><strong>ID:</strong> ${
+                        transfer.id
+                      }</span>
+                      <span style="margin-right: 15px;"><strong>Pickup:</strong> ${formatTime(
                         transfer.pickupTime
                       )}</span>
-                      <span><strong>Dropoff:</strong> ${formatTime(
+                      <span style="margin-right: 15px;"><strong>Dropoff:</strong> ${formatTime(
                         transfer.dropoffTime
                       )}</span>
-                      <span><strong>Duration:</strong> ${
+                      <span style="margin-right: 15px;"><strong>Duration:</strong> ${
                         transfer.duration
                       }</span>
                       <span><strong>Capacity:</strong> ${
@@ -283,8 +226,8 @@ function generatePDFHTML(data: ItineraryData): string {
                       } people</span>
                     </div>
                   </div>
-                  <div style="text-align: right; min-width: 80px;">
-                    <div style="background: #541C9C; color: white; padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: bold;">
+                  <div style="display: table-cell; width: 20%; text-align: right; vertical-align: top;">
+                    <div style="background: #541C9C; color: #ffffff; padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: bold;">
                       $${transfer.price.toFixed(2)}
                     </div>
                   </div>
@@ -306,17 +249,19 @@ function generatePDFHTML(data: ItineraryData): string {
               ${day.flights
                 .map(
                   (flight) => `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 15px; border: 1px solid #936FE0; border-radius: 8px; background: #FBF4FF;">
-                  <div style="flex: 1;">
+                <div style="display: table; width: 100%; margin-bottom: 15px; padding: 15px; border: 1px solid #936FE0; border-radius: 8px; background: #FBF4FF;">
+                  <div style="display: table-cell; width: 80%; vertical-align: top;">
                     <h5 style="margin: 0 0 8px 0; color: #321E5D; font-size: 14px; font-weight: bold;">${
                       flight.airline
                     } ${flight.flightNumber}</h5>
-                    <div style="display: flex; gap: 15px; font-size: 12px; color: #666;">
-                      <span><strong>Route:</strong> ${flight.from} → ${
-                    flight.to
-                  }</span>
-                      <span><strong>Class:</strong> ${flight.class}</span>
-                      <span><strong>Departure:</strong> ${formatDateTime(
+                    <div style="font-size: 12px; color: #666666;">
+                      <span style="margin-right: 15px;"><strong>Route:</strong> ${
+                        flight.from
+                      } → ${flight.to}</span>
+                      <span style="margin-right: 15px;"><strong>Class:</strong> ${
+                        flight.class
+                      }</span>
+                      <span style="margin-right: 15px;"><strong>Departure:</strong> ${formatDateTime(
                         flight.departure
                       )}</span>
                       <span><strong>Arrival:</strong> ${formatDateTime(
@@ -324,8 +269,8 @@ function generatePDFHTML(data: ItineraryData): string {
                       )}</span>
                     </div>
                   </div>
-                  <div style="text-align: right; min-width: 80px;">
-                    <div style="background: #541C9C; color: white; padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: bold;">
+                  <div style="display: table-cell; width: 20%; text-align: right; vertical-align: top;">
+                    <div style="background: #541C9C; color: #ffffff; padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: bold;">
                       $${flight.price.toFixed(2)}
                     </div>
                   </div>
@@ -345,7 +290,7 @@ function generatePDFHTML(data: ItineraryData): string {
       <!-- Terms and Conditions -->
       <div style="margin-top: 40px; padding: 20px; background: #FBF4FF; border-radius: 8px; border: 1px solid #936FE0;">
         <h3 style="margin: 0 0 15px 0; color: #321E5D; font-size: 16px; font-weight: bold;">Terms and Conditions</h3>
-        <div style="font-size: 12px; color: #666; line-height: 1.5;">
+        <div style="font-size: 12px; color: #666666; line-height: 1.5;">
           <p>1. All prices are subject to change without prior notice.</p>
           <p>2. Cancellation policy applies as per the terms agreed upon booking.</p>
           <p>3. Travel insurance is recommended for all travelers.</p>
@@ -355,16 +300,16 @@ function generatePDFHTML(data: ItineraryData): string {
       </div>
 
       <!-- Footer -->
-      <div style="margin-top: 40px; padding: 20px; background: #541C9C; color: white; border-radius: 8px;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; font-size: 12px;">
-          <div>
-            <h4 style="margin: 0 0 10px 0; color: white; font-size: 14px;">Contact Information</h4>
+      <div style="margin-top: 40px; padding: 20px; background: #541C9C; color: #ffffff; border-radius: 8px;">
+        <div style="display: table; width: 100%; font-size: 12px;">
+          <div style="display: table-cell; width: 50%; vertical-align: top;">
+            <h4 style="margin: 0 0 10px 0; color: #ffffff; font-size: 14px;">Contact Information</h4>
             <p style="margin: 5px 0;"><strong>Phone:</strong> +91-98xxx64641</p>
             <p style="margin: 5px 0;"><strong>Email:</strong> contact@vigovia.com</p>
             <p style="margin: 5px 0;"><strong>Website:</strong> www.vigovia.com</p>
           </div>
-          <div>
-            <h4 style="margin: 0 0 10px 0; color: white; font-size: 14px;">Company Address</h4>
+          <div style="display: table-cell; width: 50%; vertical-align: top;">
+            <h4 style="margin: 0 0 10px 0; color: #ffffff; font-size: 14px;">Company Address</h4>
             <p style="margin: 5px 0; line-height: 1.4;">
               HD-109 Cinnabar Hills,Links Business Park,<br/>
               Bangalore North,Bangalore,Karnataka,<br/>
