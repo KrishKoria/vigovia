@@ -19,6 +19,8 @@ export async function generateItineraryPDF(data: ItineraryData) {
   try {
     pdfContainer.innerHTML = generatePDFHTML(data);
 
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     const canvas = await html2canvas(pdfContainer, {
       scale: 2,
       useCORS: true,
@@ -26,6 +28,21 @@ export async function generateItineraryPDF(data: ItineraryData) {
       backgroundColor: "#ffffff",
       width: pdfContainer.offsetWidth,
       height: pdfContainer.offsetHeight,
+      ignoreElements: (element) => {
+        return element.classList?.contains("skip-pdf") || false;
+      },
+      onclone: async (clonedDoc) => {
+        const { sanitizeDocumentStyles } = await import("./cssUtils");
+        sanitizeDocumentStyles(clonedDoc);
+
+        const links = clonedDoc.querySelectorAll('link[rel="stylesheet"]');
+        links.forEach((link) => {
+          const href = link.getAttribute("href");
+          if (href && (href.includes("tailwind") || href.includes("css"))) {
+            link.remove();
+          }
+        });
+      },
     });
 
     const pdf = new jsPDF("p", "mm", "a4");

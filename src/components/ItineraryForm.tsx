@@ -15,8 +15,23 @@ import DayCard from "./DayCard";
 import { ItineraryFormData, itinerarySchema } from "@/lib/schema";
 
 const generateItineraryPDF = async (data: ItineraryFormData) => {
-  const { generateItineraryPDF } = await import("./../lib/pdfGenerator");
-  return generateItineraryPDF(data);
+  try {
+    const { generateItineraryPDF } = await import("./../lib/pdfGenerator");
+    return await generateItineraryPDF(data);
+  } catch (error) {
+    console.error("Original PDF generator failed:", error);
+
+    // Fallback to React-PDF method
+    try {
+      const { generateItineraryPDFReactPDF } = await import(
+        "./../lib/pdfGeneratorReactPDF"
+      );
+      return await generateItineraryPDFReactPDF(data);
+    } catch (reactPdfError) {
+      console.error("React-PDF generator also failed:", reactPdfError);
+      throw new Error("All PDF generation methods failed. Please try again.");
+    }
+  }
 };
 
 export default function ItineraryForm() {
