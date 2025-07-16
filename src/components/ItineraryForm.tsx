@@ -7,36 +7,14 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import {
-  Plus,
-  Trash2,
-  Calendar,
-  MapPin,
-  Users,
-  Clock,
-  Plane,
-  Car,
-  Camera,
-} from "lucide-react";
+import { MapPin } from "lucide-react";
 import { generateItineraryPDF } from "@/lib/pdfGenerator";
-import VigloviaLogo from "./VigloviaLogo";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import Header from "./Header";
-import TransferCard from "./TransferCard";
-import FlightCard from "./FlightCard";
-import ActivityCard from "./ActivityCard";
+import DayCard from "./DayCard";
 
-// Zod schema for form validation
 const activitySchema = z.object({
   id: z.string().min(1, "Activity ID is required"),
   name: z.string().min(1, "Activity name is required"),
@@ -147,7 +125,6 @@ export default function ItineraryForm() {
     const currentDays = form.getValues("days");
 
     if (days > currentDays.length) {
-      // Add new days
       for (let i = currentDays.length; i < days; i++) {
         appendDay({
           dayNumber: i + 1,
@@ -168,7 +145,6 @@ export default function ItineraryForm() {
         });
       }
     } else if (days < currentDays.length) {
-      // Remove excess days
       for (let i = currentDays.length - 1; i >= days; i--) {
         removeDay(i);
       }
@@ -189,10 +165,8 @@ export default function ItineraryForm() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FBF4FF] to-white py-8 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <Header />
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {/* Trip Information */}
           <Card className="border-[#936FE0] shadow-lg">
             <CardHeader className="bg-gradient-to-r from-[#541C9C] to-[#680099] text-white">
               <CardTitle className="flex items-center gap-2">
@@ -373,7 +347,6 @@ export default function ItineraryForm() {
             </CardContent>
           </Card>
 
-          {/* Daily Itinerary */}
           {dayFields.map((day, dayIndex) => (
             <DayCard
               key={day.id}
@@ -383,7 +356,6 @@ export default function ItineraryForm() {
             />
           ))}
 
-          {/* Generate Button */}
           <div className="text-center">
             <Button
               type="submit"
@@ -396,195 +368,5 @@ export default function ItineraryForm() {
         </form>
       </div>
     </div>
-  );
-}
-
-function DayCard({
-  dayIndex,
-  form,
-  dayNumber,
-}: {
-  dayIndex: number;
-  form: any;
-  dayNumber: number;
-}) {
-  const {
-    fields: activityFields,
-    append: appendActivity,
-    remove: removeActivity,
-  } = useFieldArray({
-    control: form.control,
-    name: `days.${dayIndex}.activities`,
-  });
-
-  const {
-    fields: transferFields,
-    append: appendTransfer,
-    remove: removeTransfer,
-  } = useFieldArray({
-    control: form.control,
-    name: `days.${dayIndex}.transfers`,
-  });
-
-  const {
-    fields: flightFields,
-    append: appendFlight,
-    remove: removeFlight,
-  } = useFieldArray({
-    control: form.control,
-    name: `days.${dayIndex}.flights`,
-  });
-
-  return (
-    <Card className="border-[#936FE0] shadow-lg">
-      <CardHeader className="bg-gradient-to-r from-[#321E5D] to-[#541C9C] text-white">
-        <CardTitle className="flex items-center gap-2">
-          <Calendar className="h-5 w-5" />
-          Day {dayNumber}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-6">
-        {/* Day Date */}
-        <div className="mb-6">
-          <Label
-            htmlFor={`days.${dayIndex}.date`}
-            className="text-[#321E5D] font-medium"
-          >
-            Date
-          </Label>
-          <Input
-            id={`days.${dayIndex}.date`}
-            type="date"
-            {...form.register(`days.${dayIndex}.date`)}
-            className="border-[#936FE0] focus:border-[#541C9C] max-w-xs"
-          />
-        </div>
-
-        {/* Activities Section */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-[#321E5D] flex items-center gap-2">
-              <Camera className="h-5 w-5" />
-              Activities
-            </h3>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() =>
-                appendActivity({
-                  id: "",
-                  name: "",
-                  description: "",
-                  price: 0,
-                  duration: "",
-                  image: "",
-                  location: "",
-                })
-              }
-              className="border-[#541C9C] text-[#541C9C] hover:bg-[#FBF4FF]"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Activity
-            </Button>
-          </div>
-
-          {activityFields.map((activity, activityIndex) => (
-            <ActivityCard
-              key={activity.id}
-              dayIndex={dayIndex}
-              activityIndex={activityIndex}
-              form={form}
-              onRemove={() => removeActivity(activityIndex)}
-              canRemove={activityFields.length > 1}
-            />
-          ))}
-        </div>
-
-        {/* Transfers Section */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-[#321E5D] flex items-center gap-2">
-              <Car className="h-5 w-5" />
-              Transfers
-            </h3>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() =>
-                appendTransfer({
-                  id: "",
-                  type: "",
-                  price: 0,
-                  duration: "",
-                  capacity: 1,
-                  pickupTime: "",
-                  dropoffTime: "",
-                  from: "",
-                  to: "",
-                })
-              }
-              className="border-[#541C9C] text-[#541C9C] hover:bg-[#FBF4FF]"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Transfer
-            </Button>
-          </div>
-
-          {transferFields.map((transfer, transferIndex) => (
-            <TransferCard
-              key={transfer.id}
-              dayIndex={dayIndex}
-              transferIndex={transferIndex}
-              form={form}
-              onRemove={() => removeTransfer(transferIndex)}
-            />
-          ))}
-        </div>
-
-        {/* Flights Section */}
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-[#321E5D] flex items-center gap-2">
-              <Plane className="h-5 w-5" />
-              Flights
-            </h3>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() =>
-                appendFlight({
-                  id: "",
-                  airline: "",
-                  flightNumber: "",
-                  departure: "",
-                  arrival: "",
-                  from: "",
-                  to: "",
-                  price: 0,
-                  class: "",
-                })
-              }
-              className="border-[#541C9C] text-[#541C9C] hover:bg-[#FBF4FF]"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Flight
-            </Button>
-          </div>
-
-          {flightFields.map((flight, flightIndex) => (
-            <FlightCard
-              key={flight.id}
-              dayIndex={dayIndex}
-              flightIndex={flightIndex}
-              form={form}
-              onRemove={() => removeFlight(flightIndex)}
-            />
-          ))}
-        </div>
-      </CardContent>
-    </Card>
   );
 }
