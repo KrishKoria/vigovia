@@ -163,21 +163,21 @@ function generatePDFHTML(data: ItineraryData): string {
   };
 
   const footerHTML = `
-    <div style="margin-top: 40px; padding: 20px; background: linear-gradient(135deg, #4A148C 0%, #2196F3 100%); color: white; font-size: 12px; page-break-inside: avoid;">
+    <div style="margin-top: 40px; padding: 20px; background: linear-gradient(135deg, #541C9C 0%, #680099 100%); color: #FBF4FF; font-size: 12px; page-break-inside: avoid; border-radius: 0 0 16px 16px;">
       <div style="display: table; width: 100%;">
         <div style="display: table-cell; width: 50%; vertical-align: top; padding-right: 20px;">
-          <h4 style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold;">Vigovia Travel Technologies (P) Ltd</h4>
-          <p style="margin: 5px 0; line-height: 1.4;">
+          <h4 style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold; letter-spacing: 1px; color: #FBF4FF;">Vigovia Travel Technologies (P) Ltd</h4>
+          <p style="margin: 5px 0; line-height: 1.4; color: #FBF4FF;">
             HD-109 Cinnabar Hills, Links Business Park,<br/>
             Bangalore North, Bangalore, Karnataka, India - 560071
           </p>
-          <p style="margin: 10px 0 5px 0;"><strong>Phone:</strong> +91-98xxx64641</p>
-          <p style="margin: 5px 0;"><strong>Email:</strong> contact@vigovia.com</p>
-          <p style="margin: 5px 0;"><strong>Website:</strong> www.vigovia.com</p>
+          <p style="margin: 10px 0 5px 0; color: #FBF4FF;"><strong>Phone:</strong> +91-98xxx64641</p>
+          <p style="margin: 5px 0; color: #FBF4FF;"><strong>Email:</strong> contact@vigovia.com</p>
+          <p style="margin: 5px 0; color: #FBF4FF;"><strong>Website:</strong> www.vigovia.com</p>
         </div>
         <div style="display: table-cell; width: 50%; vertical-align: top; padding-left: 20px;">
-          <h4 style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold;">Important Information</h4>
-          <p style="margin: 5px 0; line-height: 1.4;">
+          <h4 style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold; color: #FBF4FF;">Important Information</h4>
+          <p style="margin: 5px 0; line-height: 1.4; color: #FBF4FF;">
             • All prices are subject to change without notice<br/>
             • Cancellation policy applies as per booking terms<br/>
             • Travel insurance is recommended<br/>
@@ -186,24 +186,24 @@ function generatePDFHTML(data: ItineraryData): string {
         </div>
       </div>
       <div style="text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
-        <p style="margin: 0; font-size: 11px;">© 2025 Vigovia Travel Technologies (P) Ltd. All rights reserved.</p>
+        <p style="margin: 0; font-size: 11px; color: #FBF4FF;">© 2025 Vigovia Travel Technologies (P) Ltd. All rights reserved.</p>
       </div>
     </div>
   `;
 
   return `
-    <div style="max-width: 800px; margin: 0 auto; padding: 0; background: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333;">
+    <div style="max-width: 800px; margin: 0 auto; padding: 0; background: #FBF4FF; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #321E5D;">
       
       <!-- Header -->
-      <div style="text-align: center; padding: 30px 20px; background: white;">
+      <div style="text-align: center; padding: 30px 20px; background: #FBF4FF;">
         <div style="margin-bottom: 20px;">
-          <h1 style="margin: 0; font-size: 32px; font-weight: bold; color: #4A148C; letter-spacing: 1px;">vigovia</h1>
-          <p style="margin: 5px 0 0 0; font-size: 12px; color: #2196F3; font-weight: 600; letter-spacing: 3px;">PLAN.PACK.GO</p>
+          <h1 style="margin: 0; font-size: 32px; font-weight: bold; color: #541C9C; letter-spacing: 1px;">vigovia</h1>
+          <p style="margin: 5px 0 0 0; font-size: 12px; color: #936FE0; font-weight: 600; letter-spacing: 3px;">PLAN.PACK.GO</p>
         </div>
       </div>
 
       <!-- Trip Header -->
-      <div style="background: linear-gradient(135deg, #4A148C 0%, #2196F3 100%); color: white; padding: 25px; margin: 0 20px; border-radius: 12px;">
+      <div style="background: linear-gradient(135deg, #541C9C 0%, #680099 100%); color: #FBF4FF; padding: 25px; margin: 0 20px; border-radius: 16px;">
         <h2 style="margin: 0 0 15px 0; font-size: 24px; font-weight: bold;">Hi ${
           data.customerName
         }!</h2>
@@ -240,7 +240,7 @@ function generatePDFHTML(data: ItineraryData): string {
               <!-- Day Timeline Circle -->
               <div style="display: table-cell; width: 80px; vertical-align: top; padding-right: 20px;">
                 <div style="position: relative;">
-                  <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #4A148C 0%, #2196F3 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px; text-align: center; margin: 0 auto;">
+                  <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #541C9C 0%, #680099 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #FBF4FF; font-weight: bold; font-size: 14px; text-align: center; margin: 0 auto;">
                     Day<br/>${day.dayNumber}
                   </div>
                   ${
@@ -253,7 +253,7 @@ function generatePDFHTML(data: ItineraryData): string {
 
               <!-- Day Content -->
               <div style="display: table-cell; vertical-align: top;">
-                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 20px;">
                   <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #4A148C;">${formatDate(
                     day.date
                   )}</h3>
@@ -264,8 +264,8 @@ function generatePDFHTML(data: ItineraryData): string {
 
                 <!-- Activities -->
                 ${day.activities
-                  .map(
-                    (activity, activityIndex) => `
+                  .map((activity, activityIndex) => {
+                    return `
                   <div style="display: table; width: 100%; margin-bottom: 20px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                     <!-- Activity Image -->
                     <div style="display: table-cell; width: 120px; vertical-align: top;">
@@ -273,17 +273,16 @@ function generatePDFHTML(data: ItineraryData): string {
                         ${
                           activity.image
                             ? `<img src="${activity.image}" style="width: 100%; height: 100%; object-fit: cover;">`
-                            : "Activity<br/>Image"
+                            : `<span style=\"color:#321E5D;\">Activity<br/>Image</span>`
                         }
                       </div>
                     </div>
-
                     <!-- Activity Details -->
                     <div style="display: table-cell; vertical-align: top; padding: 15px;">
                       <div style="display: table; width: 100%;">
                         <div style="display: table-cell; width: 70%; vertical-align: top;">
                           <div style="margin-bottom: 8px;">
-                            <span style="background: linear-gradient(135deg, #4A148C 0%, #2196F3 100%); color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold;">
+                            <span style="background: linear-gradient(135deg, #936FE0 0%, #541C9C 100%); color: #FBF4FF; padding: 3px 6px; border-radius: 12px; font-size: 11px; font-weight: bold;">
                               ${getTimeOfDay(activityIndex)}
                             </span>
                           </div>
@@ -306,15 +305,15 @@ function generatePDFHTML(data: ItineraryData): string {
                           </div>
                         </div>
                         <div style="display: table-cell; width: 30%; text-align: right; vertical-align: top;">
-                          <div style="background: linear-gradient(135deg, #4A148C 0%, #2196F3 100%); color: white; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: bold; text-align: center;">
+                          <div style="background: linear-gradient(135deg, #541C9C 0%, #936FE0 100%); color: #FBF4FF; padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: bold; text-align: center;">
                             ₹${activity.price.toLocaleString()}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                `
-                  )
+                `;
+                  })
                   .join("")}
 
                 <!-- Transfers -->
@@ -346,8 +345,8 @@ function generatePDFHTML(data: ItineraryData): string {
                             </div>
                           </div>
                           <div style="display: table-cell; width: 30%; text-align: right; vertical-align: top;">
-                            <div style="background: #2196F3; color: white; padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: bold;">
-                              ₹${transfer.price.toLocaleString()}
+                            <div style="background: #936FE0; color: #FBF4FF; padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: bold;">
+                              $${transfer.price.toLocaleString()}
                             </div>
                           </div>
                         </div>
@@ -391,7 +390,7 @@ function generatePDFHTML(data: ItineraryData): string {
                             </div>
                           </div>
                           <div style="display: table-cell; width: 30%; text-align: right; vertical-align: top;">
-                            <div style="background: #ff9800; color: white; padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: bold;">
+                            <div style="background: #321E5D; color: #FBF4FF; padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: bold;">
                               ₹${flight.price.toLocaleString()}
                             </div>
                           </div>
