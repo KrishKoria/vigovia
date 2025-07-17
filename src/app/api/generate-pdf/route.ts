@@ -8,14 +8,12 @@ export async function POST(req: NextRequest) {
     const formData = await req.json();
     console.log("Received form data for PDF generation");
 
-    // Use request origin to avoid deployment protection issues
     const url = new URL(req.url);
     const baseUrl = `${url.protocol}//${url.host}`;
 
     const previewUrl = `${baseUrl}/preview-itinerary`;
     console.log("Preview URL:", previewUrl);
 
-    // Configure browser launch options based on environment
     const isDevelopment = process.env.NODE_ENV === "development";
 
     const browserOptions = isDevelopment
@@ -58,7 +56,6 @@ export async function POST(req: NextRequest) {
 
     await page.setViewport({ width: 1200, height: 800 });
 
-    // Get cookies from the original request to forward authentication
     const cookies = req.headers.get("cookie");
     if (cookies) {
       await page.setExtraHTTPHeaders({
@@ -66,10 +63,8 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Emulate print media type for better CSS rendering
     await page.emulateMediaType("print");
 
-    // Enable request interception to monitor resource loading
     await page.setRequestInterception(true);
 
     let pendingRequests = new Set();
@@ -83,7 +78,6 @@ export async function POST(req: NextRequest) {
       pendingRequests.delete(response.url());
     });
 
-    // Add console event listener to debug page issues
     page.on("console", (msg) => {
       console.log("PAGE LOG:", msg.text());
     });
@@ -111,7 +105,6 @@ export async function POST(req: NextRequest) {
     }, formData);
     console.log("Form data injected");
 
-    // Wait a moment for React to process the data
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     console.log("Waiting for itinerary content...");
@@ -123,11 +116,9 @@ export async function POST(req: NextRequest) {
     } catch (selectorError) {
       console.log("Primary selector not found, trying fallbacks...");
 
-      // Check if we're stuck in loading state
       const isLoading = await page.$('[data-testid="loading-state"]');
       if (isLoading) {
         console.log("Page is still in loading state, waiting more...");
-        // Try injecting data again
         await page.evaluate((data) => {
           console.log("Re-injecting data:", data);
           (window as any).ITINERARY_DATA = data;
@@ -138,7 +129,6 @@ export async function POST(req: NextRequest) {
 
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        // Try waiting for content again
         try {
           await page.waitForSelector('[data-testid="itinerary-content"]', {
             timeout: 10000,
@@ -149,7 +139,6 @@ export async function POST(req: NextRequest) {
         }
       }
 
-      // Try waiting for loading state to disappear
       try {
         await page.waitForSelector('[data-testid="loading-state"]', {
           hidden: true,
@@ -160,7 +149,6 @@ export async function POST(req: NextRequest) {
         console.log("Loading state selector also failed");
       }
 
-      // Check if we have an error state
       const hasError = await page.$('[data-testid="error-state"]');
       if (hasError) {
         const errorText = await page.$eval(
@@ -171,7 +159,6 @@ export async function POST(req: NextRequest) {
         throw new Error(`Preview page error: ${errorText}`);
       }
 
-      // Try waiting for any content in the body
       try {
         await page.waitForFunction(
           () =>
@@ -188,7 +175,6 @@ export async function POST(req: NextRequest) {
     console.log("Waiting for content to stabilize...");
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Wait for all images to load
     console.log("Waiting for images to load...");
     await page.evaluate(() => {
       return Promise.all(
@@ -204,7 +190,6 @@ export async function POST(req: NextRequest) {
     });
     console.log("Images loaded");
 
-    // Wait for any remaining network requests
     console.log("Waiting for network requests to complete...");
     let waitCount = 0;
     while (pendingRequests.size > 0 && waitCount < 20) {
@@ -215,13 +200,11 @@ export async function POST(req: NextRequest) {
       `Network requests completed. Remaining: ${pendingRequests.size}`
     );
 
-    // Additional wait for CSS and font loading
     console.log("Waiting for styles and fonts...");
     await page.evaluate(() => {
       return document.fonts.ready;
     });
 
-    // Final stabilization wait
     await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log("Content stabilized");
 

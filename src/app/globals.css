@@ -38,6 +38,12 @@
   --sidebar-accent-foreground: oklch(0.2995 0.1071 293.5018);
   --sidebar-border: oklch(0.4024 0.2048 308.7856);
   --sidebar-ring: oklch(0.4024 0.2048 308.7856);
+  /* Vigovia Brand Colors */
+  --vigovia-cta: oklch(0.65 0.25 250);
+  --vigovia-accent: oklch(0.6 0.3 290);
+  --vigovia-hover: oklch(0.55 0.28 270);
+  --vigovia-light: oklch(0.98 0.02 0);
+  --vigovia-dark: oklch(0.25 0.15 280);
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
@@ -93,6 +99,12 @@
   --sidebar-accent-foreground: oklch(0.9757 0.0163 313.6171);
   --sidebar-border: oklch(0.4024 0.2048 308.7856);
   --sidebar-ring: oklch(0.4024 0.2048 308.7856);
+  /* Vigovia Brand Colors */
+  --vigovia-cta: oklch(0.65 0.25 250);
+  --vigovia-accent: oklch(0.6 0.3 290);
+  --vigovia-hover: oklch(0.55 0.28 270);
+  --vigovia-light: oklch(0.98 0.02 0);
+  --vigovia-dark: oklch(0.25 0.15 280);
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
@@ -147,6 +159,13 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  /* Vigovia Brand Colors */
+  --color-vigovia-cta: var(--vigovia-cta);
+  --color-vigovia-accent: var(--vigovia-accent);
+  --color-vigovia-hover: var(--vigovia-hover);
+  --color-vigovia-light: var(--vigovia-light);
+  --color-vigovia-dark: var(--vigovia-dark);
+
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
@@ -184,4 +203,41 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Print-specific styles for PDF generation */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Ensure gradients render in print/PDF */
+  .bg-gradient-to-r {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Fallback for gradients in PDF if needed */
+  .from-vigovia-cta.to-vigovia-accent {
+    background: linear-gradient(
+      to right,
+      hsl(var(--vigovia-cta)),
+      hsl(var(--vigovia-accent))
+    ) !important;
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* Additional styles to ensure Vigovia colors are properly rendered */
+.text-vigovia-light {
+  color: hsl(var(--vigovia-light)) !important;
+}
+
+.bg-vigovia-light\/20 {
+  background-color: hsla(var(--vigovia-light), 0.2) !important;
 }
