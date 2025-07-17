@@ -8,9 +8,9 @@ export async function POST(req: NextRequest) {
     const formData = await req.json();
     console.log("Received form data for PDF generation");
 
-    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-    const host = process.env.VERCEL_URL || "localhost:3000";
-    const baseUrl = `${protocol}://${host}`;
+    // Use request origin to avoid deployment protection issues
+    const url = new URL(req.url);
+    const baseUrl = `${url.protocol}//${url.host}`;
 
     const previewUrl = `${baseUrl}/preview-itinerary`;
     console.log("Preview URL:", previewUrl);
@@ -58,6 +58,14 @@ export async function POST(req: NextRequest) {
 
     await page.setViewport({ width: 1200, height: 800 });
 
+    // Get cookies from the original request to forward authentication
+    const cookies = req.headers.get("cookie");
+    if (cookies) {
+      await page.setExtraHTTPHeaders({
+        Cookie: cookies,
+      });
+    }
+
     // Emulate print media type for better CSS rendering
     await page.emulateMediaType("print");
 
@@ -85,6 +93,7 @@ export async function POST(req: NextRequest) {
     });
 
     console.log("Navigating to preview URL...");
+
     await page.goto(previewUrl, {
       waitUntil: ["networkidle0", "domcontentloaded"],
       timeout: 45000,
