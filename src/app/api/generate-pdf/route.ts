@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer from "puppeteer";
+import chromium from "@sparticuz/chromium";
 
 export async function POST(req: NextRequest) {
   let browser;
@@ -14,21 +15,42 @@ export async function POST(req: NextRequest) {
     const previewUrl = `${baseUrl}/preview-itinerary`;
     console.log("Preview URL:", previewUrl);
 
-    browser = await puppeteer.launch({
-      headless: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--disable-web-security",
-        "--disable-features=VizDisplayCompositor",
-        "--allow-running-insecure-content",
-        "--disable-extensions",
-        "--no-first-run",
-        "--disable-default-apps",
-      ],
-      timeout: 60000,
-    });
+    // Configure browser launch options based on environment
+    const isDevelopment = process.env.NODE_ENV === "development";
+
+    const browserOptions = isDevelopment
+      ? {
+          headless: true,
+          args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-web-security",
+            "--disable-features=VizDisplayCompositor",
+            "--allow-running-insecure-content",
+            "--disable-extensions",
+            "--no-first-run",
+            "--disable-default-apps",
+          ],
+          timeout: 60000,
+        }
+      : {
+          args: [
+            ...chromium.args,
+            "--hide-scrollbars",
+            "--disable-web-security",
+            "--disable-features=VizDisplayCompositor",
+            "--allow-running-insecure-content",
+          ],
+          executablePath: await chromium.executablePath(),
+          headless: true,
+        };
+
+    console.log(
+      "Launching browser with options:",
+      isDevelopment ? "development" : "production"
+    );
+    browser = await puppeteer.launch(browserOptions);
     console.log("Browser launched successfully");
 
     const page = await browser.newPage();
