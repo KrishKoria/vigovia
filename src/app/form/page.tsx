@@ -1,5 +1,5 @@
-import ItineraryForm from "@/components/ItineraryForm";
-import Footer from "@/components/Footer";
+import ItineraryForm from "@/components/form/ItineraryForm";
+import Footer from "@/components/form/Footer";
 
 export default function Home() {
   return (

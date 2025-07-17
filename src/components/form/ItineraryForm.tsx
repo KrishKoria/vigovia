@@ -9,14 +9,14 @@ import { Label } from "@/components/ui/label";
 
 import { Separator } from "@/components/ui/separator";
 import { MapPin } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Header from "./Header";
 import DayCard from "./DayCard";
 import { ItineraryFormData, itinerarySchema } from "@/lib/schema";
 
 const generateItineraryPDF = async (data: ItineraryFormData) => {
   try {
-    const { generateItineraryPDF } = await import("./../lib/pdfGenerator");
+    const { generateItineraryPDF } = await import("../../lib/pdfGenerator");
     return await generateItineraryPDF(data);
   } catch (error) {
     console.error("PDF generator failed:", error);

@@ -1,12 +1,12 @@
 import { useFieldArray } from "react-hook-form";
-import FlightCard from "./FlightCard";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Calendar, Camera, Car, Plane, Plus } from "lucide-react";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import ActivityCard from "./ActivityCard";
 import TransferCard from "./TransferCard";
+import FlightCard from "./FlightCard";
 
 export default function DayCard({
   dayIndex,
