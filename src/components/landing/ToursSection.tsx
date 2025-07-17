@@ -54,14 +54,12 @@ const ToursSection = () => {
         </h2>
 
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          {/* Table Header */}
           <div className="grid grid-cols-3 bg-primary text-white">
             <div className="px-6 py-4 text-center font-semibold">Tour Name</div>
             <div className="px-6 py-4 text-center font-semibold">Duration</div>
             <div className="px-6 py-4 text-center font-semibold">Rates</div>
           </div>
 
-          {/* Table Body */}
           <div className="divide-y divide-gray-200">
             {tours.map((tour, index) => (
               <div

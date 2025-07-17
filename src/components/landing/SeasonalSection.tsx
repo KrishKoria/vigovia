@@ -70,14 +70,12 @@ const SeasonalSection = () => {
           ))}
         </div>
 
-        {/* Seasonal Info Modal - Replicating the design from the image */}
         <Dialog
           open={selectedSeason === "spring"}
           onOpenChange={() => setSelectedSeason(null)}
         >
           <DialogContent className="sm:max-w-[500px] p-0">
             <div className="bg-white rounded-lg">
-              {/* Header */}
               <div className="flex items-center justify-between p-6 border-b">
                 <div className="flex items-center space-x-3">
                   <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
@@ -153,7 +151,6 @@ const SeasonalSection = () => {
           </DialogContent>
         </Dialog>
 
-        {/* Other seasonal modals with similar structure but different content */}
         {["summer", "autumn", "winter"].map((season) => (
           <Dialog
             key={season}
