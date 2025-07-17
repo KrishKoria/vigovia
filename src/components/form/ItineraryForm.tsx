@@ -25,6 +25,7 @@ const generateItineraryPDF = async (data: ItineraryFormData) => {
 
 export default function ItineraryForm() {
   const [isGenerating, setIsGenerating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<ItineraryFormData>({
     resolver: zodResolver(itinerarySchema),
@@ -102,10 +103,16 @@ export default function ItineraryForm() {
 
   const onSubmit = async (data: ItineraryFormData) => {
     setIsGenerating(true);
+    setError(null);
     try {
       await generateItineraryPDF(data);
     } catch (error) {
       console.error("Error generating PDF:", error);
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Failed to generate PDF. Please try again."
+      );
     } finally {
       setIsGenerating(false);
     }
@@ -306,6 +313,11 @@ export default function ItineraryForm() {
           ))}
 
           <div className="text-center">
+            {error && (
+              <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                {error}
+              </div>
+            )}
             <Button
               type="submit"
               disabled={isGenerating}
