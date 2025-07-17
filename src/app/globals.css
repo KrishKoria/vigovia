@@ -39,11 +39,11 @@
   --sidebar-border: oklch(0.4024 0.2048 308.7856);
   --sidebar-ring: oklch(0.4024 0.2048 308.7856);
   /* Vigovia Brand Colors */
-  --vigovia-cta: oklch(0.65 0.25 250);
-  --vigovia-accent: oklch(0.6 0.3 290);
-  --vigovia-hover: oklch(0.55 0.28 270);
-  --vigovia-light: oklch(0.98 0.02 0);
-  --vigovia-dark: oklch(0.25 0.15 280);
+  --vigovia-cta: #541c9c;
+  --vigovia-accent: #936fe0;
+  --vigovia-hover: #680099;
+  --vigovia-light: #fbf4ff;
+  --vigovia-dark: #321e5d;
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
@@ -100,11 +100,11 @@
   --sidebar-border: oklch(0.4024 0.2048 308.7856);
   --sidebar-ring: oklch(0.4024 0.2048 308.7856);
   /* Vigovia Brand Colors */
-  --vigovia-cta: oklch(0.65 0.25 250);
-  --vigovia-accent: oklch(0.6 0.3 290);
-  --vigovia-hover: oklch(0.55 0.28 270);
-  --vigovia-light: oklch(0.98 0.02 0);
-  --vigovia-dark: oklch(0.25 0.15 280);
+  --vigovia-cta: #541c9c;
+  --vigovia-accent: #936fe0;
+  --vigovia-hover: #680099;
+  --vigovia-light: #fbf4ff;
+  --vigovia-dark: #321e5d;
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   --font-serif: ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
@@ -209,35 +209,35 @@ body {
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;
-    color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
   /* Ensure gradients render in print/PDF */
   .bg-gradient-to-r {
     -webkit-print-color-adjust: exact !important;
-    color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* Fallback for gradients in PDF if needed */
+  /* Direct hex fallback for gradients in PDF */
   .from-vigovia-cta.to-vigovia-accent {
-    background: linear-gradient(
-      to right,
-      hsl(var(--vigovia-cta)),
-      hsl(var(--vigovia-accent))
-    ) !important;
+    background: linear-gradient(to right, #541c9c, #936fe0) !important;
     -webkit-print-color-adjust: exact !important;
-    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Ensure Vigovia header background renders */
+  [class*="bg-gradient-to-r"][class*="from-vigovia-cta"] {
+    background: linear-gradient(to right, #541c9c, #936fe0) !important;
+    -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 }
 
 /* Additional styles to ensure Vigovia colors are properly rendered */
 .text-vigovia-light {
-  color: hsl(var(--vigovia-light)) !important;
+  color: var(--vigovia-light) !important;
 }
 
 .bg-vigovia-light\/20 {
-  background-color: hsla(var(--vigovia-light), 0.2) !important;
+  background-color: rgba(251, 244, 255, 0.2) !important;
 }

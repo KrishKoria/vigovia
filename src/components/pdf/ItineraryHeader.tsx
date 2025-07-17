@@ -35,20 +35,41 @@ export function ItineraryHeader({
         </div>
       </div>
 
-      <div className="relative bg-gradient-to-r from-vigovia-cta to-vigovia-accent p-8 text-vigovia-light">
+      <div
+        className="relative bg-gradient-to-r from-vigovia-cta to-vigovia-accent p-8 text-vigovia-light"
+        style={{
+          background: "linear-gradient(to right, #541C9C, #936FE0)",
+          color: "#FBF4FF",
+        }}
+      >
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-2">Hi, {customerName}!</h1>
-          <h2 className="text-3xl font-bold mb-2">{destination}</h2>
-          <p className="text-lg opacity-90 mb-6">{duration}</p>
+          <h1 className="text-2xl font-bold mb-2" style={{ color: "#FBF4FF" }}>
+            Hi, {customerName}!
+          </h1>
+          <h2 className="text-3xl font-bold mb-2" style={{ color: "#FBF4FF" }}>
+            {destination}
+          </h2>
+          <p className="text-lg opacity-90 mb-6" style={{ color: "#FBF4FF" }}>
+            {duration}
+          </p>
 
           <div className="flex justify-center gap-4">
-            <div className="w-8 h-8 bg-vigovia-light/20 rounded-full flex items-center justify-center">
+            <div
+              className="w-8 h-8 bg-vigovia-light/20 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: "rgba(251, 244, 255, 0.2)" }}
+            >
               <PlaneIcon />
             </div>
-            <div className="w-8 h-8 bg-vigovia-light/20 rounded-full flex items-center justify-center">
+            <div
+              className="w-8 h-8 bg-vigovia-light/20 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: "rgba(251, 244, 255, 0.2)" }}
+            >
               <Building2Icon />
             </div>
-            <div className="w-8 h-8 bg-vigovia-light/20 rounded-full flex items-center justify-center">
+            <div
+              className="w-8 h-8 bg-vigovia-light/20 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: "rgba(251, 244, 255, 0.2)" }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="104"
@@ -64,10 +85,16 @@ export function ItineraryHeader({
                 />
               </svg>
             </div>
-            <div className="w-8 h-8 bg-vigovia-light/20 rounded-full flex items-center justify-center">
+            <div
+              className="w-8 h-8 bg-vigovia-light/20 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: "rgba(251, 244, 255, 0.2)" }}
+            >
               <CarTaxiFrontIcon />
             </div>
-            <div className="w-8 h-8 bg-vigovia-light/20 rounded-full flex items-center justify-center">
+            <div
+              className="w-8 h-8 bg-vigovia-light/20 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: "rgba(251, 244, 255, 0.2)" }}
+            >
               <IdCardIcon />
             </div>
           </div>

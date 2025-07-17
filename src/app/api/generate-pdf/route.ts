@@ -29,6 +29,8 @@ export async function POST(req: NextRequest) {
             "--disable-extensions",
             "--no-first-run",
             "--disable-default-apps",
+            "--force-color-profile=srgb",
+            "--enable-print-background",
           ],
           timeout: 60000,
         }
@@ -39,6 +41,8 @@ export async function POST(req: NextRequest) {
             "--disable-web-security",
             "--disable-features=VizDisplayCompositor",
             "--allow-running-insecure-content",
+            "--force-color-profile=srgb",
+            "--enable-print-background",
           ],
           executablePath: await chromium.executablePath(),
           headless: true,
@@ -104,6 +108,30 @@ export async function POST(req: NextRequest) {
       console.log("Data injection complete");
     }, formData);
     console.log("Form data injected");
+
+    // Inject additional CSS to ensure gradients render in PDF
+    await page.addStyleTag({
+      content: `
+        * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .bg-gradient-to-r.from-vigovia-cta.to-vigovia-accent {
+          background: linear-gradient(to right, #541C9C, #936FE0) !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        [class*="bg-gradient-to-r"][class*="from-vigovia-cta"] {
+          background: linear-gradient(to right, #541C9C, #936FE0) !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .text-vigovia-light {
+          color: #FBF4FF !important;
+        }
+      `,
+    });
+    console.log("Additional CSS injected for PDF rendering");
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
