@@ -21,11 +21,9 @@ export default function Header() {
             Create Your Itinerary
           </h2>
           <div className="flex items-center justify-center gap-3 text-[#680099] font-medium">
-            <span className="text-3xl">✈️</span>
             <p className="text-xl">
               Fill in the details below to generate your travel itinerary
             </p>
-            <span className="text-3xl">🗺️</span>
           </div>
           <div className="w-32 h-1.5 bg-gradient-to-r from-[#541C9C] to-[#936FE0] rounded-full mx-auto"></div>
         </div>
