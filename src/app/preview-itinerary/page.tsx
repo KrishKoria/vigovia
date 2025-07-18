@@ -57,7 +57,6 @@ export default function PreviewItineraryPage() {
         });
       }, 5000);
 
-      // Clean up timeout if component unmounts
       return () => {
         clearTimeout(timeoutId);
         window.removeEventListener(

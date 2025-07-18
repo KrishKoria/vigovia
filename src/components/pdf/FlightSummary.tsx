@@ -12,7 +12,7 @@ interface FlightSummaryProps {
 
 export function FlightSummary({ flights }: FlightSummaryProps) {
   return (
-    <Card className="mb-8">
+    <Card className="mb-8 page-break-before">
       <CardHeader className="bg-vigovia-light">
         <CardTitle className="text-vigovia-dark">
           Flight <span className="text-vigovia-cta">Summary</span>

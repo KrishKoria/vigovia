@@ -129,6 +129,10 @@ export async function POST(req: NextRequest) {
         .text-vigovia-light {
           color: #FBF4FF !important;
         }
+        .page-break-before {
+          page-break-before: always !important;
+          break-before: page !important;
+        }
       `,
     });
     console.log("Additional CSS injected for PDF rendering");
