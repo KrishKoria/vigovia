@@ -1,4 +1,5 @@
 import { ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 const ExploreMoreSection = () => {
   const destinations = [
@@ -40,11 +41,13 @@ const ExploreMoreSection = () => {
               key={index}
               className="flex flex-col items-center space-y-3 min-w-[120px]"
             >
-              <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-gray-100">
-                <img
+              <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-gray-100 hover:scale-105 transition-transform duration-300">
+                <Image
                   src={destination.image}
                   alt={destination.name}
                   className="w-full h-full object-cover"
+                  width={160}
+                  height={160}
                 />
               </div>
               <span className="text-sm font-medium text-foreground text-center">
