@@ -45,12 +45,6 @@ export function TravelItinerary({ data }: TravelItineraryComponentProps) {
         <InclusionSummary inclusions={itineraryData.inclusions} />
 
         <ActivityTable activities={itineraryData.activities} />
-
-        <div className="text-center py-4">
-          <p className="text-vigovia-cta font-medium underline cursor-pointer">
-            View all terms and conditions
-          </p>
-        </div>
       </div>
 
       <PaymentPlan {...itineraryData.paymentPlan} />
