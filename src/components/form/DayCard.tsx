@@ -45,33 +45,34 @@ export default function DayCard({
   });
 
   return (
-    <Card className="border-[#936FE0] shadow-lg">
-      <CardHeader className="bg-gradient-to-r from-[#321E5D] to-[#541C9C] text-white">
-        <CardTitle className="flex items-center gap-2 p-1.5">
-          <Calendar className="h-5 w-5" />
+    <Card className="border-2 border-[#936FE0]/30 shadow-xl rounded-xl bg-white/95 backdrop-blur-sm">
+      <CardHeader className="bg-gradient-to-r from-[#321E5D] to-[#541C9C] text-white rounded-t-xl">
+        <CardTitle className="flex items-center gap-3 p-2 text-xl">
+          <Calendar className="h-6 w-6" />
           Day {dayNumber}
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-6">
-        <div className="mb-6 space-y-2">
+      <CardContent className="p-8">
+        <div className="mb-8 space-y-3">
           <Label
             htmlFor={`days.${dayIndex}.date`}
-            className="text-[#321E5D] font-medium"
+            className="text-[#321E5D] font-semibold text-base flex items-center gap-2"
           >
+            <span className="w-2 h-2 bg-[#541C9C] rounded-full"></span>
             Date
           </Label>
           <Input
             id={`days.${dayIndex}.date`}
             type="date"
             {...form.register(`days.${dayIndex}.date`)}
-            className="border-[#936FE0] focus:border-[#541C9C] max-w-xs"
+            className="border-2 border-[#936FE0]/40 focus:border-[#541C9C] focus:ring-2 focus:ring-[#541C9C]/20 rounded-xl h-12 transition-all duration-200 bg-white/80 backdrop-blur-sm text-base px-4 max-w-xs"
           />
         </div>
 
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-[#321E5D] flex items-center gap-2">
-              <Camera className="h-5 w-5" />
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-[#321E5D] flex items-center gap-3">
+              <Camera className="h-6 w-6" />
               Activities
             </h3>
             <Button
@@ -89,9 +90,9 @@ export default function DayCard({
                   location: "",
                 })
               }
-              className="border-[#541C9C] text-[#541C9C] hover:bg-[#FBF4FF]"
+              className="border-2 border-[#541C9C] text-[#541C9C] hover:bg-[#FBF4FF] hover:text-[#321E5D] transition-all duration-200 px-4 py-2 rounded-xl font-semibold"
             >
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="h-5 w-5 mr-2" />
               Add Activity
             </Button>
           </div>
@@ -108,10 +109,10 @@ export default function DayCard({
           ))}
         </div>
 
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-[#321E5D] flex items-center gap-2">
-              <Car className="h-5 w-5" />
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-[#321E5D] flex items-center gap-3">
+              <Car className="h-6 w-6" />
               Transfers
             </h3>
             <Button
@@ -131,9 +132,9 @@ export default function DayCard({
                   to: "",
                 })
               }
-              className="border-[#541C9C] text-[#541C9C] hover:bg-[#FBF4FF]"
+              className="border-2 border-[#541C9C] text-[#541C9C] hover:bg-[#FBF4FF] hover:text-[#321E5D] transition-all duration-200 px-4 py-2 rounded-xl font-semibold"
             >
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="h-5 w-5 mr-2" />
               Add Transfer
             </Button>
           </div>
@@ -150,9 +151,9 @@ export default function DayCard({
         </div>
 
         <div>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-[#321E5D] flex items-center gap-2">
-              <Plane className="h-5 w-5" />
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-[#321E5D] flex items-center gap-3">
+              <Plane className="h-6 w-6" />
               Flights
             </h3>
             <Button
@@ -172,9 +173,9 @@ export default function DayCard({
                   class: "",
                 })
               }
-              className="border-[#541C9C] text-[#541C9C] hover:bg-[#FBF4FF]"
+              className="border-2 border-[#541C9C] text-[#541C9C] hover:bg-[#FBF4FF] hover:text-[#321E5D] transition-all duration-200 px-4 py-2 rounded-xl font-semibold"
             >
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="h-5 w-5 mr-2" />
               Add Flight
             </Button>
           </div>

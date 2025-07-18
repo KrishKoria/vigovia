@@ -24,10 +24,13 @@ export default function FlightCard({
   onRemove: () => void;
 }) {
   return (
-    <Card className="mb-4 border-[#936FE0]/30">
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between mb-4">
-          <Badge variant="outline" className="border-[#936FE0] text-[#541C9C]">
+    <Card className="mb-6 border-2 border-[#936FE0]/30 shadow-lg rounded-xl bg-white/95 backdrop-blur-sm">
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <Badge
+            variant="outline"
+            className="border-2 border-[#936FE0] text-[#541C9C] font-semibold text-sm px-4 py-2 rounded-lg"
+          >
             Flight {flightIndex + 1}
           </Badge>
           <Button
@@ -35,43 +38,55 @@ export default function FlightCard({
             variant="ghost"
             size="sm"
             onClick={onRemove}
-            className="text-red-500 hover:bg-red-50"
+            className="text-red-500 hover:bg-red-50 hover:text-red-600 transition-all duration-200 p-3 rounded-xl"
           >
-            <Trash2 className="h-4 w-4" />
+            <Trash2 className="h-5 w-5" />
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label className="text-[#321E5D] font-medium">Flight ID</Label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-3">
+            <Label className="text-[#321E5D] font-semibold text-base flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#541C9C] rounded-full"></span>
+              Flight ID
+            </Label>
             <Input
               {...form.register(`days.${dayIndex}.flights.${flightIndex}.id`)}
-              className="border-[#936FE0] focus:border-[#541C9C]"
+              className="border-2 border-[#936FE0]/40 focus:border-[#541C9C] focus:ring-2 focus:ring-[#541C9C]/20 rounded-xl h-12 transition-all duration-200 bg-white/80 backdrop-blur-sm text-base px-4"
               placeholder="FLT001"
             />
           </div>
-          <div className="space-y-2">
-            <Label className="text-[#321E5D] font-medium">Airline</Label>
+          <div className="space-y-3">
+            <Label className="text-[#321E5D] font-semibold text-base flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#541C9C] rounded-full"></span>
+              Airline
+            </Label>
             <Input
               {...form.register(
                 `days.${dayIndex}.flights.${flightIndex}.airline`
               )}
-              className="border-[#936FE0] focus:border-[#541C9C]"
+              className="border-2 border-[#936FE0]/40 focus:border-[#541C9C] focus:ring-2 focus:ring-[#541C9C]/20 rounded-xl h-12 transition-all duration-200 bg-white/80 backdrop-blur-sm text-base px-4"
               placeholder="Singapore Airlines"
             />
           </div>
-          <div className="space-y-2">
-            <Label className="text-[#321E5D] font-medium">Flight Number</Label>
+          <div className="space-y-3">
+            <Label className="text-[#321E5D] font-semibold text-base flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#541C9C] rounded-full"></span>
+              Flight Number
+            </Label>
             <Input
               {...form.register(
                 `days.${dayIndex}.flights.${flightIndex}.flightNumber`
               )}
-              className="border-[#936FE0] focus:border-[#541C9C]"
+              className="border-2 border-[#936FE0]/40 focus:border-[#541C9C] focus:ring-2 focus:ring-[#541C9C]/20 rounded-xl h-12 transition-all duration-200 bg-white/80 backdrop-blur-sm text-base px-4"
               placeholder="SQ123"
             />
           </div>
-          <div className="space-y-2">
-            <Label className="text-[#321E5D] font-medium">Class</Label>
+          <div className="space-y-3">
+            <Label className="text-[#321E5D] font-semibold text-base flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#541C9C] rounded-full"></span>
+              Class
+            </Label>
             <Select
               onValueChange={(value) =>
                 form.setValue(
@@ -80,7 +95,7 @@ export default function FlightCard({
                 )
               }
             >
-              <SelectTrigger className="border-[#936FE0] focus:border-[#541C9C]">
+              <SelectTrigger className="border-2 border-[#936FE0]/40 focus:border-[#541C9C] focus:ring-2 focus:ring-[#541C9C]/20 rounded-xl h-12 transition-all duration-200 bg-white/80 backdrop-blur-sm text-base">
                 <SelectValue placeholder="Select class" />
               </SelectTrigger>
               <SelectContent>
@@ -91,44 +106,59 @@ export default function FlightCard({
               </SelectContent>
             </Select>
           </div>
-          <div className="space-y-2">
-            <Label className="text-[#321E5D] font-medium">From Airport</Label>
+          <div className="space-y-3">
+            <Label className="text-[#321E5D] font-semibold text-base flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#541C9C] rounded-full"></span>
+              From Airport
+            </Label>
             <Input
               {...form.register(`days.${dayIndex}.flights.${flightIndex}.from`)}
-              className="border-[#936FE0] focus:border-[#541C9C]"
+              className="border-2 border-[#936FE0]/40 focus:border-[#541C9C] focus:ring-2 focus:ring-[#541C9C]/20 rounded-xl h-12 transition-all duration-200 bg-white/80 backdrop-blur-sm text-base px-4"
               placeholder="JFK"
             />
           </div>
-          <div className="space-y-2">
-            <Label className="text-[#321E5D] font-medium">To Airport</Label>
+          <div className="space-y-3">
+            <Label className="text-[#321E5D] font-semibold text-base flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#541C9C] rounded-full"></span>
+              To Airport
+            </Label>
             <Input
               {...form.register(`days.${dayIndex}.flights.${flightIndex}.to`)}
-              className="border-[#936FE0] focus:border-[#541C9C]"
+              className="border-2 border-[#936FE0]/40 focus:border-[#541C9C] focus:ring-2 focus:ring-[#541C9C]/20 rounded-xl h-12 transition-all duration-200 bg-white/80 backdrop-blur-sm text-base px-4"
               placeholder="SIN"
             />
           </div>
-          <div className="space-y-2">
-            <Label className="text-[#321E5D] font-medium">Departure Time</Label>
+          <div className="space-y-3">
+            <Label className="text-[#321E5D] font-semibold text-base flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#541C9C] rounded-full"></span>
+              Departure Time
+            </Label>
             <Input
               type="datetime-local"
               {...form.register(
                 `days.${dayIndex}.flights.${flightIndex}.departure`
               )}
-              className="border-[#936FE0] focus:border-[#541C9C]"
+              className="border-2 border-[#936FE0]/40 focus:border-[#541C9C] focus:ring-2 focus:ring-[#541C9C]/20 rounded-xl h-12 transition-all duration-200 bg-white/80 backdrop-blur-sm text-base px-4"
             />
           </div>
-          <div className="space-y-2">
-            <Label className="text-[#321E5D] font-medium">Arrival Time</Label>
+          <div className="space-y-3">
+            <Label className="text-[#321E5D] font-semibold text-base flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#541C9C] rounded-full"></span>
+              Arrival Time
+            </Label>
             <Input
               type="datetime-local"
               {...form.register(
                 `days.${dayIndex}.flights.${flightIndex}.arrival`
               )}
-              className="border-[#936FE0] focus:border-[#541C9C]"
+              className="border-2 border-[#936FE0]/40 focus:border-[#541C9C] focus:ring-2 focus:ring-[#541C9C]/20 rounded-xl h-12 transition-all duration-200 bg-white/80 backdrop-blur-sm text-base px-4"
             />
           </div>
-          <div className="space-y-2">
-            <Label className="text-[#321E5D] font-medium">Price ($)</Label>
+          <div className="space-y-3">
+            <Label className="text-[#321E5D] font-semibold text-base flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#541C9C] rounded-full"></span>
+              Price ($)
+            </Label>
             <Input
               type="number"
               step="0.01"
@@ -136,7 +166,7 @@ export default function FlightCard({
                 `days.${dayIndex}.flights.${flightIndex}.price`,
                 { valueAsNumber: true }
               )}
-              className="border-[#936FE0] focus:border-[#541C9C]"
+              className="border-2 border-[#936FE0]/40 focus:border-[#541C9C] focus:ring-2 focus:ring-[#541C9C]/20 rounded-xl h-12 transition-all duration-200 bg-white/80 backdrop-blur-sm text-base px-4"
               placeholder="800.00"
             />
           </div>
