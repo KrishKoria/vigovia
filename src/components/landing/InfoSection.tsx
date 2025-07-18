@@ -145,7 +145,7 @@ const InfoSection = () => {
               className={`px-6 py-2 rounded-full ${
                 activeTab === tab.id
                   ? "bg-primary text-white"
-                  : "bg-white text-foreground border hover:bg-hover-purple hover:text-white"
+                  : "bg-white text-foreground border hover:bg-purple-500 hover:text-white"
               }`}
             >
               {tab.label}

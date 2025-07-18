@@ -62,7 +62,6 @@ export function TravelItinerary({ data }: TravelItineraryComponentProps) {
         <Footer />
       </div>
 
-      {/* Fixed footer that appears on every page in print mode */}
       <FixedFooter />
     </div>
   );

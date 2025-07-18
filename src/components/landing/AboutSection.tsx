@@ -1,10 +1,14 @@
+"use client";
 import { MapPin } from "lucide-react";
 import wineImage from "../../../public/wine-tasting.jpg";
-// import adventureImage from "@/assets/adventure.jpg";
-// import natureImage from "@/assets/nature.jpg";
+import bungeejumpingImage from "../../../public/activities/bungee-jumping.jpg";
+import rotoruaImage from "../../../public/activities/rotorua.jpg";
 import Image from "next/image";
+import { useState } from "react";
 
 const AboutSection = () => {
+  const [selectedFeature, setSelectedFeature] = useState(0);
+
   const features = [
     {
       icon: <MapPin className="h-8 w-8 text-icon-purple" />,
@@ -18,14 +22,14 @@ const AboutSection = () => {
       title: "Adventure Activities",
       description:
         "Feel the rush in the adventure capital of the world! Go bungeejumping in Queenstown, hike the rugged trails of Tongariro, or try white-water rafting in the untamed rivers.",
-      // image: adventureImage,
+      image: bungeejumpingImage,
     },
     {
       icon: <MapPin className="h-8 w-8 text-icon-purple" />,
       title: "Nature Escapades",
       description:
         "Discover nature at its finest. Visit Fiordland National Park's magical Milford Sound, hike through the lush greenery of Abel Tasman, or explore Rotorua's geothermal wonders and serene lakes.",
-      // image: natureImage,
+      image: rotoruaImage,
     },
   ];
 
@@ -42,10 +46,13 @@ const AboutSection = () => {
           {/* Left side - Image */}
           <div className="relative">
             <Image
-              src={wineImage}
-              alt="New Zealand Adventure"
-              className="w-full h-[600px] object-cover rounded-lg"
+              src={features[selectedFeature].image}
+              alt={features[selectedFeature].title}
+              className="w-full h-[600px] object-cover rounded-lg transition-all duration-500 ease-in-out"
             />
+            <div className="absolute bottom-4 left-4 bg-black/70 text-white px-4 py-2 rounded-lg">
+              <p className="font-semibold">{features[selectedFeature].title}</p>
+            </div>
           </div>
 
           {/* Right side - Content */}
@@ -73,12 +80,23 @@ const AboutSection = () => {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="bg-white border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
+                  onClick={() => setSelectedFeature(index)}
+                  className={`border rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer ${
+                    selectedFeature === index
+                      ? "bg-primary/5 border-primary shadow-md ring-2 ring-primary/20"
+                      : "bg-white border-gray-200 hover:border-primary/50"
+                  }`}
                 >
                   <div className="flex items-start space-x-4">
                     <div className="flex-shrink-0">{feature.icon}</div>
                     <div>
-                      <h4 className="text-lg font-semibold text-foreground mb-2">
+                      <h4
+                        className={`text-lg font-semibold mb-2 transition-colors ${
+                          selectedFeature === index
+                            ? "text-primary"
+                            : "text-foreground"
+                        }`}
+                      >
                         {feature.title}
                       </h4>
                       <p className="text-muted-foreground text-sm">
@@ -86,6 +104,13 @@ const AboutSection = () => {
                       </p>
                     </div>
                   </div>
+                  {selectedFeature === index && (
+                    <div className="mt-3 pt-3 border-t border-primary/20">
+                      <p className="text-xs text-primary font-medium">
+                        Currently Viewing
+                      </p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

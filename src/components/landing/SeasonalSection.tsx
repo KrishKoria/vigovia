@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "../ui/card";
 
 const SeasonalSection = () => {
   const [selectedSeason, setSelectedSeason] = useState<string | null>(null);
@@ -16,142 +17,68 @@ const SeasonalSection = () => {
     {
       id: "spring",
       name: "SPRING",
-      icon: <Leaf className="h-8 w-8 text-white" />,
-      color: "bg-green-500",
+      icon: <Leaf className="h-16 w-16 text-white" />,
+      color: "bg-[#321E5D]",
     },
     {
       id: "summer",
       name: "SUMMER",
-      icon: <Sun className="h-8 w-8 text-white" />,
-      color: "bg-yellow-500",
+      icon: <Sun className="h-16 w-16 text-white" />,
+      color: "bg-[#321E5D]",
     },
     {
       id: "autumn",
       name: "AUTUMN",
-      icon: <TreePine className="h-8 w-8 text-white" />,
-      color: "bg-orange-500",
+      icon: <TreePine className="h-16 w-16 text-white" />,
+      color: "bg-[#321E5D]",
     },
     {
       id: "winter",
       name: "WINTER",
-      icon: <Snowflake className="h-8 w-8 text-white" />,
-      color: "bg-blue-500",
+      icon: <Snowflake className="h-16 w-16 text-white" />,
+      color: "bg-[#321E5D]",
     },
   ];
 
   return (
-    <section className="py-16 px-4 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12">
+    <section className="py-16 px-4 bg-gray-50">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-16">
           Special <span className="text-primary">Seasonal Info</span>
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {seasons.map((season) => (
-            <div key={season.id} className="text-center">
-              <div
-                onClick={() => setSelectedSeason(season.id)}
-                className={`w-24 h-24 ${season.color} rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer hover:scale-110 transition-transform shadow-lg`}
-              >
-                {season.icon}
+            <div key={season.id} className="text-center relative">
+              <div className="w-40 h-40 bg-[#321e5d] rounded-full flex items-center justify-center mx-auto relative z-10 mb-[-80px]">
+                <div className="w-16 h-16 flex items-center justify-center text-white">
+                  {season.icon}
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-3">
-                {season.name}
-              </h3>
-              <Button
-                variant="default"
-                size="sm"
-                className="bg-primary hover:bg-hover-purple text-white px-6 py-2 rounded-full"
+
+              <Card
+                className="bg-white rounded-4xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 pt-12"
                 onClick={() => setSelectedSeason(season.id)}
               >
-                Read More
-              </Button>
+                <CardContent className="mt-4 flex flex-col justify-end min-h-24">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
+                    {season.name}
+                  </h3>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="bg-primary hover:bg-hover-purple text-white rounded-full w-full"
+                    onClick={() => setSelectedSeason(season.id)}
+                  >
+                    Read More
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
           ))}
         </div>
 
-        <Dialog
-          open={selectedSeason === "spring"}
-          onOpenChange={() => setSelectedSeason(null)}
-        >
-          <DialogContent className="sm:max-w-[500px] p-0">
-            <div className="bg-white rounded-lg">
-              <div className="flex items-center justify-between p-6 border-b">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                    <Leaf className="h-6 w-6 text-white" />
-                  </div>
-                  <h2 className="text-xl font-bold text-foreground">SPRING</h2>
-                </div>
-                <button
-                  onClick={() => setSelectedSeason(null)}
-                  className="p-2 hover:bg-gray-100 rounded-full"
-                >
-                  <X className="h-5 w-5 text-gray-500" />
-                </button>
-              </div>
-
-              {/* Content */}
-              <div className="p-6 space-y-6">
-                <div>
-                  <h3 className="font-bold text-foreground mb-2">
-                    Visa Validity Period:
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-1">
-                    • How Long The Visa Is Valid From The Date Of Issue.
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    • The Difference Between Single-Entry, Double-Entry, And
-                    Multiple-Entry Visas.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-bold text-foreground mb-2">
-                    Duration Of Stay:
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-1">
-                    • Maximum Length Of Stay Per Visit (E.g., 90 Days Within A
-                    180-Day Period For Some Visas).
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    • Rules For Short Stays, Long Stays, And Temporary Residence
-                    Visas.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-bold text-foreground mb-2">
-                    Permitted Activities:
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-1">
-                    • What Activities Are Allowed Under The Visa (E.g., Work,
-                    Study, Tourism).
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    • Restrictions On Working On Tourist Or Student Visas.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-bold text-foreground mb-2">
-                    Entry Ban Or Restrictions:
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-1">
-                    • Certain Nationalities Or Individuals May Face
-                    Restrictions, Including Travel Bans.
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    • Conditions For Transit Visas And Whether They Allow
-                    Temporary Entry Into The Country.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
-
-        {["summer", "autumn", "winter"].map((season) => (
+        {["spring", "summer", "autumn", "winter"].map((season) => (
           <Dialog
             key={season}
             open={selectedSeason === season}

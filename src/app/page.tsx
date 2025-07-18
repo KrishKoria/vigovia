@@ -1,3 +1,4 @@
+import Footer from "@/components/form/Footer";
 import AboutSection from "@/components/landing/AboutSection";
 import ActivitiesSection from "@/components/landing/ActivitySection";
 import BlogSection from "@/components/landing/BlogSection";
@@ -20,6 +21,7 @@ const IndexPage = () => {
       <SeasonalSection />
       <BlogSection />
       <FAQSection />
+      <Footer />
     </div>
   );
 };
