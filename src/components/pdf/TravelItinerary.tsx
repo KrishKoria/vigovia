@@ -1,16 +1,16 @@
-import { ItineraryHeader } from "./ItineraryHeader";
-import { DayItinerary } from "./DayItinerary";
-import { FlightSummary } from "./FlightSummary";
-import { HotelBookings } from "./HotelBookings";
-import { ImportantNotes } from "./ImportantNotes";
-import { InclusionSummary } from "./InclusionSummary";
-import { PaymentPlan } from "./PaymentPlan";
-import { ActivityTable } from "./ActivityTable";
-import { Footer } from "./Footer";
-import { FixedFooter } from "./FixedFooter";
-import { TripDetails } from "./TripDetails";
-import { ScopeOfService } from "./Scope";
-import { VisaDetails } from "./VisaDetails";
+import { ItineraryHeader } from "./components/ItineraryHeader";
+import { DayItinerary } from "./components/DayItinerary";
+import { FlightSummary } from "./components/FlightSummary";
+import { HotelBookings } from "./components/HotelBookings";
+import { ImportantNotes } from "./components/ImportantNotes";
+import { InclusionSummary } from "./components/InclusionSummary";
+import { PaymentPlan } from "./components/PaymentPlan";
+import { ActivityTable } from "./components/ActivityTable";
+import { Footer } from "./components/Footer";
+import { FixedFooter } from "./components/FixedFooter";
+import { TripDetails } from "./components/TripDetails";
+import { ScopeOfService } from "./components/Scope";
+import { VisaDetails } from "./components/VisaDetails";
 import { TravelItineraryProps } from "@/lib/types";
 
 interface TravelItineraryComponentProps {

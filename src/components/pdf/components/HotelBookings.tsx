@@ -44,7 +44,6 @@ export function HotelBookings({ hotels }: HotelBookingsProps) {
           </div>
         ))}
 
-        {/* Footer Notes */}
         <div className="p-4 text-xs text-vigovia-dark/60 space-y-1">
           <p>1. All Hotels Are Tentative And Can Be Replaced With Similar</p>
           <p>2. Breakfast Included For All Hotel Stays</p>

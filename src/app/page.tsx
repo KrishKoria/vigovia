@@ -1,4 +1,4 @@
-import Footer from "@/components/form/Footer";
+import Footer from "@/components/comman/Footer";
 import AboutSection from "@/components/landing/AboutSection";
 import ActivitiesSection from "@/components/landing/ActivitySection";
 import BlogSection from "@/components/landing/BlogSection";
