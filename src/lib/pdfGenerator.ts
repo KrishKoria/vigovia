@@ -17,10 +17,8 @@ export async function generateItineraryPDF(
       throw new Error(errorData.details || "PDF generation failed");
     }
 
-    // Get the PDF blob
     const blob = await response.blob();
 
-    // Create a download link
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -28,11 +26,9 @@ export async function generateItineraryPDF(
       .replace(/\s+/g, "-")
       .toLowerCase()}-itinerary.pdf`;
 
-    // Trigger download
     document.body.appendChild(link);
     link.click();
 
-    // Cleanup
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
 

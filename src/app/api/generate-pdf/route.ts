@@ -109,7 +109,6 @@ export async function POST(req: NextRequest) {
     }, formData);
     console.log("Form data injected");
 
-    // Inject additional CSS to ensure gradients render in PDF
     await page.addStyleTag({
       content: `
         * {
@@ -288,7 +287,6 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("PDF generation failed:", error);
 
-    // Ensure browser is closed even if there's an error
     if (browser) {
       try {
         await browser.close();

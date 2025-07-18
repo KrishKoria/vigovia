@@ -20,7 +20,6 @@ export function ActivityTable({ activities }: ActivityTableProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        {/* Header Row */}
         <div className="grid grid-cols-4 gap-4 p-4 bg-vigovia-dark text-vigovia-light font-medium">
           <div>City</div>
           <div>Activity</div>
@@ -28,7 +27,6 @@ export function ActivityTable({ activities }: ActivityTableProps) {
           <div>Time Required</div>
         </div>
 
-        {/* Data Rows */}
         {activities.map((activity, index) => (
           <div
             key={index}

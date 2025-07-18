@@ -33,7 +33,6 @@ export default function PreviewItineraryPage() {
       handleItineraryDataReady as EventListener
     );
 
-    // Check if data is already available
     if ((window as any).ITINERARY_DATA) {
       try {
         const formData = (window as any).ITINERARY_DATA as ItineraryFormData;
@@ -46,7 +45,6 @@ export default function PreviewItineraryPage() {
         setIsLoading(false);
       }
     } else {
-      // If no data is available after 5 seconds, show error
       const timeoutId = setTimeout(() => {
         setIsLoading((currentLoading) => {
           if (currentLoading) {

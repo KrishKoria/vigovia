@@ -21,7 +21,6 @@ export function HotelBookings({ hotels }: HotelBookingsProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        {/* Header Row */}
         <div className="grid grid-cols-5 gap-4 p-4 bg-vigovia-dark text-vigovia-light font-medium text-sm">
           <div>City</div>
           <div>Check In</div>
@@ -30,7 +29,6 @@ export function HotelBookings({ hotels }: HotelBookingsProps) {
           <div>Hotel Name</div>
         </div>
 
-        {/* Data Rows */}
         {hotels.map((hotel, index) => (
           <div
             key={index}

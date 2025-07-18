@@ -35,7 +35,6 @@ export function PaymentPlan({
           </div>
         </div>
 
-        {/* TCS */}
         <div className="flex items-center gap-4 mb-6 p-3 bg-vigovia-light/50 rounded-lg">
           <div className="bg-vigovia-accent/20 px-3 py-2 rounded min-w-32">
             <span className="text-vigovia-dark font-medium">TCS</span>
@@ -43,16 +42,13 @@ export function PaymentPlan({
           <div className="flex-1 text-vigovia-dark">{tcs}</div>
         </div>
 
-        {/* Installments Table */}
         <div className="mb-6">
-          {/* Header */}
           <div className="grid grid-cols-3 gap-4 p-4 bg-vigovia-dark text-vigovia-light font-medium rounded-t-lg">
             <div>Installment</div>
             <div>Amount</div>
             <div>Due Date</div>
           </div>
 
-          {/* Rows */}
           {installments.map((installment, index) => (
             <div
               key={index}

@@ -20,7 +20,6 @@ export function InclusionSummary({ inclusions }: InclusionSummaryProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        {/* Header Row */}
         <div className="grid grid-cols-4 gap-4 p-4 bg-vigovia-dark text-vigovia-light font-medium text-sm">
           <div>Category</div>
           <div>Count</div>
@@ -28,7 +27,6 @@ export function InclusionSummary({ inclusions }: InclusionSummaryProps) {
           <div>Status / Comments</div>
         </div>
 
-        {/* Data Rows */}
         {inclusions.map((inclusion, index) => (
           <div
             key={index}

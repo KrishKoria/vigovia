@@ -18,13 +18,11 @@ export function ImportantNotes({ notes }: ImportantNotesProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        {/* Header Row */}
         <div className="grid grid-cols-2 gap-4 p-4 bg-vigovia-dark text-vigovia-light font-medium">
           <div>Point</div>
           <div>Details</div>
         </div>
 
-        {/* Data Rows */}
         {notes.map((note, index) => (
           <div
             key={index}

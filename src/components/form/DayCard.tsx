@@ -53,7 +53,6 @@ export default function DayCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="p-6">
-        {/* Day Date */}
         <div className="mb-6 space-y-2">
           <Label
             htmlFor={`days.${dayIndex}.date`}
@@ -69,7 +68,6 @@ export default function DayCard({
           />
         </div>
 
-        {/* Activities Section */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-[#321E5D] flex items-center gap-2">
@@ -110,7 +108,6 @@ export default function DayCard({
           ))}
         </div>
 
-        {/* Transfers Section */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-[#321E5D] flex items-center gap-2">
@@ -152,7 +149,6 @@ export default function DayCard({
           ))}
         </div>
 
-        {/* Flights Section */}
         <div>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-[#321E5D] flex items-center gap-2">

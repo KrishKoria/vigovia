@@ -123,7 +123,6 @@ export interface TravelItineraryProps {
   }[];
 }
 
-// Function to transform ItineraryFormData to TravelItineraryProps
 export function transformFormDataToTravelItinerary(
   formData: ItineraryData
 ): TravelItineraryProps {
@@ -140,11 +139,11 @@ export function transformFormDataToTravelItinerary(
       duration: duration,
     },
     tripDetails: {
-      departureFrom: "Not specified", // This could be added to the form later
+      departureFrom: "Not specified",
       departureDate: startDate.toLocaleDateString(),
       arrivalDate: endDate.toLocaleDateString(),
       destination: formData.destination,
-      travelers: 1, // This could be added to the form later
+      travelers: 1,
     },
     itinerary: formData.days.map((day) => ({
       day: day.dayNumber,

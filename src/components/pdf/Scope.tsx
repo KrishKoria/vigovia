@@ -18,13 +18,11 @@ export function ScopeOfService({ services }: ScopeOfServiceProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        {/* Header Row */}
         <div className="grid grid-cols-2 gap-4 p-4 bg-vigovia-dark text-vigovia-light font-medium">
           <div>Service</div>
           <div>Details</div>
         </div>
 
-        {/* Data Rows */}
         {services.map((service, index) => (
           <div
             key={index}

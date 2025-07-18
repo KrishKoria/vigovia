@@ -232,7 +232,6 @@ const ActivitiesSection = () => {
               onClick={() => setSelectedActivity(activity.id)}
               className="relative overflow-hidden rounded-3xl cursor-pointer hover:scale-105 transition-transform duration-300 group aspect-square"
             >
-              {/* Background Image or Gradient */}
               <div className={`absolute inset-0 ${activity.fallbackColor}`}>
                 <Image
                   src={activity.image}
@@ -242,7 +241,6 @@ const ActivitiesSection = () => {
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = "none";
-                    // Show the fallback icon
                     const parent = target.parentElement;
                     if (parent) {
                       const iconEl = parent.querySelector(".fallback-icon");
@@ -253,7 +251,6 @@ const ActivitiesSection = () => {
                   }}
                 />
 
-                {/* Fallback Icon (hidden by default) */}
                 <div
                   className="fallback-icon absolute inset-0 items-center justify-center text-6xl"
                   style={{ display: "none" }}
@@ -262,10 +259,8 @@ const ActivitiesSection = () => {
                 </div>
               </div>
 
-              {/* Dark Overlay */}
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300" />
 
-              {/* Text Content */}
               <div className="absolute inset-0 flex items-end p-4">
                 <h3 className="text-white font-semibold text-sm md:text-base drop-shadow-lg">
                   {activity.name}
@@ -275,7 +270,6 @@ const ActivitiesSection = () => {
           ))}
         </div>
 
-        {/* Activity Detail Modal */}
         <Dialog
           open={!!selectedActivity}
           onOpenChange={() => setSelectedActivity(null)}

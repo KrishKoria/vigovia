@@ -57,7 +57,6 @@ export function TravelItinerary({ data }: TravelItineraryComponentProps) {
 
       <VisaDetails {...itineraryData.visaDetails} />
 
-      {/* Regular footer - hidden in print mode */}
       <div className="regular-footer">
         <Footer />
       </div>
