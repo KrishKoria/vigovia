@@ -35,6 +35,7 @@ export default function ItineraryForm() {
       startDate: "",
       endDate: "",
       numberOfDays: 1,
+      numberOfTravellers: 1,
       customerName: "",
       customerEmail: "",
       customerPhone: "",
@@ -177,7 +178,7 @@ export default function ItineraryForm() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-4">
                   <Label
                     htmlFor="startDate"
@@ -218,6 +219,9 @@ export default function ItineraryForm() {
                     </p>
                   )}
                 </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-4">
                   <Label
                     htmlFor="numberOfDays"
@@ -241,6 +245,31 @@ export default function ItineraryForm() {
                   {form.formState.errors.numberOfDays && (
                     <p className="text-red-500 text-sm mt-1 font-medium">
                       {form.formState.errors.numberOfDays.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-4">
+                  <Label
+                    htmlFor="numberOfTravellers"
+                    className="text-[#321E5D] font-semibold text-base flex items-center gap-3"
+                  >
+                    <span className="w-3 h-3 bg-[#541C9C] rounded-full"></span>
+                    Number of Travellers
+                  </Label>
+                  <Input
+                    id="numberOfTravellers"
+                    type="number"
+                    min="1"
+                    max="20"
+                    {...form.register("numberOfTravellers", {
+                      valueAsNumber: true,
+                    })}
+                    className="border-2 border-[#936FE0]/40 focus:border-[#541C9C] focus:ring-2 focus:ring-[#541C9C]/20 rounded-xl h-14 transition-all duration-200 bg-white/80 backdrop-blur-sm text-lg px-4"
+                    placeholder="e.g., 2"
+                  />
+                  {form.formState.errors.numberOfTravellers && (
+                    <p className="text-red-500 text-sm mt-1 font-medium">
+                      {form.formState.errors.numberOfTravellers.message}
                     </p>
                   )}
                 </div>

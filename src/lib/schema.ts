@@ -49,6 +49,9 @@ export const itinerarySchema = z.object({
   startDate: z.string().min(1, "Start date is required"),
   endDate: z.string().min(1, "End date is required"),
   numberOfDays: z.number().min(1, "Number of days must be at least 1"),
+  numberOfTravellers: z
+    .number()
+    .min(1, "Number of travellers must be at least 1"),
   customerName: z.string().min(1, "Customer name is required"),
   customerEmail: z.string().email("Valid email is required"),
   customerPhone: z.string().min(1, "Phone number is required"),

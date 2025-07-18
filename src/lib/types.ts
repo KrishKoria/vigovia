@@ -46,6 +46,7 @@ export interface ItineraryData {
   startDate: string;
   endDate: string;
   numberOfDays: number;
+  numberOfTravellers: number;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
@@ -143,7 +144,7 @@ export function transformFormDataToTravelItinerary(
       departureDate: startDate.toLocaleDateString(),
       arrivalDate: endDate.toLocaleDateString(),
       destination: formData.destination,
-      travelers: 1,
+      travelers: formData.numberOfTravellers,
     },
     itinerary: formData.days.map((day) => ({
       day: day.dayNumber,
@@ -225,7 +226,9 @@ export function transformFormDataToTravelItinerary(
             ),
           0
         )
-        .toLocaleString()} (Inclusive Of GST)`,
+        .toLocaleString()} For ${
+        formData.numberOfTravellers
+      } Pax (Inclusive Of GST)`,
       tcs: "As Applicable",
       installments: [
         {
