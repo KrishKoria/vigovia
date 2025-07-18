@@ -11,7 +11,7 @@ interface ScopeOfServiceProps {
 
 export function ScopeOfService({ services }: ScopeOfServiceProps) {
   return (
-    <Card className="mb-8">
+    <Card className="mb-8 page-break-before">
       <CardHeader className="bg-vigovia-light">
         <CardTitle className="text-vigovia-dark">
           Scope Of <span className="text-vigovia-cta">Service</span>
