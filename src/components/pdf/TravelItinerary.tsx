@@ -7,6 +7,7 @@ import { InclusionSummary } from "./InclusionSummary";
 import { PaymentPlan } from "./PaymentPlan";
 import { ActivityTable } from "./ActivityTable";
 import { Footer } from "./Footer";
+import { FixedFooter } from "./FixedFooter";
 import { TripDetails } from "./TripDetails";
 import { ScopeOfService } from "./Scope";
 import { VisaDetails } from "./VisaDetails";
@@ -21,7 +22,7 @@ export function TravelItinerary({ data }: TravelItineraryComponentProps) {
 
   return (
     <div
-      className="max-w-4xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden"
+      className="max-w-4xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden pdf-content"
       data-testid="itinerary-content"
     >
       <ItineraryHeader {...itineraryData.header} />
@@ -56,7 +57,13 @@ export function TravelItinerary({ data }: TravelItineraryComponentProps) {
 
       <VisaDetails {...itineraryData.visaDetails} />
 
-      <Footer />
+      {/* Regular footer - hidden in print mode */}
+      <div className="regular-footer">
+        <Footer />
+      </div>
+
+      {/* Fixed footer that appears on every page in print mode */}
+      <FixedFooter />
     </div>
   );
 }

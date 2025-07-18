@@ -133,6 +133,26 @@ export async function POST(req: NextRequest) {
           page-break-before: always !important;
           break-before: page !important;
         }
+        .fixed-footer {
+          position: fixed !important;
+          bottom: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          width: 100% !important;
+          background: white !important;
+          border-top: 1px solid #e5e5e5 !important;
+          padding: 16px !important;
+          font-size: 12px !important;
+          z-index: 1000 !important;
+          page-break-inside: avoid !important;
+        }
+        .pdf-content {
+          margin-bottom: 120px !important;
+          padding-bottom: 20px !important;
+        }
+        .regular-footer {
+          display: none !important;
+        }
       `,
     });
     console.log("Additional CSS injected for PDF rendering");
