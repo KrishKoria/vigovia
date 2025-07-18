@@ -2,6 +2,7 @@ import Footer from "@/components/form/Footer";
 import AboutSection from "@/components/landing/AboutSection";
 import ActivitiesSection from "@/components/landing/ActivitySection";
 import BlogSection from "@/components/landing/BlogSection";
+import ExploreMoreSection from "@/components/landing/ExploreTours";
 import FAQSection from "@/components/landing/FAQSection";
 import Header from "@/components/landing/Header";
 import HeroSection from "@/components/landing/Hero";
@@ -21,6 +22,7 @@ const IndexPage = () => {
       <SeasonalSection />
       <BlogSection />
       <FAQSection />
+      <ExploreMoreSection />
       <Footer />
     </div>
   );
