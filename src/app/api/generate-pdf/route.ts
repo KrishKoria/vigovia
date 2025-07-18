@@ -278,10 +278,32 @@ export async function POST(req: NextRequest) {
     await browser.close();
     console.log("Browser closed");
 
+    const destination =
+      formData.destination?.replace(/[^a-zA-Z0-9-_]/g, "-") || "destination";
+    const startDate = formData.startDate
+      ? new Date(formData.startDate).toISOString().split("T")[0]
+      : "";
+    const endDate = formData.endDate
+      ? new Date(formData.endDate).toISOString().split("T")[0]
+      : "";
+    const customerName =
+      formData.customerName?.replace(/[^a-zA-Z0-9-_]/g, "-") || "customer";
+    const numberOfTravellers = formData.numberOfTravellers || 1;
+
+    let filename = `${destination}-itinerary`;
+    if (startDate && endDate) {
+      filename = `${destination}-${startDate}-to-${endDate}-${numberOfTravellers}pax-${customerName}`;
+    } else if (startDate) {
+      filename = `${destination}-${startDate}-${numberOfTravellers}pax-${customerName}`;
+    } else {
+      filename = `${destination}-${numberOfTravellers}pax-${customerName}-itinerary`;
+    }
+    filename = filename.toLowerCase().replace(/--+/g, "-") + ".pdf";
+
     return new Response(pdfBuffer, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": 'attachment; filename="travel-itinerary.pdf"',
+        "Content-Disposition": `attachment; filename="${filename}"`,
       },
     });
   } catch (error) {
