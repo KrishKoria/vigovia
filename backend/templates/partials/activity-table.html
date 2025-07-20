@@ -8,31 +8,40 @@
         <tr>
           <th>Day</th>
           <th>Activity</th>
-          <th>Location</th>
-          <th>Duration</th>
           <th>Type</th>
           <th>Price</th>
         </tr>
       </thead>
       <tbody>
-        {{range .Days}} {{range .Activities}}
+        {{range $dayIndex, $day := .Days}} {{range $activityIndex, $activity :=
+        $day.Activities}}
         <tr>
-          <td class="day-cell">Day {{$.DayNumber}}</td>
-          <td class="activity-name">
-            <strong>{{.Name}}</strong>
-            <div class="activity-desc">{{truncate .Description 80}}</div>
+          <td class="day-cell">
+            <strong>Day {{$day.DayNumber}}</strong>
+            <div class="date">{{formatDate $day.Date}}</div>
           </td>
-          <td>{{.Location}}</td>
-          <td>{{.Duration}}</td>
-          <td>
-            {{if .Type}}
-            <span class="activity-type type-{{lower .Type}}">{{.Type}}</span>
+          <td class="activity-name">
+            <strong>{{$activity.Name}}</strong>
+            {{if $activity.Description}}
+            <div class="activity-desc">{{$activity.Description}}</div>
+            {{end}}
+          </td>
+          <td class="activity-type">
+            {{if eq $activity.Type "Sightseeing"}}
+            <span class="activity-type type-sightseeing">Sightseeing</span>
+            {{else if eq $activity.Type "Cultural"}}
+            <span class="activity-type type-cultural">Cultural</span>
+            {{else if eq $activity.Type "Adventure"}}
+            <span class="activity-type type-adventure">Adventure</span>
+            {{else if eq $activity.Type "Transfer"}}
+            <span class="activity-type type-transfer">Transfer</span>
             {{else}}
-            <span class="activity-type">General</span>
+            <span class="activity-type">{{$activity.Type}}</span>
             {{end}}
           </td>
           <td class="price-cell">
-            {{if .Price}} {{formatCurrency .Price "₹"}} {{else}}
+            {{if $activity.Price}} {{formatCurrency $activity.Price "₹"}}
+            {{else}}
             <span class="included">Included</span>
             {{end}}
           </td>
@@ -45,14 +54,14 @@
   <div class="activity-stats">
     <div class="stat-item">
       <strong>Total Activities:</strong>
-      {{$totalActivities := 0}} {{range .Days}}{{$totalActivities = add
-      $totalActivities (len .Activities)}}{{end}} {{$totalActivities}}
+      {{$totalActivities := 0}} {{range .Days}} {{$totalActivities = add
+      $totalActivities (len .Activities)}} {{end}} {{$totalActivities}}
     </div>
     <div class="stat-item">
-      <strong>Activity Cost:</strong>
-      {{$totalCost := 0.0}} {{range .Days}}{{range .Activities}}{{if
-      .Price}}{{$totalCost = add $totalCost .Price}}{{end}}{{end}}{{end}}
-      {{formatCurrency $totalCost "₹"}}
+      <strong>Total Days with Activities:</strong>
+      {{$daysWithActivities := 0}} {{range .Days}} {{if .Activities}}
+      {{$daysWithActivities = add $daysWithActivities 1}} {{end}} {{end}}
+      {{$daysWithActivities}}
     </div>
   </div>
 </div>
@@ -60,6 +69,7 @@
 <style>
   .activity-table {
     margin-bottom: 30px;
+    page-break-inside: avoid;
   }
 
   .activity-table h3 {
@@ -71,16 +81,15 @@
 
   .table-container {
     overflow-x: auto;
-    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .activities-table {
     width: 100%;
     border-collapse: collapse;
     background: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
+    font-size: 0.9em;
   }
 
   .activities-table th {
@@ -88,8 +97,8 @@
     color: white;
     padding: 12px 8px;
     text-align: left;
-    font-weight: bold;
-    font-size: 0.9em;
+    font-weight: 600;
+    border-bottom: 2px solid #0056b3;
   }
 
   .activities-table td {
@@ -99,7 +108,7 @@
   }
 
   .activities-table tbody tr:hover {
-    background: #f8f9fa;
+    background-color: #f8f9fa;
   }
 
   .activities-table tbody tr:last-child td {
@@ -107,9 +116,14 @@
   }
 
   .day-cell {
-    font-weight: bold;
-    color: #007bff;
-    white-space: nowrap;
+    min-width: 100px;
+    text-align: center;
+  }
+
+  .day-cell .date {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 4px;
   }
 
   .activity-name strong {
@@ -119,18 +133,20 @@
   }
 
   .activity-desc {
-    font-size: 0.85em;
     color: #666;
-    line-height: 1.3;
+    font-size: 0.85em;
+    line-height: 1.4;
+    margin-top: 4px;
   }
 
   .activity-type {
     display: inline-block;
-    padding: 3px 8px;
+    padding: 4px 8px;
     border-radius: 12px;
     font-size: 0.8em;
-    font-weight: bold;
+    font-weight: 600;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   .type-sightseeing {
@@ -159,61 +175,70 @@
   }
 
   .price-cell {
-    font-weight: bold;
-    color: #28a745;
     text-align: right;
-    white-space: nowrap;
+    font-weight: 600;
+    color: #007bff;
+    min-width: 100px;
   }
 
   .included {
-    color: #007bff;
+    color: #28a745;
     font-style: italic;
-    font-size: 0.9em;
+    font-weight: normal;
   }
 
   .activity-stats {
-    display: flex;
-    justify-content: space-between;
-    background: #f8f9fa;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
     padding: 15px;
+    background: #f8f9fa;
     border-radius: 8px;
-    border: 1px solid #dee2e6;
   }
 
   .stat-item {
-    font-size: 0.95em;
+    text-align: center;
   }
 
   .stat-item strong {
+    display: block;
     color: #333;
+    margin-bottom: 5px;
   }
 
   @media print {
+    .activity-table {
+      page-break-inside: avoid;
+    }
+
     .activities-table {
       font-size: 0.8em;
     }
 
     .activities-table th,
     .activities-table td {
-      padding: 8px 4px;
+      padding: 8px 6px;
     }
 
     .activity-stats {
-      flex-direction: column;
-      gap: 8px;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .table-container {
+      box-shadow: none;
+      border: 1px solid #ddd;
     }
   }
 
-  @media (max-width: 768px) {
-    .activities-table th,
-    .activities-table td {
-      padding: 8px 4px;
-      font-size: 0.9em;
+  @media screen and (max-width: 768px) {
+    .activities-table {
+      font-size: 0.8em;
     }
 
     .activity-stats {
-      flex-direction: column;
-      gap: 10px;
+      grid-template-columns: 1fr;
     }
   }
 </style>

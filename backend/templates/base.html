@@ -1,177 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Travel Itinerary - {{.Trip.Destination}}</title>
     <style>
-        body {
-            font-family: "Arial", sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        @media print {
-            body {
-                background-color: white;
-                padding: 0;
-            }
-            
-            .container {
-                max-width: none;
-                margin: 0;
-                padding: 0;
-                border-radius: 0;
-                box-shadow: none;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        {{template "header.html" .}}
-        
-        {{template "trip-details.html" .}}
-        
-        {{template "flight-summary.html" .}}
-        
-        {{template "hotel-bookings.html" .}}
-        
-        {{range $index, $day := .Days}}
-            {{template "day-itinerary.html" (dict "Day" $day "Index" $index "Config" $.Config)}}
-        {{end}}
-        
-        {{if .Activities}}
-            {{template "activity-table.html" .}}
-        {{end}}
-        
-        {{template "payment-plan.html" .}}
-        
-        {{template "inclusions.html" .}}
-        
-        {{template "important-notes.html" .}}
-        
-        {{if .Config.Features.VisaSupport}}
-            {{template "visa-details.html" .}}
-        {{end}}
-        
-        {{template "scope.html" .}}
-        
-        {{template "footer.html" .}}
-    </div>
-</body>
-</html>
-
-      .customer-info h3 {
-        margin-top: 0;
-        color: #007bff;
-      }
-
-      .trip-details {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin-bottom: 30px;
-      }
-
-      .detail-box {
-        background: #e9ecef;
-        padding: 15px;
-        border-radius: 8px;
-      }
-
-      .detail-box h4 {
-        margin: 0 0 10px 0;
-        color: #495057;
-      }
-
-      .day-section {
-        margin-bottom: 30px;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        overflow: hidden;
-      }
-
-      .day-header {
-        background: #007bff;
-        color: white;
-        padding: 15px 20px;
+      body {
+        font-family: "Arial", sans-serif;
         margin: 0;
-      }
-
-      .day-content {
         padding: 20px;
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
       }
 
-      .activity {
-        background: #f8f9fa;
-        margin: 10px 0;
-        padding: 15px;
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
         border-radius: 8px;
-        border-left: 4px solid #28a745;
-      }
-
-      .activity h5 {
-        margin: 0 0 5px 0;
-        color: #28a745;
-      }
-
-      .flight-info {
-        background: #fff3cd;
-        border: 1px solid #ffeaa7;
-        border-radius: 8px;
-        padding: 20px;
-        margin: 20px 0;
-      }
-
-      .hotel-info {
-        background: #d1ecf1;
-        border: 1px solid #bee5eb;
-        border-radius: 8px;
-        padding: 20px;
-        margin: 20px 0;
-      }
-
-      .payment-info {
-        background: #d4edda;
-        border: 1px solid #c3e6cb;
-        border-radius: 8px;
-        padding: 20px;
-        margin: 20px 0;
-      }
-
-      .footer {
-        text-align: center;
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 1px solid #dee2e6;
-        color: #666;
-        font-size: 0.9em;
-      }
-
-      .price {
-        font-weight: bold;
-        color: #007bff;
-        font-size: 1.2em;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
 
       @media print {
         body {
-          background: white;
+          background-color: white;
+          padding: 0;
         }
+
         .container {
+          max-width: none;
+          margin: 0;
+          padding: 0;
+          border-radius: 0;
           box-shadow: none;
         }
       }
@@ -179,150 +41,15 @@
   </head>
   <body>
     <div class="container">
-      <!-- Header -->
-      <div class="header">
-        <h1>Travel Itinerary</h1>
-        <h2>{{.Trip.Destination}}</h2>
-      </div>
-
-      <!-- Customer Information -->
-      <div class="customer-info">
-        <h3>Traveler Information</h3>
-        <p><strong>Name:</strong> {{.Customer.Name}}</p>
-        <p><strong>Email:</strong> {{.Customer.Email}}</p>
-        <p><strong>Phone:</strong> {{.Customer.Phone}}</p>
-      </div>
-
-      <!-- Trip Details -->
-      <div class="trip-details">
-        <div class="detail-box">
-          <h4>Travel Dates</h4>
-          <p><strong>Start:</strong> {{formatDate .Trip.StartDate}}</p>
-          <p><strong>End:</strong> {{formatDate .Trip.EndDate}}</p>
-          <p><strong>Duration:</strong> {{.Trip.Duration}}</p>
-        </div>
-        <div class="detail-box">
-          <h4>Trip Information</h4>
-          <p><strong>Travelers:</strong> {{.Trip.Travelers}}</p>
-          <p><strong>Departure From:</strong> {{.Trip.DepartureFrom}}</p>
-        </div>
-      </div>
-
-      <!-- Flight Information -->
-      {{if .Flights}}
-      <div class="flight-info">
-        <h3>Flight Details</h3>
-        {{range .Flights}}
-        <div style="margin-bottom: 15px">
-          <p><strong>Flight:</strong> {{.Airline}} {{.FlightNumber}}</p>
-          <p><strong>Route:</strong> {{.From}} → {{.To}}</p>
-          <p><strong>Date:</strong> {{formatDate .Date}}</p>
-          <p>
-            <strong>Departure:</strong> {{.Departure}} |
-            <strong>Arrival:</strong> {{.Arrival}}
-          </p>
-          <p><strong>Price:</strong> {{formatCurrency .Price "₹"}}</p>
-        </div>
-        {{end}}
-      </div>
-      {{end}}
-
-      <!-- Hotel Information -->
-      {{if .Hotels}}
-      <div class="hotel-info">
-        <h3>Accommodation</h3>
-        {{range .Hotels}}
-        <div style="margin-bottom: 15px">
-          <p><strong>Hotel:</strong> {{.HotelName}}</p>
-          <p><strong>City:</strong> {{.City}}</p>
-          <p>
-            <strong>Check-in:</strong> {{formatDate .CheckIn}} |
-            <strong>Check-out:</strong> {{formatDate .CheckOut}}
-          </p>
-          <p>
-            <strong>Room:</strong> {{.RoomType}} |
-            <strong>Nights:</strong> {{.Nights}} |
-            <strong>Price per Night:</strong> {{formatCurrency .PricePerNight
-            "₹"}}
-          </p>
-        </div>
-        {{end}}
-      </div>
-      {{end}}
-
-      <!-- Daily Itinerary -->
-      <h3>Daily Itinerary</h3>
-      {{range .Days}}
-      <div class="day-section">
-        <h3 class="day-header">Day {{.DayNumber}}: {{.Title}}</h3>
-        <div class="day-content">
-          {{if .Activities}}
-          <h4>Activities</h4>
-          {{range .Activities}}
-          <div class="activity">
-            <h5>{{.Name}}</h5>
-            <p>
-              <strong>Location:</strong> {{.Location}} |
-              <strong>Duration:</strong> {{.Duration}}
-            </p>
-            <p>{{.Description}}</p>
-            {{if .Price}}
-            <p class="price">Price: {{formatCurrency .Price "₹"}}</p>
-            {{end}}
-          </div>
-          {{end}} {{end}} {{if .Transfers}}
-          <h4>Transfers</h4>
-          {{range .Transfers}}
-          <div
-            style="
-              background: #e2e3e5;
-              padding: 10px;
-              margin: 5px 0;
-              border-radius: 5px;
-            "
-          >
-            <p><strong>{{.Type}}:</strong> {{.From}} → {{.To}}</p>
-            <p>
-              <strong>Pickup:</strong> {{.PickupTime}} |
-              <strong>Dropoff:</strong> {{.DropoffTime}} |
-              <strong>Duration:</strong> {{.Duration}}
-            </p>
-            {{if .Price}}
-            <p>Price: {{formatCurrency .Price "₹"}}</p>
-            {{end}}
-          </div>
-          {{end}} {{end}}
-        </div>
-      </div>
-      {{end}}
-
-      <!-- Payment Information -->
-      {{if .Payment}}
-      <div class="payment-info">
-        <h3>Payment Summary</h3>
-        <p>
-          <strong>Total Amount:</strong>
-          <span class="price"
-            >{{formatCurrencyString .Payment.TotalAmount "₹"}}</span
-          >
-        </p>
-        <p>
-          <strong>Advance Paid:</strong> {{formatCurrencyString
-          .Payment.AdvanceAmount "₹"}}
-        </p>
-        <p>
-          <strong>Balance Due:</strong> {{formatCurrencyString
-          .Payment.BalanceAmount "₹"}}
-        </p>
-        <p><strong>Payment Status:</strong> {{.Payment.Status}}</p>
-      </div>
-      {{end}}
-
-      <!-- Footer -->
-      <div class="footer">
-        <p>Generated on {{formatDate .GeneratedAt}}</p>
-        <p>This itinerary was created by Vigovia Travel Services</p>
-      </div>
+      {{template "header.html" .}} {{template "trip-details.html" .}} {{template
+      "flight-summary.html" .}} {{template "hotel-bookings.html" .}} {{range
+      $index, $day := .Days}} {{template "day-itinerary.html" (dict "Day" $day
+      "Index" $index "Config" $.Config)}} {{end}} {{$hasActivities := false}}
+      {{range .Days}} {{if .Activities}} {{$hasActivities = true}} {{end}}
+      {{end}} {{if $hasActivities}} {{template "activity-table.html" .}} {{end}}
+      {{template "payment-plan.html" .}} {{template "inclusions.html" .}}
+      {{template "important-notes.html" .}} {{template "visa-details.html" .}}
+      {{template "scope.html" .}} {{template "footer.html" .}}
     </div>
   </body>
 </html>

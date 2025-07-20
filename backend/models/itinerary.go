@@ -91,7 +91,7 @@ type Hotel struct {
 	City         string  `json:"city" validate:"required"`
 	CheckIn      string  `json:"checkIn" validate:"required"`
 	CheckOut     string  `json:"checkOut" validate:"required"`
-	Nights       int     `json:"nights" validate:"min=1"`
+	Nights       int    `json:"nights" validate:"min=1"`
 	HotelName    string  `json:"hotelName" validate:"required"`
 	RoomType     string  `json:"roomType"`
 	PricePerNight float64 `json:"pricePerNight" validate:"min=0"`

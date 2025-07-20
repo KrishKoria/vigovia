@@ -126,15 +126,79 @@ func (s *TemplateService) getTemplateFunctions() template.FuncMap {
 		"sub": func(a, b int) int {
 			return a - b
 		},
-		"mul": func(a, b int) int {
-			return a * b
-		},
-		"div": func(a, b int) int {
-			if b == 0 {
-				return 0
-			}
-			return a / b
-		},
+        "mul": func(a, b interface{}) float64 {
+            var aFloat, bFloat float64
+            
+            switch v := a.(type) {
+            case float64:
+                aFloat = v
+            case float32:
+                aFloat = float64(v)
+            case int:
+                aFloat = float64(v)
+            case int64:
+                aFloat = float64(v)
+            case int32:
+                aFloat = float64(v)
+            default:
+                return 0 
+            }
+            
+            switch v := b.(type) {
+            case float64:
+                bFloat = v
+            case float32:
+                bFloat = float64(v)
+            case int:
+                bFloat = float64(v)
+            case int64:
+                bFloat = float64(v)
+            case int32:
+                bFloat = float64(v)
+            default:
+                return 0 
+            }
+            
+            return aFloat * bFloat
+        },
+        "div": func(a, b interface{}) float64 {
+            var aFloat, bFloat float64
+            
+            switch v := a.(type) {
+            case float64:
+                aFloat = v
+            case float32:
+                aFloat = float64(v)
+            case int:
+                aFloat = float64(v)
+            case int64:
+                aFloat = float64(v)
+            case int32:
+                aFloat = float64(v)
+            default:
+                return 0
+            }
+            
+            switch v := b.(type) {
+            case float64:
+                bFloat = v
+            case float32:
+                bFloat = float64(v)
+            case int:
+                bFloat = float64(v)
+            case int64:
+                bFloat = float64(v)
+            case int32:
+                bFloat = float64(v)
+            default:
+                return 0
+            }
+            
+            if bFloat == 0 {
+                return 0 
+            }
+            return aFloat / bFloat
+        },
 		"mod": func(a, b int) int {
 			if b == 0 {
 				return 0
