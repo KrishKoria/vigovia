@@ -31,25 +31,36 @@ func FormatCurrencyString(amountStr string, currency string) string {
 	return fmt.Sprintf("%s%.2f", currency, amount)
 }
 
+func FormatDate(date interface{}) string {
+    switch v := date.(type) {
+    case string:
+        return formatDateString(v)
+    case time.Time:
+        return v.Format("2 January 2006")
+    default:
+        return fmt.Sprintf("%v", date)
+    }
+}
+
 // FormatDate formats a date string into a more readable format
-func FormatDate(dateStr string) string {
-	// Try to parse the date in various formats
-	formats := []string{
-		"2006-01-02",
-		"2006-01-02T15:04:05Z",
-		"2006-01-02T15:04:05.000Z",
-		"02/01/2006",
-		"2006/01/02",
-	}
-	
-	for _, format := range formats {
-		if t, err := time.Parse(format, dateStr); err == nil {
-			return t.Format("2 January 2006")
-		}
-	}
-	
-	// If no format matches, return the original string
-	return dateStr
+func formatDateString(dateStr string) string {
+    // Try to parse the date in various formats
+    formats := []string{
+        "2006-01-02",
+        "2006-01-02T15:04:05Z",
+        "2006-01-02T15:04:05.000Z",
+        "02/01/2006",
+        "2006/01/02",
+    }
+    
+    for _, format := range formats {
+        if t, err := time.Parse(format, dateStr); err == nil {
+            return t.Format("2 January 2006")
+        }
+    }
+    
+    // If no format matches, return the original string
+    return dateStr
 }
 
 // FormatDateShort formats a date string into a short format
