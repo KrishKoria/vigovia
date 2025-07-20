@@ -66,6 +66,9 @@ func (s *TemplateService) RenderTemplate(templateName string, data *models.Templ
 	logrus.WithFields(logrus.Fields{
 		"template": templateName,
 		"htmlSize": len(html),
+		"customerName": data.Customer.Name,
+		"destination": data.Trip.Destination,
+		"daysCount": len(data.Days),
 	}).Debug("Template rendered successfully")
 	
 	return html, nil
@@ -142,25 +145,24 @@ func (s *TemplateService) ClearCache() {
 func (s *TemplateService) PreloadTemplates() error {
 	templateFiles := []string{
 		"base.html",
-		"header.html",
-		"footer.html",
-		"trip-details.html",
-		"day-itinerary.html",
-		"flight-summary.html",
-		"hotel-bookings.html",
-		"activity-table.html",
-		"payment-plan.html",
-		"inclusions.html",
-		"important-notes.html",
-		"scope.html",
-		"visa-details.html",
+		// "header.html",
+		// "footer.html",
+		// "trip-details.html",
+		// "day-itinerary.html",
+		// "flight-summary.html",
+		// "hotel-bookings.html",
+		// "activity-table.html",
+		// "payment-plan.html",
+		// "inclusions.html",
+		// "important-notes.html",
+		// "scope.html",
+		// "visa-details.html",
 	}
 	
 	for _, templateFile := range templateFiles {
 		_, err := s.LoadTemplate(templateFile)
 		if err != nil {
 			logrus.WithError(err).WithField("template", templateFile).Warn("Failed to preload template")
-			// Continue loading other templates even if one fails
 		}
 	}
 	

@@ -3,6 +3,8 @@ package services
 import (
 	"context"
 	"fmt"
+	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/KrishKoria/Vigovia/config"
@@ -34,10 +36,37 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 	
 	templateData := s.transformToTemplateData(request)
 	
+	// Log template data for debugging
+	logrus.WithFields(logrus.Fields{
+		"customerName": templateData.Customer.Name,
+		"daysCount": len(templateData.Days),
+		"flightsCount": len(templateData.Flights),
+		"hotelsCount": len(templateData.Hotels),
+		"hasPayment": templateData.Payment.TotalAmount != "",
+	}).Info("Template data prepared")
+	
 	html, err := s.templateService.RenderTemplate("base.html", templateData)
 	if err != nil {
 		logrus.WithError(err).Error("Failed to render template")
 		return nil, fmt.Errorf("failed to render template: %w", err)
+	}
+	
+	// Log HTML size and preview for debugging
+	htmlPreview := html
+	if len(html) > 200 {
+		htmlPreview = html[:200]
+	}
+	logrus.WithFields(logrus.Fields{
+		"htmlSize": len(html),
+		"htmlPreview": htmlPreview,
+	}).Info("Template rendered to HTML")
+	
+	// Save HTML to file for debugging
+	htmlFile := "debug_output.html"
+	if err := s.fileService.SaveHTMLDebug([]byte(html), htmlFile); err != nil {
+		logrus.WithError(err).Warn("Failed to save HTML debug file")
+	} else {
+		logrus.WithField("htmlFile", htmlFile).Info("HTML saved for debugging")
 	}
 	
 	pdfData, err := s.convertHTMLToPDF(html)
@@ -45,6 +74,12 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 		logrus.WithError(err).Error("Failed to convert HTML to PDF")
 		return nil, fmt.Errorf("failed to convert HTML to PDF: %w", err)
 	}
+	
+	// Log PDF conversion result
+	logrus.WithFields(logrus.Fields{
+		"pdfSize": len(pdfData),
+		"htmlSize": len(html),
+	}).Info("HTML converted to PDF")
 	
 	filename := s.generateFilename(request)
 	
@@ -80,7 +115,8 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), config.AppConfig.ChromeDP.Timeout)
 	defer cancel()
-	
+
+	// Add more Chrome flags for better PDF rendering
 	opts := append(chromedp.DefaultExecAllocatorOptions[:],
 		chromedp.DisableGPU,
 		chromedp.NoDefaultBrowserCheck,
@@ -88,6 +124,14 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 		chromedp.Flag("no-sandbox", true),
 		chromedp.Flag("disable-web-security", config.AppConfig.ChromeDP.DisableWebSecurity),
 		chromedp.Flag("disable-features", "VizDisplayCompositor"),
+		chromedp.Flag("disable-dev-shm-usage", true),
+		chromedp.Flag("disable-extensions", true),
+		chromedp.Flag("disable-plugins", true),
+		chromedp.Flag("disable-background-timer-throttling", true),
+		chromedp.Flag("disable-backgrounding-occluded-windows", true),
+		chromedp.Flag("disable-renderer-backgrounding", true),
+		chromedp.Flag("force-color-profile", "srgb"),
+		chromedp.Flag("enable-print-background", true),
 	)
 	
 	allocCtx, cancel := chromedp.NewExecAllocator(ctx, opts...)
@@ -96,13 +140,45 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 	chromeCtx, cancel := chromedp.NewContext(allocCtx)
 	defer cancel()
 	
-	var pdfBuffer []byte
+	// Add logging for ChromeDP operations
+	logrus.Info("Starting ChromeDP HTML to PDF conversion")
 	
-	err := chromedp.Run(chromeCtx,
-		chromedp.Navigate("data:text/html,"+html),
-		chromedp.WaitReady("body"),
-		chromedp.Sleep(2*time.Second), // Wait for CSS and fonts to load
+	var pdfBuffer []byte
+	var pageTitle string
+	var bodyText string
+	
+	// Create a temporary HTML file instead of using data URI
+	tempHTMLFile := filepath.Join(config.AppConfig.PDF.StoragePath, "temp_render.html")
+	err := os.WriteFile(tempHTMLFile, []byte(html), 0644)
+	if err != nil {
+		logrus.WithError(err).Error("Failed to write temporary HTML file")
+		return nil, fmt.Errorf("failed to write temporary HTML file: %w", err)
+	}
+	defer os.Remove(tempHTMLFile) // Clean up
+	
+	// Convert to absolute path for file URL
+	absPath, err := filepath.Abs(tempHTMLFile)
+	if err != nil {
+		logrus.WithError(err).Error("Failed to get absolute path")
+		return nil, fmt.Errorf("failed to get absolute path: %w", err)
+	}
+	
+	fileURL := "file:///" + filepath.ToSlash(absPath)
+	logrus.WithField("fileURL", fileURL).Info("Loading HTML from file")
+	
+	err = chromedp.Run(chromeCtx,
+		chromedp.Navigate(fileURL),
+		chromedp.WaitReady("body", chromedp.ByQuery),
+		chromedp.Title(&pageTitle),
+		chromedp.Text("body", &bodyText, chromedp.ByQuery),
+		chromedp.Sleep(3*time.Second), // Wait for CSS and fonts to load
 		chromedp.ActionFunc(func(ctx context.Context) error {
+			logrus.WithFields(logrus.Fields{
+				"pageTitle": pageTitle,
+				"bodyTextLength": len(bodyText),
+				"bodyPreview": bodyText[:min(100, len(bodyText))],
+			}).Info("Page loaded, generating PDF")
+			
 			buf, _, err := page.PrintToPDF().
 				WithPaperWidth(8.27).  // A4 width in inches
 				WithPaperHeight(11.7). // A4 height in inches
@@ -112,20 +188,41 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 				WithMarginRight(0.4).
 				WithPrintBackground(true).
 				WithPreferCSSPageSize(false).
+				WithDisplayHeaderFooter(false).
 				Do(ctx)
 			if err != nil {
+				logrus.WithError(err).Error("PDF generation failed in ChromeDP")
 				return err
 			}
 			pdfBuffer = buf
+			logrus.WithField("pdfSize", len(buf)).Info("PDF generated successfully in ChromeDP")
 			return nil
 		}),
 	)
 	
 	if err != nil {
+		logrus.WithError(err).Error("ChromeDP execution failed")
 		return nil, fmt.Errorf("chromedp error: %w", err)
 	}
 	
+	if len(pdfBuffer) < 1000 { // If PDF is suspiciously small
+		logrus.WithFields(logrus.Fields{
+			"pdfSize": len(pdfBuffer),
+			"htmlSize": len(html),
+			"pageTitle": pageTitle,
+			"bodyTextLength": len(bodyText),
+		}).Warn("Generated PDF is suspiciously small")
+	}
+	
 	return pdfBuffer, nil
+}
+
+// Helper function for min
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
 
 func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *models.TemplateData {

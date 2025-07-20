@@ -154,3 +154,23 @@ func (s *FileService) GetFileInfo(filename string) (os.FileInfo, error) {
 	
 	return os.Stat(filePath)
 }
+
+// SaveHTMLDebug saves HTML content to disk for debugging purposes
+func (s *FileService) SaveHTMLDebug(htmlData []byte, filename string) error {
+	// Create full file path in storage directory
+	filePath := filepath.Join(s.storagePath, filename)
+	
+	// Write HTML data to file
+	err := os.WriteFile(filePath, htmlData, 0644)
+	if err != nil {
+		logrus.WithError(err).WithField("filePath", filePath).Error("Failed to write HTML debug file")
+		return fmt.Errorf("failed to write HTML debug file: %w", err)
+	}
+	
+	logrus.WithFields(logrus.Fields{
+		"filePath": filePath,
+		"fileSize": len(htmlData),
+	}).Info("HTML debug file saved successfully")
+	
+	return nil
+}

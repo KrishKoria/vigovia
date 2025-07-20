@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"path/filepath"
 
@@ -42,7 +43,16 @@ func (h *PDFHandler) GenerateItinerary(c *gin.Context) {
 		"travelers":   request.Trip.Travelers,
 		"startDate":   request.Trip.StartDate,
 		"endDate":     request.Trip.EndDate,
+		"customerName": request.Customer.Name,
+		"customerEmail": request.Customer.Email,
+		"daysCount": len(request.Itinerary.Days),
+		"flightsCount": len(request.Flights),
+		"hotelsCount": len(request.Hotels),
+		"hasPayment": request.Payment.TotalAmount != "",
 	}).Info("Received PDF generation request")
+	
+	// Log detailed request structure for debugging
+	logrus.WithField("requestStructure", fmt.Sprintf("%+v", request)).Debug("Full request structure")
 	
 	// Generate PDF
 	response, err := h.pdfService.GenerateItinerary(&request)

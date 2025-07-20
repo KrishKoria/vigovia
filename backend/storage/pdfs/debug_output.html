@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel Itinerary - New Zealand</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .header {
+        text-align: center;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+      }
+
+      .header h1 {
+        margin: 0;
+        color: #007bff;
+        font-size: 2.5em;
+      }
+
+      .header h2 {
+        margin: 10px 0 0 0;
+        color: #666;
+        font-weight: normal;
+      }
+
+      .customer-info {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+      }
+
+      .customer-info h3 {
+        margin-top: 0;
+        color: #007bff;
+      }
+
+      .trip-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .detail-box {
+        background: #e9ecef;
+        padding: 15px;
+        border-radius: 8px;
+      }
+
+      .detail-box h4 {
+        margin: 0 0 10px 0;
+        color: #495057;
+      }
+
+      .day-section {
+        margin-bottom: 30px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .day-header {
+        background: #007bff;
+        color: white;
+        padding: 15px 20px;
+        margin: 0;
+      }
+
+      .day-content {
+        padding: 20px;
+      }
+
+      .activity {
+        background: #f8f9fa;
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #28a745;
+      }
+
+      .activity h5 {
+        margin: 0 0 5px 0;
+        color: #28a745;
+      }
+
+      .flight-info {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .hotel-info {
+        background: #d1ecf1;
+        border: 1px solid #bee5eb;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .payment-info {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #dee2e6;
+        color: #666;
+        font-size: 0.9em;
+      }
+
+      .price {
+        font-weight: bold;
+        color: #007bff;
+        font-size: 1.2em;
+      }
+
+      @media print {
+        body {
+          background: white;
+        }
+        .container {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      
+      <div class="header">
+        <h1>Travel Itinerary</h1>
+        <h2>New Zealand</h2>
+      </div>
+
+      
+      <div class="customer-info">
+        <h3>Traveler Information</h3>
+        <p><strong>Name:</strong> John Doe</p>
+        <p><strong>Email:</strong> john.doe@example.com</p>
+        <p><strong>Phone:</strong> &#43;1-555-0123</p>
+      </div>
+
+      
+      <div class="trip-details">
+        <div class="detail-box">
+          <h4>Travel Dates</h4>
+          <p><strong>Start:</strong> 15 December 2024</p>
+          <p><strong>End:</strong> 22 December 2024</p>
+          <p><strong>Duration:</strong> 7 Days 6 Nights</p>
+        </div>
+        <div class="detail-box">
+          <h4>Trip Information</h4>
+          <p><strong>Travelers:</strong> 2</p>
+          <p><strong>Departure From:</strong> Mumbai</p>
+        </div>
+      </div>
+
+      
+      
+      <div class="flight-info">
+        <h3>Flight Details</h3>
+        
+        <div style="margin-bottom: 15px">
+          <p><strong>Flight:</strong> Air New Zealand NZ132</p>
+          <p><strong>Route:</strong> Mumbai → Auckland</p>
+          <p><strong>Date:</strong> 15 December 2024</p>
+          <p>
+            <strong>Departure:</strong> 09:30 |
+            <strong>Arrival:</strong> 23:30
+          </p>
+          <p><strong>Price:</strong> ₹85000.00</p>
+        </div>
+        
+      </div>
+      
+
+      
+      
+      <div class="hotel-info">
+        <h3>Accommodation</h3>
+        
+        <div style="margin-bottom: 15px">
+          <p><strong>Hotel:</strong> Auckland Harbour Hotel</p>
+          <p><strong>City:</strong> Auckland</p>
+          <p>
+            <strong>Check-in:</strong> 15 December 2024 |
+            <strong>Check-out:</strong> 17 December 2024
+          </p>
+          <p>
+            <strong>Room:</strong> Superior Room |
+            <strong>Nights:</strong> 2 |
+            <strong>Price per Night:</strong> ₹9000.00
+          </p>
+        </div>
+        
+      </div>
+      
+
+      
+      <h3>Daily Itinerary</h3>
+      
+      <div class="day-section">
+        <h3 class="day-header">Day 1: Arrival in Auckland</h3>
+        <div class="day-content">
+          
+          <h4>Activities</h4>
+          
+          <div class="activity">
+            <h5>Airport Transfer</h5>
+            <p>
+              <strong>Location:</strong> Auckland Airport |
+              <strong>Duration:</strong> 1 hour
+            </p>
+            <p>Private transfer from Auckland Airport to hotel</p>
+            
+            <p class="price">Price: ₹5000.00</p>
+            
+          </div>
+          
+          <div class="activity">
+            <h5>Auckland City Tour</h5>
+            <p>
+              <strong>Location:</strong> Auckland City |
+              <strong>Duration:</strong> 3 hours
+            </p>
+            <p>Explore Auckland&#39;s Sky Tower, Harbour Bridge, and Viaduct Harbour</p>
+            
+            <p class="price">Price: ₹8000.00</p>
+            
+          </div>
+            
+          <h4>Transfers</h4>
+          
+          <div
+            style="
+              background: #e2e3e5;
+              padding: 10px;
+              margin: 5px 0;
+              border-radius: 5px;
+            "
+          >
+            <p><strong>Private Car:</strong> Auckland Airport → Hotel</p>
+            <p>
+              <strong>Pickup:</strong> 14:00 |
+              <strong>Dropoff:</strong> 14:45 |
+              <strong>Duration:</strong> 45 minutes
+            </p>
+            
+            <p>Price: ₹5000.00</p>
+            
+          </div>
+           
+        </div>
+      </div>
+      
+      <div class="day-section">
+        <h3 class="day-header">Day 2: Rotorua Geothermal Wonders</h3>
+        <div class="day-content">
+          
+          <h4>Activities</h4>
+          
+          <div class="activity">
+            <h5>Te Puia Geothermal Park</h5>
+            <p>
+              <strong>Location:</strong> Rotorua |
+              <strong>Duration:</strong> 3 hours
+            </p>
+            <p>Visit geysers, hot springs, and learn about Maori culture</p>
+            
+            <p class="price">Price: ₹12000.00</p>
+            
+          </div>
+            
+        </div>
+      </div>
+      
+
+      
+      
+      <div class="payment-info">
+        <h3>Payment Summary</h3>
+        <p>
+          <strong>Total Amount:</strong>
+          <span class="price"
+            >₹275000.00</span
+          >
+        </p>
+        <p>
+          <strong>Advance Paid:</strong> ₹82500.00
+        </p>
+        <p>
+          <strong>Balance Due:</strong> ₹192500.00
+        </p>
+        <p><strong>Payment Status:</strong> Pending</p>
+      </div>
+      
+
+      
+      <div class="footer">
+        <p>Generated on 20 July 2025</p>
+        <p>This itinerary was created by Vigovia Travel Services</p>
+      </div>
+    </div>
+  </body>
+</html>
