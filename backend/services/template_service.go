@@ -24,31 +24,25 @@ func NewTemplateService() *TemplateService {
 	}
 }
 
-// LoadTemplate loads and caches a template
 func (s *TemplateService) LoadTemplate(templateName string) (*template.Template, error) {
-	// Check if template is already cached
 	if tmpl, exists := s.templates[templateName]; exists {
 		return tmpl, nil
 	}
 	
-	// Create template path
 	templateFile := filepath.Join(s.templatePath, templateName)
 	
-	// Parse template with helper functions
 	tmpl, err := template.New(templateName).Funcs(s.getTemplateFunctions()).ParseFiles(templateFile)
 	if err != nil {
 		logrus.WithError(err).WithField("template", templateName).Error("Failed to parse template")
 		return nil, fmt.Errorf("failed to parse template %s: %w", templateName, err)
 	}
 	
-	// Cache the template
 	s.templates[templateName] = tmpl
 	
 	logrus.WithField("template", templateName).Debug("Template loaded and cached")
 	return tmpl, nil
 }
 
-// RenderTemplate renders a template with provided data
 func (s *TemplateService) RenderTemplate(templateName string, data *models.TemplateData) (string, error) {
 	tmpl, err := s.LoadTemplate(templateName)
 	if err != nil {
@@ -74,7 +68,6 @@ func (s *TemplateService) RenderTemplate(templateName string, data *models.Templ
 	return html, nil
 }
 
-// getTemplateFunctions returns template helper functions
 func (s *TemplateService) getTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
 		"formatCurrency": utils.FormatCurrency,
@@ -135,28 +128,26 @@ func (s *TemplateService) getTemplateFunctions() template.FuncMap {
 	}
 }
 
-// ClearCache clears the template cache
 func (s *TemplateService) ClearCache() {
 	s.templates = make(map[string]*template.Template)
 	logrus.Info("Template cache cleared")
 }
 
-// PreloadTemplates preloads commonly used templates
 func (s *TemplateService) PreloadTemplates() error {
 	templateFiles := []string{
 		"base.html",
-		// "header.html",
-		// "footer.html",
-		// "trip-details.html",
-		// "day-itinerary.html",
-		// "flight-summary.html",
-		// "hotel-bookings.html",
-		// "activity-table.html",
-		// "payment-plan.html",
-		// "inclusions.html",
-		// "important-notes.html",
-		// "scope.html",
-		// "visa-details.html",
+		"header.html",
+		"footer.html",
+		"trip-details.html",
+		"day-itinerary.html",
+		"flight-summary.html",
+		"hotel-bookings.html",
+		"activity-table.html",
+		"payment-plan.html",
+		"inclusions.html",
+		"important-notes.html",
+		"scope.html",
+		"visa-details.html",
 	}
 	
 	for _, templateFile := range templateFiles {

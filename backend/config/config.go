@@ -53,14 +53,11 @@ func LoadConfig() error {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("./config")
 
-	// Set default values
 	setDefaults()
 
-	// Read environment variables
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
-		// If config file is not found, use defaults
 		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
 			return err
 		}
@@ -75,7 +72,7 @@ func setDefaults() {
 	viper.SetDefault("server.host", "0.0.0.0")
 	
 	viper.SetDefault("pdf.storage_path", "./storage/pdfs")
-	viper.SetDefault("pdf.max_file_age", "168h") // 7 days
+	viper.SetDefault("pdf.max_file_age", "168h") 
 	viper.SetDefault("pdf.page_format", "A4")
 	viper.SetDefault("pdf.orientation", "portrait")
 	viper.SetDefault("pdf.margin.top", "0.5in")

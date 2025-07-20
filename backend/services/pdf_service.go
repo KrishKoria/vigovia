@@ -36,7 +36,6 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 	
 	templateData := s.transformToTemplateData(request)
 	
-	// Log template data for debugging
 	logrus.WithFields(logrus.Fields{
 		"customerName": templateData.Customer.Name,
 		"daysCount": len(templateData.Days),
@@ -51,7 +50,6 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 		return nil, fmt.Errorf("failed to render template: %w", err)
 	}
 	
-	// Log HTML size and preview for debugging
 	htmlPreview := html
 	if len(html) > 200 {
 		htmlPreview = html[:200]
@@ -61,29 +59,20 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 		"htmlPreview": htmlPreview,
 	}).Info("Template rendered to HTML")
 	
-	// Save HTML to file for debugging
-	htmlFile := "debug_output.html"
-	if err := s.fileService.SaveHTMLDebug([]byte(html), htmlFile); err != nil {
-		logrus.WithError(err).Warn("Failed to save HTML debug file")
-	} else {
-		logrus.WithField("htmlFile", htmlFile).Info("HTML saved for debugging")
-	}
-	
 	pdfData, err := s.convertHTMLToPDF(html)
 	if err != nil {
 		logrus.WithError(err).Error("Failed to convert HTML to PDF")
 		return nil, fmt.Errorf("failed to convert HTML to PDF: %w", err)
 	}
 	
-	// Log PDF conversion result
 	logrus.WithFields(logrus.Fields{
 		"pdfSize": len(pdfData),
 		"htmlSize": len(html),
 	}).Info("HTML converted to PDF")
 	
-	filename := s.generateFilename(request)
+	k := s.generateFilename(request)
 	
-	filePath, err := s.fileService.SavePDF(pdfData, filename)
+	filePath, err := s.fileService.SavePDF(pdfData, k)
 	if err != nil {
 		logrus.WithError(err).Error("Failed to save PDF")
 		return nil, fmt.Errorf("failed to save PDF: %w", err)
@@ -97,14 +86,14 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 	
 	response := &models.PDFResponse{
 		FilePath:    filePath,
-		FileName:    filename,
+		FileName:    k,
 		FileSize:    fileSize,
 		GeneratedAt: time.Now(),
-		DownloadURL: fmt.Sprintf("/api/v1/download/%s", filename),
+		DownloadURL: fmt.Sprintf("/api/v1/download/%s", k),
 	}
 	
 	logrus.WithFields(logrus.Fields{
-		"filename": filename,
+		"k": k,
 		"fileSize": fileSize,
 		"filePath": filePath,
 	}).Info("PDF generated successfully")
@@ -116,7 +105,6 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), config.AppConfig.ChromeDP.Timeout)
 	defer cancel()
 
-	// Add more Chrome flags for better PDF rendering
 	opts := append(chromedp.DefaultExecAllocatorOptions[:],
 		chromedp.DisableGPU,
 		chromedp.NoDefaultBrowserCheck,
@@ -140,23 +128,20 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 	chromeCtx, cancel := chromedp.NewContext(allocCtx)
 	defer cancel()
 	
-	// Add logging for ChromeDP operations
 	logrus.Info("Starting ChromeDP HTML to PDF conversion")
 	
 	var pdfBuffer []byte
 	var pageTitle string
 	var bodyText string
 	
-	// Create a temporary HTML file instead of using data URI
 	tempHTMLFile := filepath.Join(config.AppConfig.PDF.StoragePath, "temp_render.html")
 	err := os.WriteFile(tempHTMLFile, []byte(html), 0644)
 	if err != nil {
 		logrus.WithError(err).Error("Failed to write temporary HTML file")
 		return nil, fmt.Errorf("failed to write temporary HTML file: %w", err)
 	}
-	defer os.Remove(tempHTMLFile) // Clean up
+	defer os.Remove(tempHTMLFile) 
 	
-	// Convert to absolute path for file URL
 	absPath, err := filepath.Abs(tempHTMLFile)
 	if err != nil {
 		logrus.WithError(err).Error("Failed to get absolute path")
@@ -171,7 +156,7 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 		chromedp.WaitReady("body", chromedp.ByQuery),
 		chromedp.Title(&pageTitle),
 		chromedp.Text("body", &bodyText, chromedp.ByQuery),
-		chromedp.Sleep(3*time.Second), // Wait for CSS and fonts to load
+		chromedp.Sleep(3*time.Second), 
 		chromedp.ActionFunc(func(ctx context.Context) error {
 			logrus.WithFields(logrus.Fields{
 				"pageTitle": pageTitle,
@@ -180,8 +165,8 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 			}).Info("Page loaded, generating PDF")
 			
 			buf, _, err := page.PrintToPDF().
-				WithPaperWidth(8.27).  // A4 width in inches
-				WithPaperHeight(11.7). // A4 height in inches
+				WithPaperWidth(8.27).  
+				WithPaperHeight(11.7). 
 				WithMarginTop(0.4).
 				WithMarginBottom(0.4).
 				WithMarginLeft(0.4).
@@ -205,7 +190,7 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 		return nil, fmt.Errorf("chromedp error: %w", err)
 	}
 	
-	if len(pdfBuffer) < 1000 { // If PDF is suspiciously small
+	if len(pdfBuffer) < 1000 { 
 		logrus.WithFields(logrus.Fields{
 			"pdfSize": len(pdfBuffer),
 			"htmlSize": len(html),
@@ -217,7 +202,6 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 	return pdfBuffer, nil
 }
 
-// Helper function for min
 func min(a, b int) int {
 	if a < b {
 		return a
@@ -250,7 +234,6 @@ func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *
 		ProcessingDate: time.Now().AddDate(0, 0, 14).Format("2006-01-02"),
 	}
 	
-	// Calculate advance and balance amounts from installments
 	enhancedPayment := s.enhancePaymentData(request.Payment)
 	
 	return &models.TemplateData{
@@ -269,7 +252,6 @@ func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *
 	}
 }
 
-// generateFilename generates a filename for the PDF
 func (s *PDFService) generateFilename(request *models.ItineraryRequest) string {
 	baseFilename := utils.GenerateReadableFilename(
 		request.Trip.Destination,
@@ -279,11 +261,9 @@ func (s *PDFService) generateFilename(request *models.ItineraryRequest) string {
 		request.Customer.Name,
 	)
 	
-	// Ensure filename is unique
 	return baseFilename
 }
 
-// countTotalActivities counts total activities across all days
 func (s *PDFService) countTotalActivities(days []models.Day) int {
 	count := 0
 	for _, day := range days {
@@ -292,7 +272,6 @@ func (s *PDFService) countTotalActivities(days []models.Day) int {
 	return count
 }
 
-// countTotalTransfers counts total transfers across all days
 func (s *PDFService) countTotalTransfers(days []models.Day) int {
 	count := 0
 	for _, day := range days {
@@ -301,12 +280,10 @@ func (s *PDFService) countTotalTransfers(days []models.Day) int {
 	return count
 }
 
-// enhancePaymentData calculates advance and balance amounts from installments
 func (s *PDFService) enhancePaymentData(payment models.Payment) models.Payment {
 	enhanced := payment
-	enhanced.Status = "Pending" // Default status if not set
+	enhanced.Status = "Pending" 
 	
-	// Calculate advance and balance amounts from installments
 	var advanceAmount, balanceAmount string
 	
 	for _, installment := range payment.Installments {

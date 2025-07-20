@@ -23,11 +23,9 @@ func NewPDFHandler() *PDFHandler {
 	}
 }
 
-// GenerateItinerary handles POST /api/v1/generate-pdf
 func (h *PDFHandler) GenerateItinerary(c *gin.Context) {
 	var request models.ItineraryRequest
 	
-	// Bind JSON request
 	if err := c.ShouldBindJSON(&request); err != nil {
 		logrus.WithError(err).Error("Failed to bind JSON request")
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
@@ -37,7 +35,6 @@ func (h *PDFHandler) GenerateItinerary(c *gin.Context) {
 		return
 	}
 	
-	// Log request
 	logrus.WithFields(logrus.Fields{
 		"destination": request.Trip.Destination,
 		"travelers":   request.Trip.Travelers,
@@ -51,10 +48,8 @@ func (h *PDFHandler) GenerateItinerary(c *gin.Context) {
 		"hasPayment": request.Payment.TotalAmount != "",
 	}).Info("Received PDF generation request")
 	
-	// Log detailed request structure for debugging
 	logrus.WithField("requestStructure", fmt.Sprintf("%+v", request)).Debug("Full request structure")
 	
-	// Generate PDF
 	response, err := h.pdfService.GenerateItinerary(&request)
 	if err != nil {
 		logrus.WithError(err).Error("Failed to generate PDF")
@@ -65,7 +60,6 @@ func (h *PDFHandler) GenerateItinerary(c *gin.Context) {
 		return
 	}
 	
-	// Return success response
 	c.JSON(http.StatusOK, models.APIResponse{
 		Success: true,
 		Message: "PDF generated successfully",
@@ -73,7 +67,6 @@ func (h *PDFHandler) GenerateItinerary(c *gin.Context) {
 	})
 }
 
-// DownloadPDF handles GET /api/v1/download/:filename
 func (h *PDFHandler) DownloadPDF(c *gin.Context) {
 	filename := c.Param("filename")
 	
@@ -85,7 +78,6 @@ func (h *PDFHandler) DownloadPDF(c *gin.Context) {
 		return
 	}
 	
-	// Get PDF data
 	pdfData, err := h.fileService.GetPDF(filename)
 	if err != nil {
 		logrus.WithError(err).WithField("filename", filename).Error("Failed to retrieve PDF")
@@ -96,18 +88,15 @@ func (h *PDFHandler) DownloadPDF(c *gin.Context) {
 		return
 	}
 	
-	// Set headers for PDF download
 	c.Header("Content-Type", "application/pdf")
 	c.Header("Content-Disposition", "attachment; filename="+filename)
 	c.Header("Content-Length", string(rune(len(pdfData))))
 	
-	// Write PDF data
 	c.Data(http.StatusOK, "application/pdf", pdfData)
 	
 	logrus.WithField("filename", filename).Info("PDF downloaded")
 }
 
-// GetPDFInfo handles GET /api/v1/pdf/:filename/info
 func (h *PDFHandler) GetPDFInfo(c *gin.Context) {
 	filename := c.Param("filename")
 	
@@ -119,7 +108,6 @@ func (h *PDFHandler) GetPDFInfo(c *gin.Context) {
 		return
 	}
 	
-	// Get file info
 	fileInfo, err := h.fileService.GetFileInfo(filename)
 	if err != nil {
 		logrus.WithError(err).WithField("filename", filename).Error("Failed to get file info")
@@ -145,7 +133,6 @@ func (h *PDFHandler) GetPDFInfo(c *gin.Context) {
 	})
 }
 
-// ListPDFs handles GET /api/v1/pdfs
 func (h *PDFHandler) ListPDFs(c *gin.Context) {
 	filenames, err := h.fileService.ListPDFs()
 	if err != nil {
@@ -167,7 +154,6 @@ func (h *PDFHandler) ListPDFs(c *gin.Context) {
 	})
 }
 
-// DeletePDF handles DELETE /api/v1/pdf/:filename
 func (h *PDFHandler) DeletePDF(c *gin.Context) {
 	filename := c.Param("filename")
 	
@@ -179,7 +165,6 @@ func (h *PDFHandler) DeletePDF(c *gin.Context) {
 		return
 	}
 	
-	// Delete PDF file
 	err := h.fileService.DeletePDF(filename)
 	if err != nil {
 		logrus.WithError(err).WithField("filename", filename).Error("Failed to delete PDF")
@@ -199,7 +184,6 @@ func (h *PDFHandler) DeletePDF(c *gin.Context) {
 	})
 }
 
-// HealthCheck handles GET /api/v1/health
 func (h *PDFHandler) HealthCheck(c *gin.Context) {
 	c.JSON(http.StatusOK, models.APIResponse{
 		Success: true,

@@ -47,7 +47,6 @@ type Day struct {
 	Timeline   []Timeline `json:"timeline"`
 }
 
-// Activity represents an activity in the itinerary
 type Activity struct {
 	ID          string  `json:"id" validate:"required"`
 	Name        string  `json:"name" validate:"required"`

@@ -1,0 +1,88 @@
+{{/* Trip details section */}}
+<div class="trip-details">
+  <h3>Trip Overview</h3>
+  
+  <div class="details-grid">
+    <div class="detail-box">
+      <h4>Customer Information</h4>
+      <p><strong>Name:</strong> {{.Customer.Name}}</p>
+      <p><strong>Email:</strong> {{.Customer.Email}}</p>
+      <p><strong>Phone:</strong> {{.Customer.Phone}}</p>
+    </div>
+    
+    <div class="detail-box">
+      <h4>Travel Dates</h4>
+      <p><strong>Start:</strong> {{formatDate .Trip.StartDate}}</p>
+      <p><strong>End:</strong> {{formatDate .Trip.EndDate}}</p>
+      <p><strong>Duration:</strong> {{.Trip.Duration}}</p>
+    </div>
+    
+    <div class="detail-box">
+      <h4>Trip Information</h4>
+      <p><strong>Destination:</strong> {{.Trip.Destination}}</p>
+      <p><strong>Travelers:</strong> {{.Trip.Travelers}}</p>
+      {{if .Trip.DepartureFrom}}
+      <p><strong>Departure From:</strong> {{.Trip.DepartureFrom}}</p>
+      {{end}}
+    </div>
+    
+    <div class="detail-box">
+      <h4>Package Summary</h4>
+      <p><strong>Hotels:</strong> {{len .Hotels}} booking{{if ne (len .Hotels) 1}}s{{end}}</p>
+      <p><strong>Flights:</strong> {{len .Flights}} flight{{if ne (len .Flights) 1}}s{{end}}</p>
+      <p><strong>Activities:</strong> {{.Inclusions}} included</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .trip-details {
+    margin-bottom: 30px;
+  }
+  
+  .trip-details h3 {
+    margin-bottom: 20px;
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+  }
+  
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .detail-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+  }
+  
+  .detail-box h4 {
+    margin: 0 0 15px 0;
+    color: #495057;
+    font-size: 1.1em;
+  }
+  
+  .detail-box p {
+    margin: 8px 0;
+    line-height: 1.4;
+  }
+  
+  .detail-box strong {
+    color: #333;
+  }
+  
+  @media print {
+    .details-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+    
+    .detail-box {
+      page-break-inside: avoid;
+    }
+  }
+</style>

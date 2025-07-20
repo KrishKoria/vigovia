@@ -7,7 +7,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// LoggingMiddleware provides structured logging for HTTP requests
 func LoggingMiddleware() gin.HandlerFunc {
 	return gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
 		logrus.WithFields(logrus.Fields{

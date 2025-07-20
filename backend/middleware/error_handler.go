@@ -8,7 +8,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// ErrorHandler middleware handles panics and errors
 func ErrorHandler() gin.HandlerFunc {
 	return gin.HandlerFunc(func(c *gin.Context) {
 		defer func() {
@@ -33,7 +32,6 @@ func ErrorHandler() gin.HandlerFunc {
 		
 		c.Next()
 		
-		// Handle errors from handlers
 		if len(c.Errors) > 0 {
 			err := c.Errors.Last()
 			

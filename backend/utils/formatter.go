@@ -7,7 +7,6 @@ import (
 	"time"
 )
 
-// FormatCurrency formats a number as currency
 func FormatCurrency(amount float64, currency string) string {
 	if currency == "" {
 		currency = "₹"
@@ -15,16 +14,13 @@ func FormatCurrency(amount float64, currency string) string {
 	return fmt.Sprintf("%s%.2f", currency, amount)
 }
 
-// FormatCurrencyString formats a string amount as currency by first parsing it to float64
 func FormatCurrencyString(amountStr string, currency string) string {
 	if currency == "" {
 		currency = "₹"
 	}
 	
-	// Parse the string to float64
 	amount, err := strconv.ParseFloat(amountStr, 64)
 	if err != nil {
-		// If parsing fails, return the original string with currency symbol
 		return fmt.Sprintf("%s%s", currency, amountStr)
 	}
 	
@@ -42,9 +38,7 @@ func FormatDate(date interface{}) string {
     }
 }
 
-// FormatDate formats a date string into a more readable format
 func formatDateString(dateStr string) string {
-    // Try to parse the date in various formats
     formats := []string{
         "2006-01-02",
         "2006-01-02T15:04:05Z",
@@ -59,13 +53,10 @@ func formatDateString(dateStr string) string {
         }
     }
     
-    // If no format matches, return the original string
     return dateStr
 }
 
-// FormatDateShort formats a date string into a short format
 func FormatDateShort(dateStr string) string {
-	// Try to parse the date in various formats
 	formats := []string{
 		"2006-01-02",
 		"2006-01-02T15:04:05Z",
@@ -80,11 +71,9 @@ func FormatDateShort(dateStr string) string {
 		}
 	}
 	
-	// If no format matches, return the original string
 	return dateStr
 }
 
-// CalculateDuration calculates the duration between two dates
 func CalculateDuration(startDate, endDate string) string {
 	start, err1 := time.Parse("2006-01-02", startDate)
 	end, err2 := time.Parse("2006-01-02", endDate)
@@ -103,9 +92,7 @@ func CalculateDuration(startDate, endDate string) string {
 	return fmt.Sprintf("%d Days %d Nights", days, nights)
 }
 
-// FormatTime formats a time string
 func FormatTime(timeStr string) string {
-	// Try to parse time in various formats
 	formats := []string{
 		"15:04",
 		"15:04:05",
@@ -122,12 +109,10 @@ func FormatTime(timeStr string) string {
 	return timeStr
 }
 
-// FormatTimeRange formats a time range (e.g., "09:00 - 17:00")
 func FormatTimeRange(start, end time.Time) string {
 	return fmt.Sprintf("%s - %s", start.Format("15:04"), end.Format("15:04"))
 }
 
-// TruncateText truncates text to a specified length with ellipsis
 func TruncateText(text string, maxLength int) string {
 	if len(text) <= maxLength {
 		return text
@@ -140,7 +125,6 @@ func TruncateText(text string, maxLength int) string {
 	return text[:maxLength-3] + "..."
 }
 
-// FormatPrice formats price with proper currency formatting
 func FormatPrice(price float64) string {
 	if price == 0 {
 		return "Free"
@@ -149,7 +133,6 @@ func FormatPrice(price float64) string {
 	return fmt.Sprintf("₹%.0f", price)
 }
 
-// ParseFloat safely parses a string to float64
 func ParseFloat(s string) float64 {
 	val, err := strconv.ParseFloat(s, 64)
 	if err != nil {
@@ -158,7 +141,6 @@ func ParseFloat(s string) float64 {
 	return val
 }
 
-// ParseInt safely parses a string to int
 func ParseInt(s string) int {
 	val, err := strconv.Atoi(s)
 	if err != nil {
@@ -167,7 +149,6 @@ func ParseInt(s string) int {
 	return val
 }
 
-// Capitalize capitalizes the first letter of each word
 func Capitalize(s string) string {
 	words := strings.Fields(s)
 	for i, word := range words {
@@ -178,7 +159,6 @@ func Capitalize(s string) string {
 	return strings.Join(words, " ")
 }
 
-// GenerateTimeRange generates a time range string
 func GenerateTimeRange(start, end string) string {
 	if start == "" && end == "" {
 		return "Full Day"

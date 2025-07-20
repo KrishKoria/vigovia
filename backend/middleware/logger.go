@@ -7,27 +7,21 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// LoggerMiddleware logs requests using logrus
 func LoggerMiddleware() gin.HandlerFunc {
 	return gin.HandlerFunc(func(c *gin.Context) {
 		start := time.Now()
 		path := c.Request.URL.Path
 		raw := c.Request.URL.RawQuery
 
-		// Process request
 		c.Next()
 
-		// Calculate latency
 		latency := time.Since(start)
 
-		// Get client IP
 		clientIP := c.ClientIP()
 		
-		// Get method and status
 		method := c.Request.Method
 		statusCode := c.Writer.Status()
 
-		// Log the request
 		entry := logrus.WithFields(logrus.Fields{
 			"status":     statusCode,
 			"latency":    latency,
