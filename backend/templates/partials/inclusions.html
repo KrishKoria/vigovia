@@ -1,13 +1,15 @@
 {{/* Inclusions section */}}
 <div class="inclusions">
   <h3>Package Inclusions</h3>
-  
+
   <div class="inclusions-grid">
     {{range .Inclusions}}
     <div class="inclusion-item">
       <div class="inclusion-header">
         <h4>{{.Category}}</h4>
-        <span class="inclusion-status status-{{lower .Status}}">{{.Status}}</span>
+        <span class="inclusion-status status-{{lower .Status}}"
+          >{{.Status}}</span
+        >
       </div>
       <div class="inclusion-details">
         <div class="count">{{.Count}} item{{if ne .Count 1}}s{{end}}</div>
@@ -16,7 +18,7 @@
     </div>
     {{end}}
   </div>
-  
+
   <div class="inclusions-summary">
     <h4>What's Included in Your Package</h4>
     <div class="summary-grid">
@@ -31,7 +33,7 @@
           <li>24/7 customer support during travel</li>
         </ul>
       </div>
-      
+
       <div class="excluded-section">
         <h5>❌ Not Included</h5>
         <ul>
@@ -45,21 +47,30 @@
       </div>
     </div>
   </div>
-  
+
   <div class="additional-info">
     <h5>Additional Information</h5>
     <div class="info-cards">
       <div class="info-card">
         <strong>Best Time to Visit</strong>
-        <p>{{.Trip.Destination}} offers great experiences year-round. Check seasonal variations for optimal planning.</p>
+        <p>
+          {{.Trip.Destination}} offers great experiences year-round. Check
+          seasonal variations for optimal planning.
+        </p>
       </div>
       <div class="info-card">
         <strong>Packing Suggestions</strong>
-        <p>Comfortable walking shoes, weather-appropriate clothing, and essential travel documents are recommended.</p>
+        <p>
+          Comfortable walking shoes, weather-appropriate clothing, and essential
+          travel documents are recommended.
+        </p>
       </div>
       <div class="info-card">
         <strong>Health & Safety</strong>
-        <p>Travel insurance is included. Consult your doctor for any required vaccinations or health precautions.</p>
+        <p>
+          Travel insurance is included. Consult your doctor for any required
+          vaccinations or health precautions.
+        </p>
       </div>
     </div>
   </div>
@@ -69,21 +80,21 @@
   .inclusions {
     margin-bottom: 30px;
   }
-  
+
   .inclusions h3 {
     margin-bottom: 20px;
     color: #007bff;
     border-bottom: 2px solid #007bff;
     padding-bottom: 10px;
   }
-  
+
   .inclusions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 15px;
     margin-bottom: 25px;
   }
-  
+
   .inclusion-item {
     background: #f8f9fa;
     border: 1px solid #dee2e6;
@@ -91,20 +102,20 @@
     padding: 15px;
     border-left: 4px solid #28a745;
   }
-  
+
   .inclusion-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
   }
-  
+
   .inclusion-header h4 {
     margin: 0;
     color: #333;
     font-size: 1.1em;
   }
-  
+
   .inclusion-status {
     display: inline-block;
     padding: 3px 8px;
@@ -113,131 +124,134 @@
     font-weight: bold;
     text-transform: uppercase;
   }
-  
+
   .status-included {
     background: #d4edda;
     color: #155724;
   }
-  
+
   .status-optional {
     background: #fff3cd;
     color: #856404;
   }
-  
+
   .status-excluded {
     background: #f8d7da;
     color: #721c24;
   }
-  
+
   .inclusion-details .count {
     font-weight: bold;
     color: #007bff;
     margin-bottom: 5px;
   }
-  
+
   .inclusion-details p {
     margin: 0;
     font-size: 0.9em;
     color: #666;
     line-height: 1.4;
   }
-  
+
   .inclusions-summary {
     background: #f8f9fa;
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 25px;
   }
-  
+
   .inclusions-summary h4 {
     margin: 0 0 15px 0;
     color: #333;
     text-align: center;
   }
-  
+
   .summary-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
-  
-  .included-section, .excluded-section {
+
+  .included-section,
+  .excluded-section {
     background: white;
     padding: 15px;
     border-radius: 6px;
   }
-  
+
   .included-section h5 {
     color: #28a745;
     margin: 0 0 10px 0;
     font-size: 1em;
   }
-  
+
   .excluded-section h5 {
     color: #dc3545;
     margin: 0 0 10px 0;
     font-size: 1em;
   }
-  
-  .included-section ul, .excluded-section ul {
+
+  .included-section ul,
+  .excluded-section ul {
     margin: 0;
     padding-left: 18px;
   }
-  
-  .included-section li, .excluded-section li {
+
+  .included-section li,
+  .excluded-section li {
     margin-bottom: 5px;
     font-size: 0.9em;
     line-height: 1.3;
   }
-  
+
   .additional-info h5 {
     color: #333;
     margin-bottom: 15px;
     text-align: center;
   }
-  
+
   .info-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 15px;
   }
-  
+
   .info-card {
     background: #e9ecef;
     padding: 15px;
     border-radius: 8px;
     border-left: 3px solid #6c757d;
   }
-  
+
   .info-card strong {
     display: block;
     color: #495057;
     margin-bottom: 8px;
     font-size: 0.95em;
   }
-  
+
   .info-card p {
     margin: 0;
     font-size: 0.85em;
     color: #666;
     line-height: 1.4;
   }
-  
+
   @media print {
     .inclusions-grid {
       grid-template-columns: 1fr;
     }
-    
+
     .summary-grid {
       grid-template-columns: 1fr;
       gap: 15px;
     }
-    
+
     .info-cards {
       grid-template-columns: 1fr;
       gap: 10px;
     }
-    
+
     .inclusion-item,
     .inclusions-summary,
     .info-card {

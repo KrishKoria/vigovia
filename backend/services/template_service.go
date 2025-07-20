@@ -10,6 +10,8 @@ import (
 	"github.com/KrishKoria/Vigovia/models"
 	"github.com/KrishKoria/Vigovia/utils"
 	"github.com/sirupsen/logrus"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 type TemplateService struct {
@@ -113,7 +115,10 @@ func (s *TemplateService) getTemplateFunctions() template.FuncMap {
 		"truncate":       utils.TruncateText,
 		"upper":          strings.ToUpper,
 		"lower":          strings.ToLower,
-		"title":          strings.Title,
+		"title": func(s string) string {
+			caser := cases.Title(language.English)
+			return caser.String(s)
+		},
 		"contains":       strings.Contains,
 		"add": func(a, b int) int {
 			return a + b
@@ -160,6 +165,20 @@ func (s *TemplateService) getTemplateFunctions() template.FuncMap {
 			}
 			return value
 		},
+		"dict": func(values ...interface{}) map[string]interface{} {
+			if len(values)%2 != 0 {
+				return nil
+			}
+			dict := make(map[string]interface{})
+			for i := 0; i < len(values); i += 2 {
+				key, ok := values[i].(string)
+				if !ok {
+					return nil
+				}
+				dict[key] = values[i+1]
+			}
+			return dict
+		},
 	}
 }
 
@@ -171,24 +190,13 @@ func (s *TemplateService) ClearCache() {
 func (s *TemplateService) PreloadTemplates() error {
 	templateFiles := []string{
 		"base.html",
-		"header.html",
-		"footer.html",
-		"trip-details.html",
-		"day-itinerary.html",
-		"flight-summary.html",
-		"hotel-bookings.html",
-		"activity-table.html",
-		"payment-plan.html",
-		"inclusions.html",
-		"important-notes.html",
-		"scope.html",
-		"visa-details.html",
 	}
 	
 	for _, templateFile := range templateFiles {
 		_, err := s.LoadTemplate(templateFile)
 		if err != nil {
-			logrus.WithError(err).WithField("template", templateFile).Warn("Failed to preload template")
+			logrus.WithError(err).WithField("template", templateFile).Error("Failed to preload template")
+			return fmt.Errorf("failed to preload template %s: %w", templateFile, err)
 		}
 	}
 	

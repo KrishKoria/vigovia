@@ -1,11 +1,16 @@
 {{/* Scope of service section */}}
 <div class="scope-of-service">
   <h3>Scope of Service</h3>
-  
+
   <div class="scope-intro">
-    <p>{{default "Vigovia Travel Services" .Config.CustomBranding.CompanyName}} is committed to providing comprehensive travel services to ensure your journey to {{.Trip.Destination}} is memorable and hassle-free. Below is the detailed scope of our services for your trip.</p>
+    <p>
+      {{default "Vigovia Travel Services" .Config.CustomBranding.CompanyName}}
+      is committed to providing comprehensive travel services to ensure your
+      journey to {{.Trip.Destination}} is memorable and hassle-free. Below is
+      the detailed scope of our services for your trip.
+    </p>
   </div>
-  
+
   <div class="services-grid">
     {{range .ScopeOfService}}
     <div class="service-item">
@@ -17,7 +22,7 @@
     </div>
     {{end}}
   </div>
-  
+
   <div class="service-categories">
     <div class="category-section">
       <h4>🗓️ Pre-Travel Services</h4>
@@ -30,7 +35,7 @@
         <li>24/7 customer support for any queries</li>
       </ul>
     </div>
-    
+
     <div class="category-section">
       <h4>✈️ During Travel Services</h4>
       <ul>
@@ -42,7 +47,7 @@
         <li>Real-time assistance for any changes</li>
       </ul>
     </div>
-    
+
     <div class="category-section">
       <h4>🏨 Accommodation Services</h4>
       <ul>
@@ -54,7 +59,7 @@
         <li>Alternative arrangements if needed</li>
       </ul>
     </div>
-    
+
     <div class="category-section">
       <h4>🎯 Activity Management</h4>
       <ul>
@@ -67,25 +72,34 @@
       </ul>
     </div>
   </div>
-  
+
   <div class="service-standards">
     <h4>Our Service Standards</h4>
     <div class="standards-grid">
       <div class="standard-item">
         <strong>Quality Assurance</strong>
-        <p>All services are vetted and regularly audited to maintain high standards</p>
+        <p>
+          All services are vetted and regularly audited to maintain high
+          standards
+        </p>
       </div>
       <div class="standard-item">
         <strong>Transparent Pricing</strong>
-        <p>No hidden costs - all charges are clearly mentioned in your package</p>
+        <p>
+          No hidden costs - all charges are clearly mentioned in your package
+        </p>
       </div>
       <div class="standard-item">
         <strong>Local Expertise</strong>
-        <p>Our local partners provide authentic experiences and insider knowledge</p>
+        <p>
+          Our local partners provide authentic experiences and insider knowledge
+        </p>
       </div>
       <div class="standard-item">
         <strong>Flexibility</strong>
-        <p>We accommodate reasonable changes and special requests when possible</p>
+        <p>
+          We accommodate reasonable changes and special requests when possible
+        </p>
       </div>
       <div class="standard-item">
         <strong>Safety First</strong>
@@ -97,11 +111,14 @@
       </div>
     </div>
   </div>
-  
+
   <div class="limitations">
     <h4>Service Limitations</h4>
     <div class="limitation-content">
-      <p><strong>Please note:</strong> While we strive to provide exceptional service, certain factors beyond our control may affect service delivery:</p>
+      <p>
+        <strong>Please note:</strong> While we strive to provide exceptional
+        service, certain factors beyond our control may affect service delivery:
+      </p>
       <ul>
         <li>Weather conditions affecting outdoor activities</li>
         <li>Government regulations and policy changes</li>
@@ -109,7 +126,10 @@
         <li>Third-party service provider limitations</li>
         <li>Local infrastructure or transportation delays</li>
       </ul>
-      <p>In such cases, we will provide alternative arrangements or appropriate compensation as per our terms and conditions.</p>
+      <p>
+        In such cases, we will provide alternative arrangements or appropriate
+        compensation as per our terms and conditions.
+      </p>
     </div>
   </div>
 </div>
@@ -118,14 +138,14 @@
   .scope-of-service {
     margin-bottom: 30px;
   }
-  
+
   .scope-of-service h3 {
     margin-bottom: 20px;
     color: #007bff;
     border-bottom: 2px solid #007bff;
     padding-bottom: 10px;
   }
-  
+
   .scope-intro {
     background: #f8f9fa;
     padding: 15px;
@@ -133,100 +153,100 @@
     margin-bottom: 25px;
     border-left: 4px solid #007bff;
   }
-  
+
   .scope-intro p {
     margin: 0;
     color: #495057;
     line-height: 1.5;
   }
-  
+
   .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 15px;
     margin-bottom: 25px;
   }
-  
+
   .service-item {
     background: #e9ecef;
     padding: 15px;
     border-radius: 8px;
     border-left: 4px solid #6c757d;
   }
-  
+
   .service-header {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
   }
-  
+
   .service-icon {
     font-size: 1.1em;
     margin-right: 8px;
     color: #007bff;
   }
-  
+
   .service-header h4 {
     margin: 0;
     color: #333;
     font-size: 1em;
   }
-  
+
   .service-item p {
     margin: 0;
     color: #666;
     font-size: 0.9em;
     line-height: 1.4;
   }
-  
+
   .service-categories {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
     margin-bottom: 25px;
   }
-  
+
   .category-section {
     background: #f8f9fa;
     padding: 20px;
     border-radius: 8px;
     border-top: 3px solid #007bff;
   }
-  
+
   .category-section h4 {
     margin: 0 0 12px 0;
     color: #495057;
     font-size: 1em;
   }
-  
+
   .category-section ul {
     margin: 0;
     padding-left: 18px;
   }
-  
+
   .category-section li {
     margin-bottom: 6px;
     font-size: 0.9em;
     color: #666;
     line-height: 1.3;
   }
-  
+
   .service-standards {
     margin-bottom: 25px;
   }
-  
+
   .service-standards h4 {
     color: #333;
     margin-bottom: 15px;
     text-align: center;
   }
-  
+
   .standards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 12px;
   }
-  
+
   .standard-item {
     background: #e3f2fd;
     padding: 12px;
@@ -234,68 +254,68 @@
     text-align: center;
     border: 1px solid #bbdefb;
   }
-  
+
   .standard-item strong {
     display: block;
     color: #1976d2;
     margin-bottom: 6px;
     font-size: 0.9em;
   }
-  
+
   .standard-item p {
     margin: 0;
     font-size: 0.8em;
     color: #666;
     line-height: 1.3;
   }
-  
+
   .limitations {
     background: #fff3cd;
     padding: 20px;
     border-radius: 8px;
     border: 1px solid #ffeaa7;
   }
-  
+
   .limitations h4 {
     margin: 0 0 12px 0;
     color: #856404;
   }
-  
+
   .limitation-content p {
     margin: 0 0 10px 0;
     color: #495057;
     font-size: 0.9em;
     line-height: 1.4;
   }
-  
+
   .limitation-content ul {
     margin: 10px 0;
     padding-left: 20px;
   }
-  
+
   .limitation-content li {
     margin-bottom: 4px;
     font-size: 0.85em;
     color: #666;
     line-height: 1.3;
   }
-  
+
   @media print {
     .services-grid {
       grid-template-columns: 1fr;
       gap: 10px;
     }
-    
+
     .service-categories {
       grid-template-columns: repeat(2, 1fr);
       gap: 15px;
     }
-    
+
     .standards-grid {
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
     }
-    
+
     .category-section,
     .service-item,
     .standard-item,
