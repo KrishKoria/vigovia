@@ -77,6 +77,9 @@ func setupRoutes(router *gin.Engine) {
 	// Initialize handlers
 	pdfHandler := handlers.NewPDFHandler()
 	
+	// Serve static files (for logo and other assets)
+	router.Static("/static", "./static")
+	
 	// API v1 routes
 	v1 := router.Group("/api/v1")
 	{

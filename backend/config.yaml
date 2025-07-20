@@ -5,7 +5,7 @@ server:
 
 pdf:
   storage_path: "./storage/pdfs"
-  max_file_age: "168h" # 7 days
+  max_file_age: "168h"
   page_format: "A4"
   orientation: "portrait"
   margin:

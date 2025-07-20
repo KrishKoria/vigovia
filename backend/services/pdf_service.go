@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/KrishKoria/Vigovia/config"
@@ -49,6 +50,9 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 		logrus.WithError(err).Error("Failed to render template")
 		return nil, fmt.Errorf("failed to render template: %w", err)
 	}
+	
+	// Convert relative static URLs to absolute file paths for ChromeDP
+	html = s.convertStaticURLsToFilePaths(html)
 	
 	htmlPreview := html
 	if len(html) > 200 {
@@ -299,4 +303,32 @@ func (s *PDFService) enhancePaymentData(payment models.Payment) models.Payment {
 	enhanced.BalanceAmount = balanceAmount
 	
 	return enhanced
+}
+
+// convertStaticURLsToFilePaths converts relative static URLs to absolute file paths for ChromeDP
+func (s *PDFService) convertStaticURLsToFilePaths(html string) string {
+	// Get the current working directory
+	cwd, err := os.Getwd()
+	if err != nil {
+		logrus.WithError(err).Warn("Failed to get current working directory")
+		return html
+	}
+	
+	// Replace /static/ URLs with absolute file:// paths
+	// Example: /static/final-logo-2.png -> file:///C:/path/to/backend/static/final-logo-2.png
+	staticDir := filepath.Join(cwd, "static")
+	absStaticDir := filepath.ToSlash(staticDir)
+	
+	// Convert to file:// URL format
+	fileURL := "file:///" + absStaticDir + "/"
+	
+	// Replace all occurrences of /static/ with the absolute file path
+	html = strings.ReplaceAll(html, "/static/", fileURL)
+	
+	logrus.WithFields(logrus.Fields{
+		"staticDir": staticDir,
+		"fileURL": fileURL,
+	}).Debug("Converted static URLs to file paths")
+	
+	return html
 }

@@ -41,15 +41,15 @@
   </head>
   <body>
     <div class="container">
-      {{template "header.html" .}} {{template "trip-details.html" .}} {{template
-      "flight-summary.html" .}} {{template "hotel-bookings.html" .}} {{range
-      $index, $day := .Days}} {{template "day-itinerary.html" (dict "Day" $day
-      "Index" $index "Config" $.Config)}} {{end}} {{$hasActivities := false}}
-      {{range .Days}} {{if .Activities}} {{$hasActivities = true}} {{end}}
-      {{end}} {{if $hasActivities}} {{template "activity-table.html" .}} {{end}}
-      {{template "payment-plan.html" .}} {{template "inclusions.html" .}}
-      {{template "important-notes.html" .}} {{template "visa-details.html" .}}
-      {{template "scope.html" .}} {{template "footer.html" .}}
+      {{template "header.html" .}} {{range $index, $day := .Days}} {{template
+      "day-itinerary.html" (dict "Day" $day "Index" $index "Config" $.Config)}}
+      {{end}} {{template "flight-summary.html" .}} {{template
+      "hotel-bookings.html" .}} {{$hasActivities := false}} {{range .Days}} {{if
+      .Activities}} {{$hasActivities = true}} {{end}} {{end}} {{if
+      $hasActivities}} {{template "activity-table.html" .}} {{end}} {{template
+      "payment-plan.html" .}} {{template "inclusions.html" .}} {{template
+      "important-notes.html" .}} {{template "visa-details.html" .}} {{template
+      "scope.html" .}} {{template "footer.html" .}}
     </div>
   </body>
 </html>
