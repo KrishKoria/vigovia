@@ -1,0 +1,130 @@
+{
+  "customer": {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "phone": "+1-555-0123"
+  },
+  "trip": {
+    "title": "New Zealand Adventure",
+    "destination": "New Zealand",
+    "startDate": "2024-12-15",
+    "endDate": "2024-12-22",
+    "duration": "7 Days 6 Nights",
+    "travelers": 2,
+    "departureFrom": "Mumbai"
+  },
+  "itinerary": {
+    "days": [
+      {
+        "dayNumber": 1,
+        "date": "2024-12-15",
+        "title": "Arrival in Auckland",
+        "activities": [
+          {
+            "id": "act001",
+            "name": "Airport Transfer",
+            "description": "Private transfer from Auckland Airport to hotel",
+            "location": "Auckland Airport",
+            "duration": "1 hour",
+            "price": 5000.00,
+            "type": "Transfer"
+          },
+          {
+            "id": "act002", 
+            "name": "Auckland City Tour",
+            "description": "Explore Auckland's Sky Tower, Harbour Bridge, and Viaduct Harbour",
+            "location": "Auckland City",
+            "duration": "3 hours",
+            "price": 8000.00,
+            "type": "Sightseeing"
+          }
+        ],
+        "transfers": [
+          {
+            "id": "trans001",
+            "type": "Private Car",
+            "from": "Auckland Airport",
+            "to": "Hotel",
+            "pickupTime": "14:00",
+            "dropoffTime": "14:45",
+            "duration": "45 minutes",
+            "price": 5000.00,
+            "capacity": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 2,
+        "date": "2024-12-16",
+        "title": "Rotorua Geothermal Wonders",
+        "activities": [
+          {
+            "id": "act003",
+            "name": "Te Puia Geothermal Park",
+            "description": "Visit geysers, hot springs, and learn about Maori culture",
+            "location": "Rotorua",
+            "duration": "3 hours",
+            "price": 12000.00,
+            "type": "Cultural"
+          }
+        ]
+      }
+    ]
+  },
+  "flights": [
+    {
+      "id": "flight001",
+      "date": "2024-12-15",
+      "airline": "Air New Zealand",
+      "flightNumber": "NZ132",
+      "route": "Mumbai to Auckland",
+      "from": "Mumbai",
+      "to": "Auckland",
+      "departure": "09:30",
+      "arrival": "23:30",
+      "class": "Economy",
+      "price": 85000.00
+    }
+  ],
+  "hotels": [
+    {
+      "city": "Auckland",
+      "checkIn": "2024-12-15",
+      "checkOut": "2024-12-17",
+      "nights": 2,
+      "hotelName": "Auckland Harbour Hotel",
+      "roomType": "Superior Room",
+      "pricePerNight": 9000.00
+    }
+  ],
+  "payment": {
+    "totalAmount": "275000.00",
+    "tcs": "13750.00",
+    "installments": [
+      {
+        "installment": "Advance Payment",
+        "amount": "82500.00",
+        "dueDate": "2024-12-01"
+      },
+      {
+        "installment": "Balance Payment",
+        "amount": "192500.00",
+        "dueDate": "2024-12-15"
+      }
+    ]
+  },
+  "config": {
+    "includeFlights": true,
+    "includeHotels": true,
+    "includeActivities": true,
+    "includePayments": true,
+    "pageFormat": "A4",
+    "orientation": "portrait",
+    "customBranding": {
+      "primaryColor": "#007bff",
+      "accentColor": "#28a745",
+      "logoUrl": "",
+      "companyName": "Vigovia Travel"
+    }
+  }
+}

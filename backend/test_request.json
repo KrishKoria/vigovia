@@ -1,0 +1,173 @@
+{
+  "customer": {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "phone": "+1-555-0123"
+  },
+  "trip": {
+   "payment": {
+    "totalAmount": "275000.00",
+    "tcs": "13750.00",
+    "installments": [
+      {
+        "installment": "Advance Payment",
+        "amount": "82500.00",
+        "dueDate": "2024-12-01"
+      },
+      {
+        "installment": "Balance Payment",
+        "amount": "192500.00",
+        "dueDate": "2024-12-15"
+      }
+    ]
+  },Zealand Adventure",
+    "destination": "New Zealand",
+    "startDate": "2024-12-15",
+    "endDate": "2024-12-22",
+    "duration": "7 Days 6 Nights",
+    "travelers": 2,
+    "departureFrom": "Mumbai"
+  },
+  "itinerary": {
+    "days": [
+      {
+        "dayNumber": 1,
+        "date": "2024-12-15",
+        "title": "Arrival in Auckland",
+        "activities": [
+          {
+            "name": "Airport Transfer",
+            "time": "14:00",
+            "duration": "1 hour",
+            "description": "Private transfer from Auckland Airport to hotel",
+            "price": 5000.0,
+            "category": "Transfer",
+            "location": "Auckland Airport"
+          },
+          {
+            "name": "Auckland City Tour",
+            "time": "16:00",
+            "duration": "3 hours",
+            "description": "Explore Auckland's Sky Tower, Harbour Bridge, and Viaduct Harbour",
+            "price": 8000.0,
+            "category": "Sightseeing",
+            "location": "Auckland City"
+          }
+        ],
+        "transfers": [
+          {
+            "type": "Private Car",
+            "from": "Auckland Airport",
+            "to": "Hotel",
+            "time": "14:00",
+            "duration": "45 minutes",
+            "price": 5000.0
+          }
+        ]
+      },
+      {
+        "dayNumber": 2,
+        "date": "2024-12-16",
+        "title": "Rotorua Geothermal Wonders",
+        "activities": [
+          {
+            "name": "Te Puia Geothermal Park",
+            "time": "09:00",
+            "duration": "3 hours",
+            "description": "Visit geysers, hot springs, and learn about Maori culture",
+            "price": 12000.0,
+            "category": "Cultural",
+            "location": "Rotorua"
+          },
+          {
+            "name": "Lake Rotorua Cruise",
+            "time": "14:00",
+            "duration": "2 hours",
+            "description": "Scenic cruise on Lake Rotorua with lunch",
+            "price": 7500.0,
+            "category": "Leisure",
+            "location": "Lake Rotorua"
+          }
+        ],
+        "transfers": [
+          {
+            "type": "Coach",
+            "from": "Auckland",
+            "to": "Rotorua",
+            "time": "07:00",
+            "duration": "3 hours",
+            "price": 3500.0
+          }
+        ]
+      }
+    ]
+  },
+  "flights": [
+    {
+      "type": "Outbound",
+      "airline": "Air New Zealand",
+      "flightNumber": "NZ132",
+      "from": "Mumbai",
+      "to": "Auckland",
+      "date": "2024-12-15",
+      "time": "09:30",
+      "price": 85000.0
+    },
+    {
+      "type": "Return",
+      "airline": "Air New Zealand",
+      "flightNumber": "NZ131",
+      "from": "Auckland",
+      "to": "Mumbai",
+      "date": "2024-12-22",
+      "time": "16:45",
+      "price": 85000.0
+    }
+  ],
+  "hotels": [
+    {
+      "name": "Auckland Harbour Hotel",
+      "location": "Auckland CBD",
+      "category": "4 Star",
+      "checkIn": "2024-12-15",
+      "checkOut": "2024-12-17",
+      "roomType": "Superior Room",
+      "price": 18000.0
+    },
+    {
+      "name": "Rotorua Lakeside Resort",
+      "location": "Rotorua",
+      "category": "5 Star",
+      "checkIn": "2024-12-17",
+      "checkOut": "2024-12-22",
+      "roomType": "Lake View Suite",
+      "price": 35000.0
+    }
+  ],
+  "payment": {
+    "totalAmount": 275000.0,
+    "installments": [
+      {
+        "amount": 82500.0,
+        "dueDate": "2024-12-01",
+        "status": "Paid",
+        "description": "Advance Payment"
+      },
+      {
+        "amount": 192500.0,
+        "dueDate": "2024-12-15",
+        "status": "Pending",
+        "description": "Balance Payment"
+      }
+    ]
+  },
+  "config": {
+    "includeFlight": true,
+    "includeHotel": true,
+    "includeActivity": true,
+    "includeTransfer": true,
+    "includePayment": true,
+    "currency": "INR",
+    "dateFormat": "DD/MM/YYYY"
+  }
+}
