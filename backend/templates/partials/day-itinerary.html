@@ -1,217 +1,271 @@
-{{/* Daily itinerary section */}}
-<div class="day-itinerary">
-  <h3>Daily Itinerary</h3>
-
-  {{range .Days}}
-  <div class="day-section">
-    <div class="day-header">
-      <h4>Day {{.DayNumber}}: {{.Title}}</h4>
-      <span class="day-date">{{formatDate .Date}}</span>
-    </div>
-
-    <div class="day-content">
-      {{if .Activities}}
-      <div class="activities-section">
-        <h5>Activities & Experiences</h5>
-        {{range .Activities}}
-        <div class="activity">
-          <div class="activity-header">
-            <h6>{{.Name}}</h6>
-            {{if .Price}}
-            <span class="activity-price">{{formatCurrency .Price "₹"}}</span>
-            {{end}}
-          </div>
-          <div class="activity-details">
-            <p><strong>Location:</strong> {{.Location}}</p>
-            <p><strong>Duration:</strong> {{.Duration}}</p>
-            {{if .Type}}
-            <p><strong>Type:</strong> {{.Type}}</p>
-            {{end}}
-          </div>
-          <p class="activity-description">{{.Description}}</p>
-        </div>
-        {{end}}
-      </div>
-      {{end}} {{if .Transfers}}
-      <div class="transfers-section">
-        <h5>Transfers</h5>
-        {{range .Transfers}}
-        <div class="transfer">
-          <div class="transfer-header">
-            <h6>{{.Type}}</h6>
-            {{if .Price}}
-            <span class="transfer-price">{{formatCurrency .Price "₹"}}</span>
-            {{end}}
-          </div>
-          <div class="transfer-details">
-            <p><strong>Route:</strong> {{.From}} → {{.To}}</p>
-            <p>
-              <strong>Pickup:</strong> {{.PickupTime}} |
-              <strong>Dropoff:</strong> {{.DropoffTime}}
-            </p>
-            <p>
-              <strong>Duration:</strong> {{.Duration}} |
-              <strong>Capacity:</strong> {{.Capacity}} people
-            </p>
-          </div>
-        </div>
-        {{end}}
-      </div>
-      {{end}}
-    </div>
-  </div>
-  {{end}}
-</div>
-
 <style>
   .day-itinerary {
     margin-bottom: 30px;
   }
 
-  .day-itinerary h3 {
-    margin-bottom: 25px;
-    color: #007bff;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 10px;
-  }
-
   .day-section {
-    margin-bottom: 25px;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    overflow: hidden;
-    page-break-inside: avoid;
-  }
-
-  .day-header {
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    color: white;
-    padding: 15px 20px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    min-height: 200px;
   }
 
-  .day-header h4 {
-    margin: 0;
-    font-size: 1.2em;
+  .day-section:nth-child(even) {
+    border: 3px solid #4a90e2;
+  }
+
+  .day-number {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    position: relative;
+  }
+
+  .day-circle {
+    background: #541c9c;
+    color: white;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+    transform: rotate(-10deg);
+  }
+
+  .day-circle span {
+    transform: rotate(10deg);
+    line-height: 1.2;
+  }
+
+  /* Center: Image and Date */
+  .day-image-section {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+  }
+
+  .day-image {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .day-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .placeholder-image {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #4a90e2, #541c9c);
+  }
+
+  .day-date-title {
+    text-align: center;
   }
 
   .day-date {
-    font-size: 0.9em;
-    opacity: 0.9;
-  }
-
-  .day-content {
-    padding: 20px;
-  }
-
-  .activities-section,
-  .transfers-section {
-    margin-bottom: 20px;
-  }
-
-  .activities-section h5,
-  .transfers-section h5 {
-    color: #28a745;
-    margin: 0 0 15px 0;
-    font-size: 1.1em;
-    border-bottom: 1px solid #28a745;
-    padding-bottom: 5px;
-  }
-
-  .activity {
-    background: #f8f9fa;
-    margin: 15px 0;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid #28a745;
-  }
-
-  .activity-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .activity-header h6 {
-    margin: 0;
-    color: #28a745;
-    font-size: 1em;
-  }
-
-  .activity-price {
-    background: #28a745;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.9em;
+    font-size: 16px;
     font-weight: bold;
-  }
-
-  .activity-details {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-
-  .activity-details p {
-    margin: 0;
-    font-size: 0.9em;
-    color: #666;
-  }
-
-  .activity-description {
-    margin: 10px 0 0 0;
-    line-height: 1.5;
+    margin: 0 0 5px 0;
     color: #333;
   }
 
-  .transfer {
-    background: #e9ecef;
-    margin: 10px 0;
-    padding: 12px;
-    border-radius: 6px;
-    border-left: 3px solid #6c757d;
-  }
-
-  .transfer-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
-  .transfer-header h6 {
-    margin: 0;
-    color: #495057;
-  }
-
-  .transfer-price {
-    background: #6c757d;
-    color: white;
-    padding: 3px 6px;
-    border-radius: 3px;
-    font-size: 0.8em;
-  }
-
-  .transfer-details p {
-    margin: 4px 0;
-    font-size: 0.9em;
+  .day-title {
+    font-size: 13px;
     color: #666;
+    margin: 0;
+    font-weight: normal;
+  }
+
+  /* Right: Timeline */
+  .timeline-section {
+    flex: 1;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+  }
+
+  .timeline {
+    position: relative;
+    width: 100%;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #4a90e2;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 25px;
+    padding-left: 30px;
+  }
+
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .time-point {
+    position: absolute;
+    left: -20px;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #4a90e2;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px #4a90e2;
+  }
+
+  .time-content {
+    margin: 0;
+  }
+
+  .time-label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .time-activities {
+    color: #666;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .time-activities p {
+    margin: 2px 0;
   }
 
   @media print {
     .day-section {
-      page-break-before: auto;
-      page-break-after: auto;
       page-break-inside: avoid;
+      margin-bottom: 15px;
+      min-height: 180px;
     }
 
-    .activity-details {
-      grid-template-columns: 1fr;
+    .day-image-section {
+      width: 200px;
+    }
+
+    .day-image {
+      width: 120px;
+      height: 120px;
+    }
+
+    .timeline-section {
+      padding: 15px 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .day-section {
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .day-number {
+      width: 100%;
+      padding: 15px 0;
+    }
+
+    .day-image-section {
+      width: 100%;
+      padding: 15px 0;
+    }
+
+    .day-image {
+      width: 120px;
+      height: 120px;
+    }
+
+    .timeline-section {
+      padding: 15px 20px;
     }
   }
 </style>
+
+<div class="day-itinerary">
+  {{range $dayIndex, $day := .Days}}
+  <div class="day-section">
+    <!-- Left: Day Number Circle -->
+    <div class="day-number">
+      <div class="day-circle">
+        <span>Day<br />{{$day.DayNumber}}</span>
+      </div>
+    </div>
+
+    <!-- Center: Image and Date -->
+    <div class="day-image-section">
+      <div class="day-image">
+        {{if $day.Image}}
+        <img src="{{$day.Image}}" alt="Day {{$day.DayNumber}} Activity" />
+        {{else}}
+        <div class="placeholder-image"></div>
+        {{end}}
+      </div>
+      <div class="day-date-title">
+        <h3 class="day-date">{{formatDate $day.Date}}</h3>
+        <p class="day-title">{{$day.Title}}</p>
+      </div>
+    </div>
+
+    <!-- Right: Timeline -->
+    <div class="timeline-section">
+      <div class="timeline">
+        {{if $day.Activities}} {{range $actIndex, $activity := $day.Activities}}
+        <div class="timeline-item">
+          <div class="time-point"></div>
+          <div class="time-content">
+            <div class="time-label">{{$activity.Name}}</div>
+            <div class="time-activities">
+              <p>{{$activity.Description}}</p>
+              <p><strong>Location:</strong> {{$activity.Location}}</p>
+              <p><strong>Duration:</strong> {{$activity.Duration}}</p>
+              {{if $activity.Type}}
+              <p><strong>Type:</strong> {{$activity.Type}}</p>
+              {{end}}
+            </div>
+          </div>
+        </div>
+        {{end}} {{else}}
+        <div class="timeline-item">
+          <div class="time-point"></div>
+          <div class="time-content">
+            <div class="time-label">Full Day</div>
+            <div class="time-activities">
+              <p>Activities planned for this day</p>
+            </div>
+          </div>
+        </div>
+        {{end}}
+      </div>
+    </div>
+  </div>
+  {{end}}
+</div>

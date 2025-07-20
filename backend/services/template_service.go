@@ -56,7 +56,6 @@ func (s *TemplateService) loadBaseTemplateWithPartials() (*template.Template, er
 		filepath.Join(s.templatePath, "base.html"),
 		filepath.Join(s.templatePath, "partials", "header.html"),
 		filepath.Join(s.templatePath, "partials", "footer.html"),
-		filepath.Join(s.templatePath, "partials", "trip-details.html"),
 		filepath.Join(s.templatePath, "partials", "day-itinerary.html"),
 		filepath.Join(s.templatePath, "partials", "flight-summary.html"),
 		filepath.Join(s.templatePath, "partials", "hotel-bookings.html"),

@@ -19,6 +19,7 @@
         "dayNumber": 1,
         "date": "2024-12-15",
         "title": "Arrival in Auckland",
+        "image": "/static/activities/aoraki.jpg",
         "activities": [
           {
             "id": "act001",
@@ -57,6 +58,7 @@
         "dayNumber": 2,
         "date": "2024-12-16",
         "title": "Rotorua Geothermal Wonders",
+        "image": "/static/activities/rotorua.jpg",
         "activities": [
           {
             "id": "act003",
