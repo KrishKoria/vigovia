@@ -1,0 +1,290 @@
+{{/* Important notes section */}}
+<div class="important-notes">
+  <h3>Important Information</h3>
+  
+  <div class="notes-container">
+    {{range .ImportantNotes}}
+    <div class="note-item">
+      <div class="note-header">
+        <span class="note-icon">ℹ️</span>
+        <h4>{{.Point}}</h4>
+      </div>
+      <p>{{.Details}}</p>
+    </div>
+    {{end}}
+  </div>
+  
+  <div class="travel-guidelines">
+    <h4>General Travel Guidelines</h4>
+    
+    <div class="guidelines-grid">
+      <div class="guideline-section">
+        <h5>📋 Documentation Required</h5>
+        <ul>
+          <li>Valid passport with minimum 6 months validity</li>
+          <li>Appropriate visa for {{.Trip.Destination}}</li>
+          <li>Travel insurance documents</li>
+          <li>Vaccination certificates (if required)</li>
+          <li>Emergency contact information</li>
+        </ul>
+      </div>
+      
+      <div class="guideline-section">
+        <h5>🧳 Packing Essentials</h5>
+        <ul>
+          <li>Comfortable walking shoes</li>
+          <li>Weather-appropriate clothing</li>
+          <li>Sunscreen and personal medications</li>
+          <li>Power adapters and chargers</li>
+          <li>Copies of important documents</li>
+        </ul>
+      </div>
+      
+      <div class="guideline-section">
+        <h5>💰 Financial Guidelines</h5>
+        <ul>
+          <li>Inform bank about international travel</li>
+          <li>Carry some local currency</li>
+          <li>Keep receipts for tax purposes</li>
+          <li>Budget for tips and personal expenses</li>
+          <li>Check currency exchange rates</li>
+        </ul>
+      </div>
+      
+      <div class="guideline-section">
+        <h5>🏥 Health & Safety</h5>
+        <ul>
+          <li>Check required vaccinations</li>
+          <li>Carry prescription medications</li>
+          <li>Know emergency contact numbers</li>
+          <li>Follow local safety guidelines</li>
+          <li>Stay hydrated and rest well</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="emergency-contacts">
+    <h4>Emergency Contacts</h4>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <strong>24/7 Travel Support</strong>
+        <p>📞 +1-800-VIGOVIA</p>
+        <p>📧 emergency@vigovia.com</p>
+      </div>
+      <div class="contact-item">
+        <strong>Local Office ({{.Trip.Destination}})</strong>
+        <p>📞 Available upon arrival</p>
+        <p>📧 {{lower .Trip.Destination}}@vigovia.com</p>
+      </div>
+      <div class="contact-item">
+        <strong>Medical Emergency</strong>
+        <p>📞 Local emergency number: 911</p>
+        <p>🏥 Insurance hotline in travel documents</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="cancellation-policy">
+    <h4>Cancellation & Changes Policy</h4>
+    <div class="policy-content">
+      <div class="policy-item">
+        <strong>Free Cancellation:</strong> Up to 30 days before departure
+      </div>
+      <div class="policy-item">
+        <strong>Partial Refund:</strong> 15-29 days before departure (50% refund)
+      </div>
+      <div class="policy-item">
+        <strong>No Refund:</strong> Less than 14 days before departure
+      </div>
+      <div class="policy-item">
+        <strong>Changes:</strong> Subject to availability and additional charges
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .important-notes {
+    margin-bottom: 30px;
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 10px;
+    padding: 25px;
+  }
+  
+  .important-notes h3 {
+    margin: 0 0 20px 0;
+    color: #856404;
+    border-bottom: 2px solid #ffc107;
+    padding-bottom: 10px;
+  }
+  
+  .notes-container {
+    margin-bottom: 25px;
+  }
+  
+  .note-item {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border-left: 4px solid #ffc107;
+  }
+  
+  .note-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .note-icon {
+    font-size: 1.2em;
+    margin-right: 10px;
+  }
+  
+  .note-header h4 {
+    margin: 0;
+    color: #856404;
+    font-size: 1em;
+  }
+  
+  .note-item p {
+    margin: 0;
+    color: #495057;
+    font-size: 0.9em;
+    line-height: 1.4;
+  }
+  
+  .travel-guidelines {
+    margin-bottom: 25px;
+  }
+  
+  .travel-guidelines h4 {
+    color: #856404;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .guidelines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+  }
+  
+  .guideline-section {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    border-top: 3px solid #ffc107;
+  }
+  
+  .guideline-section h5 {
+    margin: 0 0 10px 0;
+    color: #495057;
+    font-size: 0.95em;
+  }
+  
+  .guideline-section ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+  
+  .guideline-section li {
+    margin-bottom: 4px;
+    font-size: 0.85em;
+    color: #666;
+    line-height: 1.3;
+  }
+  
+  .emergency-contacts {
+    margin-bottom: 25px;
+  }
+  
+  .emergency-contacts h4 {
+    color: #856404;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  
+  .contact-item {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #ffd54f;
+  }
+  
+  .contact-item strong {
+    display: block;
+    color: #495057;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+  }
+  
+  .contact-item p {
+    margin: 3px 0;
+    font-size: 0.85em;
+    color: #666;
+  }
+  
+  .cancellation-policy h4 {
+    color: #856404;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .policy-content {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ffd54f;
+  }
+  
+  .policy-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9em;
+  }
+  
+  .policy-item:last-child {
+    border-bottom: none;
+  }
+  
+  .policy-item strong {
+    color: #495057;
+    min-width: 140px;
+  }
+  
+  @media print {
+    .important-notes {
+      background: white !important;
+      border: 1px solid #ccc !important;
+      page-break-inside: avoid;
+    }
+    
+    .guidelines-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    
+    .guideline-section,
+    .contact-item,
+    .policy-content {
+      background: #f9f9f9 !important;
+    }
+  }
+</style>

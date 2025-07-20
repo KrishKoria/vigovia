@@ -29,6 +29,11 @@ func (s *TemplateService) LoadTemplate(templateName string) (*template.Template,
 		return tmpl, nil
 	}
 	
+	// If loading base.html, include all partials
+	if templateName == "base.html" {
+		return s.loadBaseTemplateWithPartials()
+	}
+	
 	templateFile := filepath.Join(s.templatePath, templateName)
 	
 	tmpl, err := template.New(templateName).Funcs(s.getTemplateFunctions()).ParseFiles(templateFile)
@@ -40,6 +45,36 @@ func (s *TemplateService) LoadTemplate(templateName string) (*template.Template,
 	s.templates[templateName] = tmpl
 	
 	logrus.WithField("template", templateName).Debug("Template loaded and cached")
+	return tmpl, nil
+}
+
+func (s *TemplateService) loadBaseTemplateWithPartials() (*template.Template, error) {
+	// Define all template files to load together
+	templateFiles := []string{
+		filepath.Join(s.templatePath, "base.html"),
+		filepath.Join(s.templatePath, "partials", "header.html"),
+		filepath.Join(s.templatePath, "partials", "footer.html"),
+		filepath.Join(s.templatePath, "partials", "trip-details.html"),
+		filepath.Join(s.templatePath, "partials", "day-itinerary.html"),
+		filepath.Join(s.templatePath, "partials", "flight-summary.html"),
+		filepath.Join(s.templatePath, "partials", "hotel-bookings.html"),
+		filepath.Join(s.templatePath, "partials", "activity-table.html"),
+		filepath.Join(s.templatePath, "partials", "payment-plan.html"),
+		filepath.Join(s.templatePath, "partials", "inclusions.html"),
+		filepath.Join(s.templatePath, "partials", "important-notes.html"),
+		filepath.Join(s.templatePath, "partials", "scope.html"),
+		filepath.Join(s.templatePath, "partials", "visa-details.html"),
+	}
+	
+	tmpl, err := template.New("base.html").Funcs(s.getTemplateFunctions()).ParseFiles(templateFiles...)
+	if err != nil {
+		logrus.WithError(err).Error("Failed to parse base template with partials")
+		return nil, fmt.Errorf("failed to parse base template with partials: %w", err)
+	}
+	
+	s.templates["base.html"] = tmpl
+	
+	logrus.WithField("template", "base.html").WithField("partialsCount", len(templateFiles)-1).Debug("Base template with partials loaded and cached")
 	return tmpl, nil
 }
 

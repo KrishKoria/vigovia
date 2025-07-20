@@ -1,0 +1,162 @@
+{{/* Flight summary section */}}
+{{if .Flights}}
+<div class="flight-summary">
+  <h3>Flight Information</h3>
+  
+  <div class="flights-container">
+    {{range .Flights}}
+    <div class="flight-card">
+      <div class="flight-header">
+        <div class="airline-info">
+          <h4>{{.Airline}} {{.FlightNumber}}</h4>
+          <span class="flight-class">{{.Class}}</span>
+        </div>
+        <div class="flight-price">
+          {{formatCurrency .Price "₹"}}
+        </div>
+      </div>
+      
+      <div class="flight-route">
+        <div class="departure">
+          <div class="city">{{.From}}</div>
+          <div class="time">{{.Departure}}</div>
+        </div>
+        <div class="flight-arrow">✈️</div>
+        <div class="arrival">
+          <div class="city">{{.To}}</div>
+          <div class="time">{{.Arrival}}</div>
+        </div>
+      </div>
+      
+      <div class="flight-details">
+        <div class="detail-item">
+          <strong>Date:</strong> {{formatDate .Date}}
+        </div>
+        <div class="detail-item">
+          <strong>Route:</strong> {{.Route}}
+        </div>
+      </div>
+    </div>
+    {{end}}
+  </div>
+</div>
+{{end}}
+
+<style>
+  .flight-summary {
+    margin-bottom: 30px;
+  }
+  
+  .flight-summary h3 {
+    margin-bottom: 20px;
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+  }
+  
+  .flights-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .flight-card {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .flight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .airline-info h4 {
+    margin: 0;
+    color: #333;
+    font-size: 1.2em;
+  }
+  
+  .flight-class {
+    background: #007bff;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    margin-left: 10px;
+  }
+  
+  .flight-price {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  .flight-route {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+  }
+  
+  .departure, .arrival {
+    text-align: center;
+    flex: 1;
+  }
+  
+  .departure .city, .arrival .city {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .departure .time, .arrival .time {
+    font-size: 1.2em;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .flight-arrow {
+    font-size: 2em;
+    margin: 0 20px;
+    color: #007bff;
+  }
+  
+  .flight-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e9ecef;
+  }
+  
+  .detail-item {
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  .detail-item strong {
+    color: #333;
+  }
+  
+  @media print {
+    .flight-card {
+      page-break-inside: avoid;
+      box-shadow: none;
+      border: 1px solid #ddd;
+    }
+    
+    .flight-details {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
