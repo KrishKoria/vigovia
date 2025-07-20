@@ -1,0 +1,23 @@
+server:
+  port: "8080"
+  host: "0.0.0.0"
+
+pdf:
+  storage_path: "./storage/pdfs"
+  max_file_age: "168h" # 7 days
+  page_format: "A4"
+  orientation: "portrait"
+  margin:
+    top: "0.5in"
+    bottom: "0.5in"
+    left: "0.5in"
+    right: "0.5in"
+
+chromedp:
+  timeout: "30s"
+  disable_web_security: true
+  headless: true
+
+logging:
+  level: "info"
+  format: "json"
