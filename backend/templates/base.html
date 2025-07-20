@@ -188,12 +188,13 @@
         <h3>Flight Details</h3>
         {{range .Flights}}
         <div style="margin-bottom: 15px">
-          <p>
-            <strong>Flight:</strong> {{.Airline}} {{.FlightNumber}}
-          </p>
+          <p><strong>Flight:</strong> {{.Airline}} {{.FlightNumber}}</p>
           <p><strong>Route:</strong> {{.From}} → {{.To}}</p>
           <p><strong>Date:</strong> {{formatDate .Date}}</p>
-          <p><strong>Departure:</strong> {{.Departure}} | <strong>Arrival:</strong> {{.Arrival}}</p>
+          <p>
+            <strong>Departure:</strong> {{.Departure}} |
+            <strong>Arrival:</strong> {{.Arrival}}
+          </p>
           <p><strong>Price:</strong> {{formatCurrency .Price "₹"}}</p>
         </div>
         {{end}}
@@ -215,7 +216,8 @@
           <p>
             <strong>Room:</strong> {{.RoomType}} |
             <strong>Nights:</strong> {{.Nights}} |
-            <strong>Price per Night:</strong> {{formatCurrency .PricePerNight "₹"}}
+            <strong>Price per Night:</strong> {{formatCurrency .PricePerNight
+            "₹"}}
           </p>
         </div>
         {{end}}
@@ -274,15 +276,17 @@
         <h3>Payment Summary</h3>
         <p>
           <strong>Total Amount:</strong>
-          <span class="price">{{formatCurrency .Payment.TotalAmount "₹"}}</span>
+          <span class="price"
+            >{{formatCurrencyString .Payment.TotalAmount "₹"}}</span
+          >
         </p>
         <p>
-          <strong>Advance Paid:</strong> {{formatCurrency .Payment.AdvanceAmount
-          "₹"}}
+          <strong>Advance Paid:</strong> {{formatCurrencyString
+          .Payment.AdvanceAmount "₹"}}
         </p>
         <p>
-          <strong>Balance Due:</strong> {{formatCurrency .Payment.BalanceAmount
-          "₹"}}
+          <strong>Balance Due:</strong> {{formatCurrencyString
+          .Payment.BalanceAmount "₹"}}
         </p>
         <p><strong>Payment Status:</strong> {{.Payment.Status}}</p>
       </div>

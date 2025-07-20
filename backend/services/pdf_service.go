@@ -25,43 +25,35 @@ func NewPDFService() *PDFService {
 	}
 }
 
-// GenerateItinerary generates a complete itinerary PDF
 func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*models.PDFResponse, error) {
 	logrus.Info("Starting PDF generation")
 	
-	// Validate request
 	if errors := utils.ValidateStruct(request); len(errors) > 0 {
 		return nil, fmt.Errorf("validation failed: %v", errors)
 	}
 	
-	// Transform request to template data
 	templateData := s.transformToTemplateData(request)
 	
-	// Generate HTML from template
 	html, err := s.templateService.RenderTemplate("base.html", templateData)
 	if err != nil {
 		logrus.WithError(err).Error("Failed to render template")
 		return nil, fmt.Errorf("failed to render template: %w", err)
 	}
 	
-	// Convert HTML to PDF
 	pdfData, err := s.convertHTMLToPDF(html)
 	if err != nil {
 		logrus.WithError(err).Error("Failed to convert HTML to PDF")
 		return nil, fmt.Errorf("failed to convert HTML to PDF: %w", err)
 	}
 	
-	// Generate filename
 	filename := s.generateFilename(request)
 	
-	// Save PDF file
 	filePath, err := s.fileService.SavePDF(pdfData, filename)
 	if err != nil {
 		logrus.WithError(err).Error("Failed to save PDF")
 		return nil, fmt.Errorf("failed to save PDF: %w", err)
 	}
 	
-	// Get file size
 	fileSize, err := utils.GetFileSize(filePath)
 	if err != nil {
 		logrus.WithError(err).Warn("Failed to get file size")
@@ -85,13 +77,10 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 	return response, nil
 }
 
-// convertHTMLToPDF converts HTML content to PDF using ChromeDP
 func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
-	// Create context with timeout
 	ctx, cancel := context.WithTimeout(context.Background(), config.AppConfig.ChromeDP.Timeout)
 	defer cancel()
 	
-	// Configure Chrome options
 	opts := append(chromedp.DefaultExecAllocatorOptions[:],
 		chromedp.DisableGPU,
 		chromedp.NoDefaultBrowserCheck,
@@ -104,13 +93,11 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 	allocCtx, cancel := chromedp.NewExecAllocator(ctx, opts...)
 	defer cancel()
 	
-	// Create Chrome instance
 	chromeCtx, cancel := chromedp.NewContext(allocCtx)
 	defer cancel()
 	
 	var pdfBuffer []byte
 	
-	// Run Chrome automation
 	err := chromedp.Run(chromeCtx,
 		chromedp.Navigate("data:text/html,"+html),
 		chromedp.WaitReady("body"),
@@ -141,9 +128,7 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 	return pdfBuffer, nil
 }
 
-// transformToTemplateData transforms the request into template data
 func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *models.TemplateData {
-	// Generate default important notes and service scope if not provided
 	importantNotes := []models.ImportantNote{
 		{Point: "General Information", Details: "Please carry valid identification and travel documents."},
 		{Point: "Booking Confirmation", Details: "All bookings are subject to availability and confirmation."},
@@ -168,13 +153,16 @@ func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *
 		ProcessingDate: time.Now().AddDate(0, 0, 14).Format("2006-01-02"),
 	}
 	
+	// Calculate advance and balance amounts from installments
+	enhancedPayment := s.enhancePaymentData(request.Payment)
+	
 	return &models.TemplateData{
 		Customer:       request.Customer,
 		Trip:           request.Trip,
 		Days:           request.Itinerary.Days,
 		Flights:        request.Flights,
 		Hotels:         request.Hotels,
-		Payment:        request.Payment,
+		Payment:        enhancedPayment,
 		Config:         request.Config,
 		ImportantNotes: importantNotes,
 		ScopeOfService: scopeOfService,
@@ -214,4 +202,27 @@ func (s *PDFService) countTotalTransfers(days []models.Day) int {
 		count += len(day.Transfers)
 	}
 	return count
+}
+
+// enhancePaymentData calculates advance and balance amounts from installments
+func (s *PDFService) enhancePaymentData(payment models.Payment) models.Payment {
+	enhanced := payment
+	enhanced.Status = "Pending" // Default status if not set
+	
+	// Calculate advance and balance amounts from installments
+	var advanceAmount, balanceAmount string
+	
+	for _, installment := range payment.Installments {
+		switch installment.InstallmentName {
+		case "Advance Payment":
+			advanceAmount = installment.Amount
+		case "Balance Payment":
+			balanceAmount = installment.Amount
+		}
+	}
+	
+	enhanced.AdvanceAmount = advanceAmount
+	enhanced.BalanceAmount = balanceAmount
+	
+	return enhanced
 }

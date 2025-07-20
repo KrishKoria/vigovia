@@ -2,7 +2,6 @@ package models
 
 import "time"
 
-// ItineraryRequest represents the main request structure for PDF generation
 type ItineraryRequest struct {
 	Customer  Customer  `json:"customer" validate:"required"`
 	Trip      Trip      `json:"trip" validate:"required"`
@@ -99,11 +98,13 @@ type Hotel struct {
 	PricePerNight float64 `json:"pricePerNight" validate:"min=0"`
 }
 
-// Payment represents payment plan information
 type Payment struct {
-	TotalAmount  string        `json:"totalAmount" validate:"required"`
-	TCS          string        `json:"tcs"`
-	Installments []Installment `json:"installments" validate:"required,min=1"`
+	TotalAmount   string        `json:"totalAmount" validate:"required"`
+	TCS           string        `json:"tcs"`
+	AdvanceAmount string        `json:"advanceAmount,omitempty"`
+	BalanceAmount string        `json:"balanceAmount,omitempty"`
+	Status        string        `json:"status,omitempty"`
+	Installments  []Installment `json:"installments" validate:"required,min=1"`
 }
 
 // Installment represents a payment installment

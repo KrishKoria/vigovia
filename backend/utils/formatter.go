@@ -15,6 +15,22 @@ func FormatCurrency(amount float64, currency string) string {
 	return fmt.Sprintf("%s%.2f", currency, amount)
 }
 
+// FormatCurrencyString formats a string amount as currency by first parsing it to float64
+func FormatCurrencyString(amountStr string, currency string) string {
+	if currency == "" {
+		currency = "₹"
+	}
+	
+	// Parse the string to float64
+	amount, err := strconv.ParseFloat(amountStr, 64)
+	if err != nil {
+		// If parsing fails, return the original string with currency symbol
+		return fmt.Sprintf("%s%s", currency, amountStr)
+	}
+	
+	return fmt.Sprintf("%s%.2f", currency, amount)
+}
+
 // FormatDate formats a date string into a more readable format
 func FormatDate(dateStr string) string {
 	// Try to parse the date in various formats

@@ -75,6 +75,7 @@ func (s *TemplateService) RenderTemplate(templateName string, data *models.Templ
 func (s *TemplateService) getTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
 		"formatCurrency": utils.FormatCurrency,
+		"formatCurrencyString": utils.FormatCurrencyString,
 		"formatDate":     utils.FormatDate,
 		"formatTime":     utils.FormatTime,
 		"timeRange":      utils.FormatTimeRange,
