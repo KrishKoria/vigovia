@@ -5,61 +5,64 @@
 
   .day-section {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     background: white;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    min-height: 200px;
+    min-height: 160px;
+    max-height: 180px;
   }
 
+  /* Blue border for even days (Day 2, etc.) */
   .day-section:nth-child(even) {
     border: 3px solid #4a90e2;
   }
 
-  .day-number {
-    width: 100px;
+  /* Left: Image Section with Day Number */
+  .day-image-section {
+    width: 280px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: white;
+    padding: 20px;
+    flex-shrink: 0;
     position: relative;
+  }
+
+  .day-number {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 10;
   }
 
   .day-circle {
     background: #541c9c;
     color: white;
     border-radius: 50%;
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 10px;
     text-align: center;
     transform: rotate(-10deg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 
   .day-circle span {
     transform: rotate(10deg);
-    line-height: 1.2;
-  }
-
-  /* Center: Image and Date */
-  .day-image-section {
-    width: 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 0;
+    line-height: 1.1;
   }
 
   .day-image {
-    width: 160px;
-    height: 160px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     overflow: hidden;
     margin-bottom: 15px;
@@ -83,14 +86,14 @@
   }
 
   .day-date {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     margin: 0 0 5px 0;
     color: #333;
   }
 
   .day-title {
-    font-size: 13px;
+    font-size: 12px;
     color: #666;
     margin: 0;
     font-weight: normal;
@@ -99,9 +102,10 @@
   /* Right: Timeline */
   .timeline-section {
     flex: 1;
-    padding: 20px 30px;
+    padding: 15px 20px;
     display: flex;
     align-items: center;
+    min-width: 0;
   }
 
   .timeline {
@@ -112,7 +116,7 @@
   .timeline::before {
     content: "";
     position: absolute;
-    left: 8px;
+    left: 6px;
     top: 0;
     bottom: 0;
     width: 2px;
@@ -121,8 +125,8 @@
 
   .timeline-item {
     position: relative;
-    margin-bottom: 25px;
-    padding-left: 30px;
+    margin-bottom: 15px;
+    padding-left: 20px;
   }
 
   .timeline-item:last-child {
@@ -131,14 +135,14 @@
 
   .time-point {
     position: absolute;
-    left: -20px;
-    top: 2px;
-    width: 16px;
-    height: 16px;
+    left: -14px;
+    top: 1px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: #4a90e2;
-    border: 3px solid white;
-    box-shadow: 0 0 0 2px #4a90e2;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px #4a90e2;
   }
 
   .time-content {
@@ -148,29 +152,37 @@
   .time-label {
     font-weight: bold;
     color: #333;
-    margin-bottom: 6px;
-    font-size: 14px;
+    margin-bottom: 3px;
+    font-size: 12px;
   }
 
   .time-activities {
     color: #666;
-    font-size: 12px;
-    line-height: 1.4;
+    font-size: 10px;
+    line-height: 1.3;
   }
 
   .time-activities p {
-    margin: 2px 0;
+    margin: 1px 0;
   }
 
   @media print {
     .day-section {
       page-break-inside: avoid;
       margin-bottom: 15px;
-      min-height: 180px;
+      min-height: 140px;
+      max-height: 160px;
     }
 
     .day-image-section {
-      width: 200px;
+      width: 240px;
+      padding: 15px;
+    }
+
+    .day-circle {
+      width: 45px;
+      height: 45px;
+      font-size: 9px;
     }
 
     .day-image {
@@ -180,6 +192,22 @@
 
     .timeline-section {
       padding: 15px 20px;
+    }
+
+    .time-label {
+      font-size: 11px;
+    }
+
+    .time-activities {
+      font-size: 9px;
+    }
+
+    .day-date {
+      font-size: 13px;
+    }
+
+    .day-title {
+      font-size: 10px;
     }
   }
 
@@ -187,25 +215,23 @@
     .day-section {
       flex-direction: column;
       min-height: auto;
-    }
-
-    .day-number {
-      width: 100%;
-      padding: 15px 0;
+      max-height: none;
     }
 
     .day-image-section {
       width: 100%;
-      padding: 15px 0;
+      padding: 20px;
     }
 
-    .day-image {
-      width: 120px;
-      height: 120px;
+    .day-number {
+      position: relative;
+      top: auto;
+      left: auto;
+      margin-bottom: 15px;
     }
 
     .timeline-section {
-      padding: 15px 20px;
+      padding: 20px;
     }
   }
 </style>
@@ -213,15 +239,13 @@
 <div class="day-itinerary">
   {{range $dayIndex, $day := .Days}}
   <div class="day-section">
-    <!-- Left: Day Number Circle -->
-    <div class="day-number">
-      <div class="day-circle">
-        <span>Day<br />{{$day.DayNumber}}</span>
-      </div>
-    </div>
-
-    <!-- Center: Image and Date -->
+    <!-- Left: Image and Date -->
     <div class="day-image-section">
+      <div class="day-number">
+        <div class="day-circle">
+          <span>Day<br />{{$day.DayNumber}}</span>
+        </div>
+      </div>
       <div class="day-image">
         {{if $day.Image}}
         <img src="{{$day.Image}}" alt="Day {{$day.DayNumber}} Activity" />
