@@ -30,21 +30,27 @@
   </div>
 
   <div class="trip-info-container">
-    <div class="trip-info-table">
-      <div class="table-header">
-        <div class="header-cell">Departure From</div>
-        <div class="header-cell">Departure</div>
-        <div class="header-cell">Arrival</div>
-        <div class="header-cell">Destination</div>
-        <div class="header-cell">No. Of Travellers</div>
-      </div>
-      <div class="table-data">
-        <div class="data-cell">{{.Trip.DepartureFrom}}</div>
-        <div class="data-cell">{{.Trip.StartDate}}</div>
-        <div class="data-cell">{{.Trip.EndDate}}</div>
-        <div class="data-cell">{{.Trip.Destination}}</div>
-        <div class="data-cell">{{.Trip.Travelers}}</div>
-      </div>
+    <div class="trip-info-table-wrapper">
+      <table class="trip-info-table">
+        <thead>
+          <tr class="trip-info-header-row">
+            <th class="trip-info-header-cell">Departure From</th>
+            <th class="trip-info-header-cell">Departure</th>
+            <th class="trip-info-header-cell">Arrival</th>
+            <th class="trip-info-header-cell">Destination</th>
+            <th class="trip-info-header-cell">No. Of Travellers</th>
+          </tr>
+        </thead>
+        <tbody class="trip-info-table-body">
+          <tr class="trip-info-row">
+            <td class="trip-info-data-cell">{{.Trip.DepartureFrom}}</td>
+            <td class="trip-info-data-cell">{{.Trip.StartDate}}</td>
+            <td class="trip-info-data-cell">{{.Trip.EndDate}}</td>
+            <td class="trip-info-data-cell">{{.Trip.Destination}}</td>
+            <td class="trip-info-data-cell">{{.Trip.Travelers}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -141,51 +147,59 @@
       min-width: 400px;
     }
 
-    .trip-info-table {
-      background: white;
-      border-radius: 15px;
+    .trip-info-table-wrapper {
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      border: 2px solid #7b2cbf;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
     }
 
-    .table-header {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      background: #7b2cbf;
+    /* Main table styling */
+    .trip-info-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      background: white;
     }
 
-    .header-cell {
-      padding-right: 30px;
-      padding-left: 30px;
+    /* Header row styling */
+    .trip-info-header-row {
+      background: #321e5d;
+    }
+
+    .trip-info-header-cell {
+      padding: 16px 20px;
       text-align: center;
-      color: white;
       font-weight: 600;
       font-size: 14px;
-      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      position: relative;
     }
 
-    .header-cell:last-child {
-      border-right: none;
+    /* Table body styling */
+    .trip-info-table-body {
+      background: #f9eeff;
     }
 
-    .table-data {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      background: #f5e6ff;
+    /* Data row styling */
+    .trip-info-row {
+      border-bottom: 1px solid #e5d3f0;
     }
 
-    .data-cell {
-      padding: 18px 10px;
+    .trip-info-row:last-child {
+      border-bottom: none;
+    }
+
+    .trip-info-data-cell {
+      padding: 16px 20px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #333;
+      vertical-align: top;
+      border: none;
       text-align: center;
       font-weight: 500;
-      color: #333;
-      font-size: 16px;
-      border-right: 1px solid rgba(123, 44, 191, 0.2);
-    }
-
-    .data-cell:last-child {
-      border-right: none;
     }
   }
 </style>

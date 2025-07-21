@@ -39,30 +39,26 @@
 
 <style>
   @media print {
-    /* Page setup with footer margin */
-    @page {
-      margin-bottom: 100px;
-    }
-
     .footer-content {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      position: running(
+        myFooter
+      ); /* Mark as running element; removes from normal flow */
+      display: block; /* Ensure it's block-level for margin box */
       width: 100%;
-      height: 80px;
-      padding: 10px 30px;
+      height: 70px;
+      padding: 8px 20px;
       background-color: white;
       font-family: "Arial", sans-serif;
       border-top: 2px solid #e0e0e0;
       box-sizing: border-box;
-      z-index: 1000;
+      z-index: 9999;
     }
 
+    /* Rest of your styles remain the same */
     .footer-container {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       width: 100%;
       height: 100%;
     }
@@ -75,33 +71,28 @@
     .footer-center {
       flex: 1;
       max-width: 35%;
-      text-align: left;
-      padding-left: 20px;
+      padding-left: 15px;
     }
 
     .footer-right {
       flex: 0 0 auto;
-      text-align: right;
-      padding-left: 20px;
-      min-width: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
+      padding-left: 15px;
+      min-width: 60px;
     }
 
     .company-name {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: bold;
       color: #000;
-      margin: 0 0 4px 0;
-      line-height: 1.2;
+      margin: 0 0 2px 0;
+      line-height: 1.1;
     }
 
     .registered-office {
-      font-size: 10px;
+      font-size: 8px;
       color: #000;
       margin: 0;
-      line-height: 1.3;
+      line-height: 1.2;
     }
 
     .contact-info {
@@ -110,14 +101,14 @@
 
     .phone,
     .email {
-      font-size: 10px;
+      font-size: 8px;
       color: #000;
-      margin: 0 0 2px 0;
-      line-height: 1.3;
+      margin: 0 0 1px 0;
+      line-height: 1.2;
     }
 
     .footer-logo {
-      height: 50px;
+      height: 40px;
       width: auto;
       object-fit: contain;
     }
@@ -127,7 +118,7 @@
     }
 
     .footer-content p {
-      margin: 0 0 2px 0;
+      margin: 0;
     }
   }
 

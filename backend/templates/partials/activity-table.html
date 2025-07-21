@@ -1,30 +1,26 @@
-{{/* Activity table/summary section */}}
 <div class="activity-table">
   <h2 class="activity-title">
     Activity <span class="purple-text">Table</span>
   </h2>
 
   <div class="table-container">
-    <!-- Header row -->
-    <div class="header-row">
-      <div class="header-cell">City</div>
-      <div class="header-cell">Activity</div>
-      <div class="header-cell">Type</div>
-      <div class="header-cell">Time Required</div>
+    <!-- Table Header -->
+    <div class="table-row table-header">
+      <div class="table-cell city-header">City</div>
+      <div class="table-cell activity-header">Activity</div>
+      <div class="table-cell type-header">Type</div>
+      <div class="table-cell time-header">Time Required</div>
     </div>
-
-    <!-- Data rows -->
-    <div class="data-rows">
-      {{range $dayIndex, $day := .Days}} {{range $activityIndex, $activity :=
-      $day.Activities}}
-      <div class="data-row">
-        <div class="data-cell city-cell">{{$activity.Location}}</div>
-        <div class="data-cell activity-cell">{{$activity.Name}}</div>
-        <div class="data-cell type-cell">{{$activity.Type}}</div>
-        <div class="data-cell time-cell">{{$activity.Duration}}</div>
-      </div>
-      {{end}} {{end}}
+    <!-- Data Rows -->
+    {{range $dayIndex, $day := .Days}} {{range $activityIndex, $activity :=
+    $day.Activities}}
+    <div class="table-row">
+      <div class="table-cell city-cell">{{$activity.Location}}</div>
+      <div class="table-cell activity-cell">{{$activity.Name}}</div>
+      <div class="table-cell type-cell">{{$activity.Type}}</div>
+      <div class="table-cell time-cell">{{$activity.Duration}}</div>
     </div>
+    {{end}} {{end}}
   </div>
 </div>
 
@@ -33,94 +29,83 @@
     .activity-table {
       margin-bottom: 30px;
       page-break-inside: avoid;
+      margin: 32px auto;
+      padding: 0 8px;
+      max-width: 1200px;
+      border-radius: 14px;
+      background: white;
     }
-
     .activity-title {
       font-size: 24px;
       font-weight: bold;
-      margin-bottom: 25px;
-      color: #000;
+      margin-top: 14px;
+      margin-bottom: 12px;
       font-family: Arial, sans-serif;
+      color: #181042;
+      letter-spacing: 0;
     }
 
     .purple-text {
-      color: #321e5d;
+      color: #7c3aed;
     }
 
     .table-container {
+      margin: 0;
       width: 100%;
-      background: white;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     }
 
-    .header-row {
+    .table-header {
       display: grid;
-      grid-template-columns: 80px 80 80px 80px;
+      grid-template-columns: 160px 1fr 120px 140px;
       background: #321e5d;
-      min-height: 50px;
-    }
-
-    .header-cell {
-      padding: 8px 6px;
-      text-align: center;
-      color: white;
-      font-weight: 600;
-      font-size: 11px;
+      color: #fff;
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 2px 8px rgba(76, 29, 149, 0.08);
       font-family: Arial, sans-serif;
-      border-right: 1px solid rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
+      min-height: 54px;
     }
 
-    .header-cell:last-child {
-      border-right: none;
+    .table-header .table-cell {
+      font-weight: 600;
+      font-size: 16px;
+      text-align: center;
+      letter-spacing: 0.5px;
+      padding: 11px 0;
     }
 
-    .data-rows {
-      background-color: white;
+    .city-header {
+      border-radius: 18px 0 0 0;
+    }
+    .time-header {
+      border-radius: 0 18px 0 0;
     }
 
-    /* Matching grid layout for data consistency */
-    .data-row {
+    .table-row {
       display: grid;
-      grid-template-columns: 80px 80px 80px 80px;
+      grid-template-columns: 160px 1fr 120px 140px;
       align-items: center;
       min-height: 45px;
+      font-family: Arial, sans-serif;
     }
 
-    .data-row:nth-child(even) {
+    .table-row:not(.table-header):nth-child(even) {
       background-color: #f5e6ff;
     }
-
-    .data-row:nth-child(odd) {
-      background-color: white;
+    .table-row:not(.table-header):nth-child(odd) {
+      background-color: #fff;
     }
 
-    .data-cell {
-      padding: 8px 6px;
-      font-size: 12px;
-      color: #333;
+    .table-cell {
+      padding: 10px 0 10px 0;
+      font-size: 14px;
       text-align: center;
-      font-family: Arial, sans-serif;
-      line-height: 1.3;
-      border-right: 1px solid rgba(50, 30, 93, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
+      border-right: 1px solid rgba(105, 55, 179, 0.07);
+      overflow: wrap;
+      text-overflow: unset;
+      white-space: normal;
     }
 
-    .data-cell:last-child {
+    .table-cell:last-child {
       border-right: none;
     }
 
@@ -130,24 +115,18 @@
     }
 
     .activity-cell {
-      font-weight: 500;
+      color: #28196e;
       text-align: left;
-      color: #333;
-      justify-content: flex-start;
+      padding-left: 10px;
+      font-weight: 500;
       white-space: normal;
       overflow: visible;
-      text-overflow: unset;
-      padding-left: 4px;
     }
 
-    .type-cell {
-      font-weight: 500;
-      color: #666;
-    }
-
+    .type-cell,
     .time-cell {
+      color: #6246a8;
       font-weight: 500;
-      color: #321e5d;
     }
   }
 </style>
