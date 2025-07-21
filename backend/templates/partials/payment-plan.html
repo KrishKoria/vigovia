@@ -1,278 +1,205 @@
 {{/* Payment plan section */}} {{if .Payment}}
 <div class="payment-plan">
-  <h3>Payment Information</h3>
+  <h2 class="payment-title">Payment <span class="purple-text">Plan</span></h2>
 
-  <div class="payment-overview">
-    <div class="total-amount">
-      <h4>Total Package Cost</h4>
-      <div class="amount">
-        {{formatCurrencyString .Payment.TotalAmount "₹"}}
+  <!-- Total Amount Section -->
+  <div class="total-amount-section">
+    <div class="arrow-box total-box">
+      <div class="label">Total Amount</div>
+      <div class="content">
+        <span class="amount"
+          >{{formatCurrencyString .Payment.TotalAmount "₹"}}</span
+        >
+        <span class="pax-info"
+          >For {{.Trip.Travelers}} Pax (Inclusive Of GST)</span
+        >
       </div>
     </div>
-
-    {{if .Payment.TCS}}
-    <div class="tcs-info">
-      <strong>TCS (Tax Collected at Source):</strong> {{formatCurrencyString
-      .Payment.TCS "₹"}}
-    </div>
-    {{end}}
   </div>
 
+  <!-- TCS Section -->
+  {{if .Payment.TCS}}
+  <div class="tcs-section">
+    <div class="arrow-box tcs-box">
+      <div class="label">TCS</div>
+      <div class="content">{{formatCurrencyString .Payment.TCS "₹"}}</div>
+    </div>
+  </div>
+  {{else}}
+  <div class="tcs-section">
+    <div class="arrow-box tcs-box">
+      <div class="label">TCS</div>
+      <div class="content">Not Collected</div>
+    </div>
+  </div>
+  {{end}}
+
+  <!-- Payment Schedule Table -->
   <div class="payment-schedule">
-    <h4>Payment Schedule</h4>
-    <div class="installments">
-      {{range .Payment.Installments}}
-      <div class="installment">
-        <div class="installment-header">
-          <span class="installment-name">{{.InstallmentName}}</span>
-          <span class="installment-amount"
-            >{{formatCurrencyString .Amount "₹"}}</span
-          >
+    <!-- Header row with pill-style design -->
+    <div class="schedule-header">
+      <div class="header-pill">Installment</div>
+      <div class="header-pill">Amount</div>
+      <div class="header-pill">Due Date</div>
+    </div>
+
+    <!-- Data rows -->
+    <div class="schedule-data">
+      {{range $index, $installment := .Payment.Installments}}
+      <div class="schedule-row">
+        <div class="data-cell installment-cell">
+          Installment {{add $index 1}}
         </div>
-        <div class="installment-due">
-          <strong>Due Date:</strong> {{formatDate .DueDate}}
+        <div class="data-cell amount-cell">
+          {{formatCurrencyString .Amount "₹"}}
         </div>
+        <div class="data-cell date-cell">{{.DueDate}}</div>
       </div>
       {{end}}
     </div>
-  </div>
-
-  <div class="payment-summary">
-    <div class="summary-row">
-      <span>Advance Payment:</span>
-      <span class="amount"
-        >{{formatCurrencyString .Payment.AdvanceAmount "₹"}}</span
-      >
-    </div>
-    <div class="summary-row">
-      <span>Balance Payment:</span>
-      <span class="amount"
-        >{{formatCurrencyString .Payment.BalanceAmount "₹"}}</span
-      >
-    </div>
-    <div class="summary-row total">
-      <span>Total Amount:</span>
-      <span class="amount"
-        >{{formatCurrencyString .Payment.TotalAmount "₹"}}</span
-      >
-    </div>
-  </div>
-
-  <div class="payment-status">
-    <strong>Payment Status:</strong>
-    <span class="status status-{{lower .Payment.Status}}"
-      >{{.Payment.Status}}</span
-    >
-  </div>
-
-  <div class="payment-notes">
-    <h5>Payment Terms & Conditions</h5>
-    <ul>
-      <li>Advance payment is required to confirm your booking</li>
-      <li>Balance payment must be completed before the travel date</li>
-      <li>All payments are non-refundable unless specified otherwise</li>
-      <li>
-        Payment can be made via bank transfer, credit card, or online payment
-      </li>
-      <li>Additional charges may apply for changes or modifications</li>
-    </ul>
   </div>
 </div>
 {{end}}
 
 <style>
-  .payment-plan {
-    margin-bottom: 30px;
-    background: #d4edda;
-    border: 1px solid #c3e6cb;
-    border-radius: 10px;
-    padding: 25px;
-  }
-
-  .payment-plan h3 {
-    margin: 0 0 20px 0;
-    color: #155724;
-    border-bottom: 2px solid #28a745;
-    padding-bottom: 10px;
-  }
-
-  .payment-overview {
-    text-align: center;
-    margin-bottom: 25px;
-  }
-
-  .total-amount h4 {
-    margin: 0 0 10px 0;
-    color: #155724;
-    font-size: 1.1em;
-  }
-
-  .total-amount .amount {
-    font-size: 2.2em;
-    font-weight: bold;
-    color: #28a745;
-    margin-bottom: 10px;
-  }
-
-  .tcs-info {
-    font-size: 0.9em;
-    color: #856404;
-    background: #fff3cd;
-    padding: 8px 12px;
-    border-radius: 5px;
-    display: inline-block;
-  }
-
-  .payment-schedule {
-    margin-bottom: 25px;
-  }
-
-  .payment-schedule h4 {
-    color: #155724;
-    margin-bottom: 15px;
-    font-size: 1.1em;
-  }
-
-  .installments {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .installment {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid #28a745;
-  }
-
-  .installment-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
-  .installment-name {
-    font-weight: bold;
-    color: #155724;
-  }
-
-  .installment-amount {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #28a745;
-  }
-
-  .installment-due {
-    font-size: 0.9em;
-    color: #666;
-  }
-
-  .payment-summary {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
-
-  .summary-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #e9ecef;
-  }
-
-  .summary-row:last-child {
-    border-bottom: none;
-  }
-
-  .summary-row.total {
-    font-weight: bold;
-    font-size: 1.1em;
-    color: #155724;
-    border-top: 2px solid #28a745;
-    padding-top: 12px;
-    margin-top: 8px;
-  }
-
-  .summary-row .amount {
-    color: #28a745;
-    font-weight: bold;
-  }
-
-  .payment-status {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.1em;
-  }
-
-  .status {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 15px;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.9em;
-  }
-
-  .status-pending {
-    background: #fff3cd;
-    color: #856404;
-  }
-
-  .status-partial {
-    background: #d1ecf1;
-    color: #0c5460;
-  }
-
-  .status-completed {
-    background: #d4edda;
-    color: #155724;
-  }
-
-  .status-failed {
-    background: #f8d7da;
-    color: #721c24;
-  }
-
-  .payment-notes {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    border-radius: 8px;
-  }
-
-  .payment-notes h5 {
-    margin: 0 0 10px 0;
-    color: #155724;
-  }
-
-  .payment-notes ul {
-    margin: 0;
-    padding-left: 20px;
-  }
-
-  .payment-notes li {
-    margin-bottom: 5px;
-    font-size: 0.9em;
-    line-height: 1.4;
-    color: #495057;
-  }
-
   @media print {
     .payment-plan {
+      margin-bottom: 30px;
       page-break-inside: avoid;
-      background: white !important;
-      border: 1px solid #ccc !important;
     }
 
-    .installments {
-      display: block;
+    .payment-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #000;
     }
 
-    .installment {
-      margin-bottom: 10px;
-      background: #f9f9f9 !important;
+    .purple-text {
+      color: #7b2cbf;
+    }
+
+    /* Arrow box styles */
+    .total-amount-section,
+    .tcs-section {
+      margin-bottom: 15px;
+    }
+
+    .arrow-box {
+      display: flex;
+      align-items: center;
+      background-color: #f5e6ff;
+      border: 1px solid #e0b3ff;
+      border-radius: 15px;
+      padding: 15px 20px;
+      position: relative;
+      min-height: 50px;
+    }
+
+    .arrow-box .label {
+      background-color: #7b2cbf;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      margin-right: 20px;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .arrow-box .content {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .total-box .content .amount {
+      font-size: 20px;
+      font-weight: bold;
+      color: #000;
+      margin-right: 10px;
+    }
+
+    .total-box .content .pax-info {
+      font-size: 14px;
+      color: #666;
+      font-weight: normal;
+    }
+
+    /* Payment Schedule Table */
+    .payment-schedule {
+      margin-top: 20px;
+    }
+
+    .schedule-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 0;
+    }
+
+    .schedule-header .header-pill {
+      background-color: #7b2cbf;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 25px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+    }
+
+    .schedule-data {
+      background-color: #f5e6ff;
+      border-radius: 0 0 15px 15px;
+      padding: 0;
+    }
+
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      padding: 12px 8px;
+      align-items: center;
+    }
+
+    .schedule-row:nth-child(even) {
+      background-color: #f0d9ff;
+    }
+
+    .schedule-row:nth-child(odd) {
+      background-color: #f5e6ff;
+    }
+
+    .schedule-row:first-child {
+      border-radius: 15px 15px 0 0;
+    }
+
+    .schedule-row:last-child {
+      border-radius: 0 0 15px 15px;
+    }
+
+    .data-cell {
+      padding: 8px 12px;
+      font-size: 14px;
+      color: #333;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .installment-cell {
+      font-weight: 500;
+    }
+
+    .amount-cell {
+      font-weight: 600;
+      color: #000;
+    }
+
+    .date-cell {
+      font-weight: 400;
     }
   }
 </style>

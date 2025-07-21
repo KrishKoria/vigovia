@@ -1,495 +1,68 @@
-{{/* Visa details section */}}
+{{/* Visa details section */}} {{if .VisaDetails}}
 <div class="visa-details">
-  <h3>Visa Information for {{.Trip.Destination}}</h3>
+  <h2 class="visa-title">Visa <span class="purple-text">Details</span></h2>
 
-  <div class="visa-overview">
-    <div class="visa-card">
-      <div class="visa-header">
-        <h4>Visa Requirements</h4>
-        <span class="visa-type">{{.VisaDetails.VisaType}}</span>
-      </div>
-      <div class="visa-info">
-        <div class="info-item">
-          <strong>Validity Period:</strong> {{.VisaDetails.Validity}}
-        </div>
-        <div class="info-item">
-          <strong>Processing Time:</strong> 7-14 business days
-        </div>
-        <div class="info-item">
-          <strong>Recommended Application Date:</strong> {{formatDate
-          .VisaDetails.ProcessingDate}}
-        </div>
-      </div>
+  <div class="visa-info-box">
+    <div class="visa-info-item">
+      <div class="info-label">Visa Type :</div>
+      <div class="info-value">{{.VisaDetails.VisaType}}</div>
     </div>
-  </div>
-
-  <div class="visa-requirements">
-    <h4>Required Documents</h4>
-    <div class="requirements-grid">
-      <div class="requirement-section">
-        <h5>📄 Basic Documents</h5>
-        <ul>
-          <li>Passport with minimum 6 months validity</li>
-          <li>Completed visa application form</li>
-          <li>Recent passport-size photographs (2 copies)</li>
-          <li>Travel itinerary and hotel confirmations</li>
-          <li>Flight booking confirmations</li>
-          <li>Travel insurance certificate</li>
-        </ul>
-      </div>
-
-      <div class="requirement-section">
-        <h5>💼 Financial Documents</h5>
-        <ul>
-          <li>Bank statements (last 3 months)</li>
-          <li>Income tax returns (last 2 years)</li>
-          <li>Employment certificate or business registration</li>
-          <li>Proof of financial sponsorship (if applicable)</li>
-          <li>Credit card statements</li>
-          <li>Foreign exchange purchase receipts</li>
-        </ul>
-      </div>
-
-      <div class="requirement-section">
-        <h5>🏠 Personal Documents</h5>
-        <ul>
-          <li>Proof of residence (utility bills/lease)</li>
-          <li>Marriage certificate (if traveling with spouse)</li>
-          <li>Birth certificates for minors</li>
-          <li>No objection certificate from employer</li>
-          <li>Character certificate (if required)</li>
-          <li>Educational certificates (for student visas)</li>
-        </ul>
-      </div>
-
-      <div class="requirement-section">
-        <h5>🏥 Health Documents</h5>
-        <ul>
-          <li>Vaccination certificates (COVID-19, others as required)</li>
-          <li>Medical examination reports (if required)</li>
-          <li>Health insurance documentation</li>
-          <li>Prescription medication list</li>
-          <li>Medical clearance for special conditions</li>
-          <li>Travel health advisory compliance</li>
-        </ul>
-      </div>
+    <div class="visa-info-item">
+      <div class="info-label">Validity:</div>
+      <div class="info-value">{{.VisaDetails.Validity}}</div>
     </div>
-  </div>
-
-  <div class="visa-process">
-    <h4>Visa Application Process</h4>
-    <div class="process-steps">
-      <div class="step">
-        <div class="step-number">1</div>
-        <div class="step-content">
-          <strong>Document Preparation</strong>
-          <p>
-            Gather all required documents and ensure they meet the specified
-            criteria
-          </p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-number">2</div>
-        <div class="step-content">
-          <strong>Application Submission</strong>
-          <p>Submit application online or at the nearest consulate/embassy</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-number">3</div>
-        <div class="step-content">
-          <strong>Fee Payment</strong>
-          <p>Pay the required visa processing fees as per current rates</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-number">4</div>
-        <div class="step-content">
-          <strong>Interview (if required)</strong>
-          <p>Attend interview at the embassy/consulate if called</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-number">5</div>
-        <div class="step-content">
-          <strong>Visa Collection</strong>
-          <p>Collect your passport with visa or receive it via courier</p>
-        </div>
-      </div>
+    <div class="visa-info-item">
+      <div class="info-label">Processing Date :</div>
+      <div class="info-value">{{formatDate .VisaDetails.ProcessingDate}}</div>
     </div>
-  </div>
-
-  <div class="visa-fees">
-    <h4>Estimated Visa Fees</h4>
-    <div class="fees-table">
-      <div class="fee-row">
-        <span>Tourist Visa (Single Entry)</span>
-        <span>$60 - $100</span>
-      </div>
-      <div class="fee-row">
-        <span>Tourist Visa (Multiple Entry)</span>
-        <span>$100 - $150</span>
-      </div>
-      <div class="fee-row">
-        <span>Processing Fee</span>
-        <span>$25 - $50</span>
-      </div>
-      <div class="fee-row">
-        <span>Service Charges (if using agent)</span>
-        <span>$30 - $75</span>
-      </div>
-    </div>
-    <p class="fee-note">
-      <strong>Note:</strong> Fees are subject to change and may vary based on
-      nationality and current policies.
-    </p>
-  </div>
-
-  <div class="visa-tips">
-    <h4>Important Tips</h4>
-    <div class="tips-grid">
-      <div class="tip-item">
-        <span class="tip-icon">💡</span>
-        <strong>Apply Early:</strong> Submit your application at least 3-4 weeks
-        before travel
-      </div>
-      <div class="tip-item">
-        <span class="tip-icon">📝</span>
-        <strong>Accurate Information:</strong> Ensure all information matches
-        your supporting documents
-      </div>
-      <div class="tip-item">
-        <span class="tip-icon">📸</span>
-        <strong>Photo Requirements:</strong> Follow exact specifications for
-        passport photographs
-      </div>
-      <div class="tip-item">
-        <span class="tip-icon">💵</span>
-        <strong>Financial Proof:</strong> Show sufficient funds for your entire
-        trip duration
-      </div>
-      <div class="tip-item">
-        <span class="tip-icon">🎯</span>
-        <strong>Purpose Clarity:</strong> Clearly state the purpose and duration
-        of your visit
-      </div>
-      <div class="tip-item">
-        <span class="tip-icon">📞</span>
-        <strong>Contact Support:</strong> Our visa support team is available for
-        assistance
-      </div>
-    </div>
-  </div>
-
-  <div class="visa-support">
-    <h4>Visa Support Services</h4>
-    <p>
-      {{default "Vigovia Travel Services" .Config.CustomBranding.CompanyName}}
-      offers comprehensive visa support to make your application process smooth
-      and hassle-free.
-    </p>
-
-    <div class="support-services">
-      <div class="support-item">✅ Document checklist and verification</div>
-      <div class="support-item">✅ Application form assistance</div>
-      <div class="support-item">✅ Appointment scheduling</div>
-      <div class="support-item">✅ Interview preparation guidance</div>
-      <div class="support-item">✅ Status tracking and updates</div>
-      <div class="support-item">
-        ✅ Emergency visa services (when available)
-      </div>
-    </div>
-
-    <p class="contact-info">
-      For visa assistance, contact our visa support team at
-      <strong>visa@vigovia.com</strong> or call <strong>+1-800-VIGOVIA</strong>
-    </p>
   </div>
 </div>
+{{end}}
 
 <style>
-  .visa-details {
-    margin-bottom: 30px;
-  }
-
-  .visa-details h3 {
-    margin-bottom: 20px;
-    color: #007bff;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 10px;
-  }
-
-  .visa-overview {
-    margin-bottom: 25px;
-  }
-
-  .visa-card {
-    background: #e3f2fd;
-    border: 1px solid #bbdefb;
-    border-radius: 10px;
-    padding: 20px;
-    border-left: 4px solid #1976d2;
-  }
-
-  .visa-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-
-  .visa-header h4 {
-    margin: 0;
-    color: #1976d2;
-  }
-
-  .visa-type {
-    background: #1976d2;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 0.85em;
-    font-weight: bold;
-  }
-
-  .visa-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-  }
-
-  .info-item {
-    font-size: 0.9em;
-    color: #495057;
-  }
-
-  .info-item strong {
-    color: #333;
-  }
-
-  .visa-requirements {
-    margin-bottom: 25px;
-  }
-
-  .visa-requirements h4 {
-    color: #333;
-    margin-bottom: 15px;
-  }
-
-  .requirements-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 15px;
-  }
-
-  .requirement-section {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    border-top: 3px solid #6c757d;
-  }
-
-  .requirement-section h5 {
-    margin: 0 0 10px 0;
-    color: #495057;
-    font-size: 0.95em;
-  }
-
-  .requirement-section ul {
-    margin: 0;
-    padding-left: 18px;
-  }
-
-  .requirement-section li {
-    margin-bottom: 4px;
-    font-size: 0.85em;
-    color: #666;
-    line-height: 1.3;
-  }
-
-  .visa-process {
-    margin-bottom: 25px;
-  }
-
-  .visa-process h4 {
-    color: #333;
-    margin-bottom: 15px;
-  }
-
-  .process-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .step {
-    display: flex;
-    align-items: flex-start;
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid #28a745;
-  }
-
-  .step-number {
-    background: #28a745;
-    color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 0.9em;
-    margin-right: 15px;
-    flex-shrink: 0;
-  }
-
-  .step-content strong {
-    display: block;
-    color: #333;
-    margin-bottom: 5px;
-  }
-
-  .step-content p {
-    margin: 0;
-    font-size: 0.9em;
-    color: #666;
-    line-height: 1.4;
-  }
-
-  .visa-fees {
-    margin-bottom: 25px;
-  }
-
-  .visa-fees h4 {
-    color: #333;
-    margin-bottom: 15px;
-  }
-
-  .fees-table {
-    background: #f8f9fa;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .fee-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 15px;
-    border-bottom: 1px solid #dee2e6;
-  }
-
-  .fee-row:last-child {
-    border-bottom: none;
-  }
-
-  .fee-row:nth-child(even) {
-    background: rgba(255, 255, 255, 0.5);
-  }
-
-  .fee-note {
-    margin: 10px 0 0 0;
-    font-size: 0.85em;
-    color: #666;
-    font-style: italic;
-  }
-
-  .visa-tips {
-    margin-bottom: 25px;
-  }
-
-  .visa-tips h4 {
-    color: #333;
-    margin-bottom: 15px;
-  }
-
-  .tips-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 12px;
-  }
-
-  .tip-item {
-    background: #fff3cd;
-    padding: 12px;
-    border-radius: 6px;
-    border-left: 3px solid #ffc107;
-    display: flex;
-    align-items: flex-start;
-  }
-
-  .tip-icon {
-    margin-right: 8px;
-    font-size: 1.1em;
-  }
-
-  .tip-item strong {
-    display: block;
-    color: #856404;
-    margin-bottom: 3px;
-    font-size: 0.9em;
-  }
-
-  .visa-support {
-    background: #d4edda;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #c3e6cb;
-  }
-
-  .visa-support h4 {
-    color: #155724;
-    margin-bottom: 10px;
-  }
-
-  .visa-support p {
-    margin: 0 0 15px 0;
-    color: #495057;
-    font-size: 0.9em;
-    line-height: 1.4;
-  }
-
-  .support-services {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 8px;
-    margin-bottom: 15px;
-  }
-
-  .support-item {
-    font-size: 0.85em;
-    color: #155724;
-    padding: 3px 0;
-  }
-
-  .contact-info {
-    font-size: 0.9em;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.7);
-    padding: 10px;
-    border-radius: 5px;
-  }
-
   @media print {
-    .requirements-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .tips-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-
-    .process-steps {
-      gap: 8px;
-    }
-
     .visa-details {
+      margin-bottom: 30px;
       page-break-inside: avoid;
+    }
+
+    .visa-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #000;
+    }
+
+    .purple-text {
+      color: #7b2cbf;
+    }
+
+    .visa-info-box {
+      background-color: #f5e6ff;
+      border: 1px solid #e0b3ff;
+      border-radius: 20px;
+      padding: 20px 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .visa-info-item {
+      text-align: left;
+    }
+
+    .info-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .info-value {
+      font-size: 16px;
+      font-weight: 400;
+      color: #333;
     }
   }
 </style>
