@@ -1,244 +1,127 @@
 {{/* Activity table/summary section */}}
 <div class="activity-table">
-  <h3>Activities Summary</h3>
+  <h2 class="activity-title">
+    Activity <span class="purple-text">Table</span>
+  </h2>
 
   <div class="table-container">
-    <table class="activities-table">
-      <thead>
-        <tr>
-          <th>Day</th>
-          <th>Activity</th>
-          <th>Type</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{range $dayIndex, $day := .Days}} {{range $activityIndex, $activity :=
-        $day.Activities}}
-        <tr>
-          <td class="day-cell">
-            <strong>Day {{$day.DayNumber}}</strong>
-            <div class="date">{{formatDate $day.Date}}</div>
-          </td>
-          <td class="activity-name">
-            <strong>{{$activity.Name}}</strong>
-            {{if $activity.Description}}
-            <div class="activity-desc">{{$activity.Description}}</div>
-            {{end}}
-          </td>
-          <td class="activity-type">
-            {{if eq $activity.Type "Sightseeing"}}
-            <span class="activity-type type-sightseeing">Sightseeing</span>
-            {{else if eq $activity.Type "Cultural"}}
-            <span class="activity-type type-cultural">Cultural</span>
-            {{else if eq $activity.Type "Adventure"}}
-            <span class="activity-type type-adventure">Adventure</span>
-            {{else if eq $activity.Type "Transfer"}}
-            <span class="activity-type type-transfer">Transfer</span>
-            {{else}}
-            <span class="activity-type">{{$activity.Type}}</span>
-            {{end}}
-          </td>
-          <td class="price-cell">
-            {{if $activity.Price}} {{formatCurrency $activity.Price "₹"}}
-            {{else}}
-            <span class="included">Included</span>
-            {{end}}
-          </td>
-        </tr>
-        {{end}} {{end}}
-      </tbody>
-    </table>
-  </div>
-
-  <div class="activity-stats">
-    <div class="stat-item">
-      <strong>Total Activities:</strong>
-      {{$totalActivities := 0}} {{range .Days}} {{$totalActivities = add
-      $totalActivities (len .Activities)}} {{end}} {{$totalActivities}}
+    <!-- Header row with pill-style design -->
+    <div class="header-row">
+      <div class="header-pill header-city">City</div>
+      <div class="header-pill header-activity">Activity</div>
+      <div class="header-pill header-type">Type</div>
+      <div class="header-pill header-time">Time Required</div>
     </div>
-    <div class="stat-item">
-      <strong>Total Days with Activities:</strong>
-      {{$daysWithActivities := 0}} {{range .Days}} {{if .Activities}}
-      {{$daysWithActivities = add $daysWithActivities 1}} {{end}} {{end}}
-      {{$daysWithActivities}}
+
+    <!-- Data rows -->
+    <div class="data-rows">
+      {{range $dayIndex, $day := .Days}} {{range $activityIndex, $activity :=
+      $day.Activities}}
+      <div class="data-row">
+        <div class="data-cell city-cell">{{$activity.Location}}</div>
+        <div class="data-cell activity-cell">{{$activity.Name}}</div>
+        <div class="data-cell type-cell">{{$activity.Type}}</div>
+        <div class="data-cell time-cell">{{$activity.Duration}}</div>
+      </div>
+      {{end}} {{end}}
     </div>
   </div>
 </div>
 
 <style>
-  .activity-table {
-    margin-bottom: 30px;
-    page-break-inside: avoid;
-  }
-
-  .activity-table h3 {
-    margin-bottom: 20px;
-    color: #007bff;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 10px;
-  }
-
-  .table-container {
-    overflow-x: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .activities-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    font-size: 0.9em;
-  }
-
-  .activities-table th {
-    background: #007bff;
-    color: white;
-    padding: 12px 8px;
-    text-align: left;
-    font-weight: 600;
-    border-bottom: 2px solid #0056b3;
-  }
-
-  .activities-table td {
-    padding: 12px 8px;
-    border-bottom: 1px solid #dee2e6;
-    vertical-align: top;
-  }
-
-  .activities-table tbody tr:hover {
-    background-color: #f8f9fa;
-  }
-
-  .activities-table tbody tr:last-child td {
-    border-bottom: none;
-  }
-
-  .day-cell {
-    min-width: 100px;
-    text-align: center;
-  }
-
-  .day-cell .date {
-    font-size: 0.8em;
-    color: #666;
-    margin-top: 4px;
-  }
-
-  .activity-name strong {
-    color: #333;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .activity-desc {
-    color: #666;
-    font-size: 0.85em;
-    line-height: 1.4;
-    margin-top: 4px;
-  }
-
-  .activity-type {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.8em;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .type-sightseeing {
-    background: #e3f2fd;
-    color: #1976d2;
-  }
-
-  .type-cultural {
-    background: #f3e5f5;
-    color: #7b1fa2;
-  }
-
-  .type-adventure {
-    background: #e8f5e8;
-    color: #388e3c;
-  }
-
-  .type-transfer {
-    background: #fff3e0;
-    color: #f57c00;
-  }
-
-  .activity-type:not([class*="type-"]) {
-    background: #f5f5f5;
-    color: #666;
-  }
-
-  .price-cell {
-    text-align: right;
-    font-weight: 600;
-    color: #007bff;
-    min-width: 100px;
-  }
-
-  .included {
-    color: #28a745;
-    font-style: italic;
-    font-weight: normal;
-  }
-
-  .activity-stats {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding: 15px;
-    background: #f8f9fa;
-    border-radius: 8px;
-  }
-
-  .stat-item {
-    text-align: center;
-  }
-
-  .stat-item strong {
-    display: block;
-    color: #333;
-    margin-bottom: 5px;
-  }
-
   @media print {
     .activity-table {
+      margin-bottom: 30px;
       page-break-inside: avoid;
     }
 
-    .activities-table {
-      font-size: 0.8em;
+    .activity-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #000;
     }
 
-    .activities-table th,
-    .activities-table td {
-      padding: 8px 6px;
-    }
-
-    .activity-stats {
-      grid-template-columns: 1fr;
-      gap: 10px;
+    .purple-text {
+      color: #7b2cbf;
     }
 
     .table-container {
-      box-shadow: none;
-      border: 1px solid #ddd;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    .activities-table {
-      font-size: 0.8em;
+      width: 100%;
     }
 
-    .activity-stats {
-      grid-template-columns: 1fr;
+    .header-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 0;
+    }
+
+    .header-pill {
+      background-color: #7b2cbf;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 25px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Data rows */
+    .data-rows {
+      background-color: #f5e6ff;
+      border-radius: 0 0 15px 15px;
+      padding: 0;
+    }
+
+    .data-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr 1fr;
+      gap: 8px;
+      padding: 12px 8px;
+      align-items: center;
+    }
+
+    .data-row:nth-child(even) {
+      background-color: #f0d9ff;
+    }
+
+    .data-row:nth-child(odd) {
+      background-color: #f5e6ff;
+    }
+
+    .data-row:first-child {
+      border-radius: 15px 15px 0 0;
+    }
+
+    .data-row:last-child {
+      border-radius: 0 0 15px 15px;
+    }
+
+    .data-cell {
+      padding: 8px 12px;
+      font-size: 14px;
+      color: #333;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .city-cell {
+      font-weight: 500;
+    }
+
+    .activity-cell {
+      font-weight: 500;
+      text-align: left;
+    }
+
+    .type-cell {
+      font-weight: 400;
+    }
+
+    .time-cell {
+      font-weight: 400;
     }
   }
 </style>
