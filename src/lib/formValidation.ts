@@ -6,6 +6,7 @@
  */
 
 import { ItineraryFormData } from "./schema";
+import { ErrorCategory, ErrorSeverity } from "./errorHandler";
 
 export interface ValidationResult {
   isValid: boolean;
@@ -309,8 +310,8 @@ export function convertToErrorHandlerFormat(
     }));
 
   return {
-    category: "VALIDATION" as const,
-    severity: "MEDIUM" as const,
+    category: ErrorCategory.VALIDATION,
+    severity: ErrorSeverity.MEDIUM,
     message: validationResult.summary,
     userMessage: `Form validation failed: ${validationResult.summary}`,
     suggestions: [

@@ -46,7 +46,7 @@
   - Maintain existing client-side PDF generation functionality
   - _Requirements: 1.1, 1.2, 1.3, 4.1_
 
-- [-] 6. Implement comprehensive error handling
+- [ ] 6. Implement comprehensive error handling
 
   - Add error handling in backend PDF service for network failures(use only pnpm whenever needed, project is setup using pnpm)
   - Create user-friendly error messages for different error types
