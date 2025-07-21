@@ -90,7 +90,20 @@ export class BackendPdfService {
    * Check if backend PDF generation is enabled
    */
   public isBackendPdfEnabled(): boolean {
-    return isFeatureEnabled("backendPdfGeneration");
+    // Check feature flag first
+    if (!isFeatureEnabled("backendPdfGeneration")) {
+      return false;
+    }
+
+    // In production, also check if we have a valid backend URL
+    if (process.env.NODE_ENV === "production") {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      if (!backendUrl || backendUrl === "https://api.example.com") {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /**
@@ -103,6 +116,17 @@ export class BackendPdfService {
         "Backend PDF generation is disabled. Please enable it in configuration or use client-side generation.",
         "FEATURE_DISABLED"
       );
+    }
+
+    // Runtime validation for production environment
+    if (process.env.NODE_ENV === "production") {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      if (!backendUrl || backendUrl === "https://api.example.com") {
+        throw new BackendPdfError(
+          "NEXT_PUBLIC_BACKEND_URL must be set in production environment",
+          "CONFIGURATION_ERROR"
+        );
+      }
     }
     let lastError: Error | undefined;
 

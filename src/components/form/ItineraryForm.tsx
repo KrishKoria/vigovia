@@ -3,11 +3,10 @@
 import { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { MapPin, Download, Server } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Header from "./Header";
 import DayCard from "./DayCard";
@@ -26,8 +25,9 @@ import {
 import {
   ErrorDisplay,
   SimpleErrorDisplay,
-  SuccessDisplay,
 } from "@/components/comman/ErrorDisplay";
+import { PdfGenerationButtons } from "@/components/ui/PdfGenerationButtons";
+import { SuccessNotification } from "@/components/ui/SuccessNotification";
 import {
   validateItineraryForm,
   convertToErrorHandlerFormat,
@@ -50,6 +50,10 @@ export default function ItineraryForm() {
   const [backendError, setBackendError] = useState<ErrorInfo | null>(null);
   const [isRetrying, setIsRetrying] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [successFilename, setSuccessFilename] = useState<string | null>(null);
+  const [successMethod, setSuccessMethod] = useState<"client" | "backend">(
+    "client"
+  );
 
   const form = useForm<ItineraryFormData>({
     resolver: zodResolver(itinerarySchema),
@@ -127,8 +131,27 @@ export default function ItineraryForm() {
   const onSubmit = async (data: ItineraryFormData) => {
     setIsGenerating(true);
     setError(null);
+    setSuccessMessage(null);
     try {
       await generateItineraryPDF(data);
+
+      // Show success notification for client generation
+      const filename = `${
+        data.destination
+      }_Itinerary_${data.customerName.replace(/\s+/g, "_")}_${
+        data.startDate
+      }.pdf`;
+      setSuccessMessage(
+        "PDF generated successfully using client-side processing!"
+      );
+      setSuccessFilename(filename);
+      setSuccessMethod("client");
+
+      // Auto-dismiss after 5 seconds
+      setTimeout(() => {
+        setSuccessMessage(null);
+        setSuccessFilename(null);
+      }, 5000);
     } catch (error) {
       console.error("Error generating PDF:", error);
       setError(
@@ -159,12 +182,6 @@ export default function ItineraryForm() {
       const backendData = transformToBackendFormat(data);
       console.log("Data transformed for backend:", backendData);
 
-      const context = {
-        formData: data,
-        retryAttempt: 0,
-        timestamp: new Date(),
-      };
-
       const pdfBlob = await backendPdfService.generatePDF(backendData);
 
       const filename = backendPdfService.generateFilename({
@@ -176,9 +193,17 @@ export default function ItineraryForm() {
       backendPdfService.downloadPdf(pdfBlob, filename);
 
       console.log("Backend PDF generation completed successfully");
-      setSuccessMessage(`PDF generated successfully! File: ${filename}`);
+      setSuccessMessage(
+        "PDF generated successfully using server-side processing!"
+      );
+      setSuccessFilename(filename);
+      setSuccessMethod("backend");
 
-      setTimeout(() => setSuccessMessage(null), 5000);
+      // Auto-dismiss after 5 seconds
+      setTimeout(() => {
+        setSuccessMessage(null);
+        setSuccessFilename(null);
+      }, 5000);
     } catch (error) {
       console.error("Backend PDF generation failed:", error);
 
@@ -475,14 +500,21 @@ export default function ItineraryForm() {
           ))}
 
           <div className="text-center bg-gradient-to-r from-white via-[#FBF4FF]/50 to-white p-8 rounded-2xl border border-[#936FE0]/20">
+            {/* Success Notification */}
             {successMessage && (
-              <SuccessDisplay
+              <SuccessNotification
                 message={successMessage}
-                onDismiss={() => setSuccessMessage(null)}
+                filename={successFilename || undefined}
+                generationMethod={successMethod}
+                onDismiss={() => {
+                  setSuccessMessage(null);
+                  setSuccessFilename(null);
+                }}
                 className="mb-6"
               />
             )}
 
+            {/* Error Displays */}
             {error && (
               <SimpleErrorDisplay
                 message={error}
@@ -515,60 +547,22 @@ export default function ItineraryForm() {
               />
             )}
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button
-                type="submit"
-                disabled={isGenerating || isGeneratingBackend}
-                className="bg-gradient-to-r from-[#541C9C] via-[#680099] to-[#936FE0] hover:from-[#680099] hover:via-[#541C9C] hover:to-[#680099] text-white px-12 py-6 text-lg font-bold min-w-[280px] rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
-              >
-                {isGenerating ? (
-                  <div className="flex items-center gap-3">
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    <span className="text-lg">Generating PDF...</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-3">
-                    <Download className="h-5 w-5" />
-                    <span className="text-lg">Generate PDF (Client)</span>
-                  </div>
-                )}
-              </Button>
-
-              <Button
-                type="button"
-                onClick={() => {
-                  const formData = form.getValues();
-                  form.handleSubmit((data) =>
-                    handleBackendPdfGeneration(data)
-                  )();
-                }}
-                disabled={isGenerating || isGeneratingBackend}
-                className="bg-gradient-to-r from-[#2563eb] via-[#1d4ed8] to-[#1e40af] hover:from-[#1d4ed8] hover:via-[#2563eb] hover:to-[#1d4ed8] text-white px-12 py-6 text-lg font-bold min-w-[280px] rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
-              >
-                {isGeneratingBackend ? (
-                  <div className="flex items-center gap-3">
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    <span className="text-lg">Generating PDF...</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-3">
-                    <Server className="h-5 w-5" />
-                    <span className="text-lg">Generate PDF (Backend)</span>
-                  </div>
-                )}
-              </Button>
-            </div>
-
-            {/* Help text */}
-            <div className="mt-4 text-sm text-[#680099]/70">
-              <p>Choose your preferred PDF generation method:</p>
-              <p className="mt-1">
-                <span className="font-medium">Client:</span> Generated in your
-                browser (faster, works offline) |
-                <span className="font-medium ml-2">Backend:</span> Generated on
-                server (more features, requires connection)
-              </p>
-            </div>
+            {/* Enhanced PDF Generation Buttons */}
+            <PdfGenerationButtons
+              onClientGeneration={async () => {
+                const formData = form.getValues();
+                await onSubmit(formData);
+              }}
+              onBackendGeneration={async () => {
+                const formData = form.getValues();
+                await form.handleSubmit((data) =>
+                  handleBackendPdfGeneration(data)
+                )();
+              }}
+              isGeneratingClient={isGenerating}
+              isGeneratingBackend={isGeneratingBackend}
+              disabled={false}
+            />
           </div>
         </form>
       </div>
