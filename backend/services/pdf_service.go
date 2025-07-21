@@ -240,6 +240,25 @@ func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *
 	
 	enhancedPayment := s.enhancePaymentData(request.Payment)
 	
+	// Set default company info if not provided in request
+	companyInfo := request.CompanyInfo
+	if companyInfo.Name == "" {
+		companyInfo = models.CompanyInfo{
+			Name: "Vigovia Tech Pvt. Ltd",
+			RegisteredOffice: models.RegisteredOffice{
+				Address: "Hd-109 Cinnabar Hills, Links Business Park",
+				City:    "Karnataka",
+				State:   "Karnataka",
+				Country: "India",
+			},
+			Contact: models.ContactInfo{
+				Phone: "+91-99X9999999",
+				Email: "Contact@Vigovia.Com",
+			},
+			Logo: "/static/final-logo-2.png",
+		}
+	}
+	
 	return &models.TemplateData{
 		Customer:       request.Customer,
 		Trip:           request.Trip,
@@ -252,6 +271,7 @@ func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *
 		ScopeOfService: scopeOfService,
 		Inclusions:     inclusions,
 		VisaDetails:    visaDetails,
+		CompanyInfo:    companyInfo,
 		GeneratedAt:    time.Now(),
 	}
 }

@@ -3,13 +3,14 @@ package models
 import "time"
 
 type ItineraryRequest struct {
-	Customer  Customer  `json:"customer" validate:"required"`
-	Trip      Trip      `json:"trip" validate:"required"`
-	Itinerary Itinerary `json:"itinerary" validate:"required"`
-	Flights   []Flight  `json:"flights"`
-	Hotels    []Hotel   `json:"hotels"`
-	Payment   Payment   `json:"payment"`
-	Config    PDFConfig `json:"config"`
+	Customer    Customer    `json:"customer" validate:"required"`
+	Trip        Trip        `json:"trip" validate:"required"`
+	Itinerary   Itinerary   `json:"itinerary" validate:"required"`
+	Flights     []Flight    `json:"flights"`
+	Hotels      []Hotel     `json:"hotels"`
+	Payment     Payment     `json:"payment"`
+	Config      PDFConfig   `json:"config"`
+	CompanyInfo CompanyInfo `json:"companyInfo"`
 }
 
 // Customer represents customer information
@@ -152,7 +153,32 @@ type TemplateData struct {
 	ScopeOfService []ServiceScope  `json:"scopeOfService"`
 	Inclusions     []Inclusion     `json:"inclusions"`
 	VisaDetails    VisaDetails     `json:"visaDetails"`
+	CompanyInfo    CompanyInfo     `json:"companyInfo"`
+	ContactInfo    ContactInfo     `json:"contactInfo"`
+	CompanyLogo    string          `json:"companyLogo"`
 	GeneratedAt    time.Time      `json:"generatedAt"`
+}
+
+// CompanyInfo represents company information for footer
+type CompanyInfo struct {
+	Name             string           `json:"name"`
+	RegisteredOffice RegisteredOffice `json:"registeredOffice"`
+	Contact          ContactInfo      `json:"contact"`
+	Logo             string           `json:"logo"`
+}
+
+// RegisteredOffice represents company registered office address
+type RegisteredOffice struct {
+	Address string `json:"address"`
+	City    string `json:"city"`
+	State   string `json:"state"`
+	Country string `json:"country"`
+}
+
+// ContactInfo represents contact information
+type ContactInfo struct {
+	Phone string `json:"phone"`
+	Email string `json:"email"`
 }
 
 // ImportantNote represents important notes in the PDF
