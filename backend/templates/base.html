@@ -26,7 +26,10 @@
       @media print {
         @page {
           margin: 20mm;
-          margin-bottom: 25mm;
+          margin-bottom: 30mm;
+          @bottom-center {
+            content: element(footer);
+          }
         }
 
         body {
@@ -39,7 +42,7 @@
           max-width: none;
           margin: 0;
           padding: 20px;
-          padding-bottom: 100px;
+          padding-bottom: 20px;
           border-radius: 0;
           box-shadow: none;
         }
@@ -49,8 +52,12 @@
         .visa-details,
         .activity-table,
         .hotel-bookings,
-        .flight-summary {
+        .flight-summary,
+        .important-notes,
+        .scope,
+        .inclusions {
           page-break-inside: avoid;
+          margin-bottom: 20px;
         }
       }
     </style>
