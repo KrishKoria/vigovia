@@ -3,18 +3,7 @@ package utils
 import (
 	"fmt"
 	"os"
-	"path/filepath"
-	"time"
-
-	"github.com/google/uuid"
-	"github.com/sirupsen/logrus"
 )
-
-func GenerateUniqueFilename(prefix string) string {
-	timestamp := time.Now().Format("20060102_150405")
-	uniqueID := uuid.New().String()[:8]
-	return fmt.Sprintf("%s_%s_%s.pdf", prefix, timestamp, uniqueID)
-}
 
 func GenerateReadableFilename(destination, startDate, endDate string, travelers int, customerName string) string {
 	destination = sanitizeForFilename(destination)
@@ -27,10 +16,10 @@ func GenerateReadableFilename(destination, startDate, endDate string, travelers 
 }
 
 func EnsureDirectory(dirPath string) error {
-	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
-		return os.MkdirAll(dirPath, 0755)
-	}
-	return nil
+    if _, err := os.Stat(dirPath); os.IsNotExist(err) {
+        return os.MkdirAll(dirPath, 0755)
+    }
+    return nil
 }
 
 func GetFileSize(filePath string) (string, error) {
@@ -50,34 +39,10 @@ func GetFileSize(filePath string) (string, error) {
 	}
 }
 
-func CleanupOldFiles(dirPath string, maxAge time.Duration) error {
-	return filepath.Walk(dirPath, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		
-		if !info.IsDir() && time.Since(info.ModTime()) > maxAge {
-			logrus.WithField("file", path).Info("Removing old file")
-			return os.Remove(path)
-		}
-		
-		return nil
-	})
-}
 
 func FileExists(filePath string) bool {
 	_, err := os.Stat(filePath)
 	return !os.IsNotExist(err)
-}
-
-func EnsureDirectoryExists(dirPath string) error {
-	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
-		err := os.MkdirAll(dirPath, 0755)
-		if err != nil {
-			return fmt.Errorf("failed to create directory %s: %w", dirPath, err)
-		}
-	}
-	return nil
 }
 
 func sanitizeForFilename(s string) string {

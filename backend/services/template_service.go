@@ -102,6 +102,23 @@ func (s *TemplateService) RenderTemplate(templateName string, data *models.Templ
 	return html, nil
 }
 
+func toFloat64(v interface{}) (float64, bool) {
+    switch v := v.(type) {
+    case float64:
+        return v, true
+    case float32:
+        return float64(v), true
+    case int:
+        return float64(v), true
+    case int64:
+        return float64(v), true
+    case int32:
+        return float64(v), true
+    default:
+        return 0, false
+    }
+}
+
 func (s *TemplateService) getTemplateFunctions() template.FuncMap {
 	return template.FuncMap{
 		"formatCurrency": utils.FormatCurrency,
@@ -125,75 +142,16 @@ func (s *TemplateService) getTemplateFunctions() template.FuncMap {
 		},
         "mul": func(a, b interface{}) float64 {
             var aFloat, bFloat float64
-            
-            switch v := a.(type) {
-            case float64:
-                aFloat = v
-            case float32:
-                aFloat = float64(v)
-            case int:
-                aFloat = float64(v)
-            case int64:
-                aFloat = float64(v)
-            case int32:
-                aFloat = float64(v)
-            default:
-                return 0 
-            }
-            
-            switch v := b.(type) {
-            case float64:
-                bFloat = v
-            case float32:
-                bFloat = float64(v)
-            case int:
-                bFloat = float64(v)
-            case int64:
-                bFloat = float64(v)
-            case int32:
-                bFloat = float64(v)
-            default:
-                return 0 
-            }
-            
+
+            aFloat, _ = toFloat64(a)
+            bFloat, _ = toFloat64(b)
+
             return aFloat * bFloat
         },
         "div": func(a, b interface{}) float64 {
             var aFloat, bFloat float64
-            
-            switch v := a.(type) {
-            case float64:
-                aFloat = v
-            case float32:
-                aFloat = float64(v)
-            case int:
-                aFloat = float64(v)
-            case int64:
-                aFloat = float64(v)
-            case int32:
-                aFloat = float64(v)
-            default:
-                return 0
-            }
-            
-            switch v := b.(type) {
-            case float64:
-                bFloat = v
-            case float32:
-                bFloat = float64(v)
-            case int:
-                bFloat = float64(v)
-            case int64:
-                bFloat = float64(v)
-            case int32:
-                bFloat = float64(v)
-            default:
-                return 0
-            }
-            
-            if bFloat == 0 {
-                return 0 
-            }
+            aFloat, _ = toFloat64(a)
+			bFloat, _ = toFloat64(b)
             return aFloat / bFloat
         },
 		"mod": func(a, b int) int {
@@ -241,26 +199,4 @@ func (s *TemplateService) getTemplateFunctions() template.FuncMap {
 			return dict
 		},
 	}
-}
-
-func (s *TemplateService) ClearCache() {
-	s.templates = make(map[string]*template.Template)
-	logrus.Info("Template cache cleared")
-}
-
-func (s *TemplateService) PreloadTemplates() error {
-	templateFiles := []string{
-		"base.html",
-	}
-	
-	for _, templateFile := range templateFiles {
-		_, err := s.LoadTemplate(templateFile)
-		if err != nil {
-			logrus.WithError(err).WithField("template", templateFile).Error("Failed to preload template")
-			return fmt.Errorf("failed to preload template %s: %w", templateFile, err)
-		}
-	}
-	
-	logrus.WithField("templatesLoaded", len(s.templates)).Info("Templates preloaded")
-	return nil
 }

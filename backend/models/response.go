@@ -31,7 +31,6 @@ type PDFResponse struct {
 	FileName    string    `json:"file_name"`
 	FileSize    string    `json:"file_size"`
 	GeneratedAt time.Time `json:"generated_at"`
-	DownloadURL string    `json:"download_url"`
 }
 
 // FileInfoResponse represents file information response

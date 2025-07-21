@@ -92,7 +92,6 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 		FileName:    k,
 		FileSize:    fileSize,
 		GeneratedAt: time.Now(),
-		DownloadURL: fmt.Sprintf("/api/v1/download/%s", k),
 	}
 	
 	logrus.WithFields(logrus.Fields{
@@ -192,25 +191,10 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 		logrus.WithError(err).Error("ChromeDP execution failed")
 		return nil, fmt.Errorf("chromedp error: %w", err)
 	}
-	
-	if len(pdfBuffer) < 1000 { 
-		logrus.WithFields(logrus.Fields{
-			"pdfSize": len(pdfBuffer),
-			"htmlSize": len(html),
-			"pageTitle": pageTitle,
-			"bodyTextLength": len(bodyText),
-		}).Warn("Generated PDF is suspiciously small")
-	}
-	
+
 	return pdfBuffer, nil
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
 
 func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *models.TemplateData {
 	importantNotes := []models.ImportantNote{

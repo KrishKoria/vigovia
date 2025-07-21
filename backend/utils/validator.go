@@ -95,3 +95,4 @@ func getValidationMessage(err validator.FieldError) string {
 		return fmt.Sprintf("Invalid value for %s", err.Field())
 	}
 }
+
