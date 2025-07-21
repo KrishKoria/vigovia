@@ -24,7 +24,6 @@ func main() {
 	
 	router := gin.New()
 	
-	router.Use(middleware.LoggingMiddleware())
 	router.Use(middleware.CORSMiddleware())
 	router.Use(middleware.ErrorHandlingMiddleware())
 	router.Use(gin.Recovery())
