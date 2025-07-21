@@ -33,6 +33,10 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Keep these environment files in version control
+!.env.example
+!.env.development
+
 # vercel
 .vercel
 

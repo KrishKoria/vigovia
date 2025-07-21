@@ -12,6 +12,7 @@ import {
   PDFResponse,
   ErrorResponse,
 } from "./types/backend";
+import { getBackendConfig, getFeatureFlags, isFeatureEnabled } from "./config";
 
 // Configuration interface
 interface BackendConfig {
@@ -66,35 +67,43 @@ export class BackendPdfService {
   }
 
   /**
-   * Get backend configuration from environment variables with defaults
+   * Get backend configuration from centralized config system
    */
   private getConfiguration(): BackendConfig {
+    const backendConfig = getBackendConfig();
     return {
-      baseUrl: this.getBackendUrl(),
-      timeout: parseInt(process.env.NEXT_PUBLIC_PDF_TIMEOUT || "30000", 10),
-      maxRetries: parseInt(process.env.NEXT_PUBLIC_PDF_MAX_RETRIES || "3", 10),
-      retryDelay: parseInt(
-        process.env.NEXT_PUBLIC_PDF_RETRY_DELAY || "1000",
-        10
-      ),
+      baseUrl: backendConfig.url,
+      timeout: backendConfig.timeout,
+      maxRetries: backendConfig.maxRetries,
+      retryDelay: backendConfig.retryDelay,
     };
   }
 
   /**
-   * Get backend URL from environment with fallback to localhost
+   * Get backend URL from centralized configuration
    */
   public getBackendUrl(): string {
-    const backendUrl =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8080";
+    return getBackendConfig().url;
+  }
 
-    // Ensure URL doesn't end with slash
-    return backendUrl.replace(/\/$/, "");
+  /**
+   * Check if backend PDF generation is enabled
+   */
+  public isBackendPdfEnabled(): boolean {
+    return isFeatureEnabled("backendPdfGeneration");
   }
 
   /**
    * Main function to generate PDF from backend API
    */
   public async generatePDF(data: ItineraryRequest): Promise<Blob> {
+    // Check if backend PDF generation is enabled
+    if (!this.isBackendPdfEnabled()) {
+      throw new BackendPdfError(
+        "Backend PDF generation is disabled. Please enable it in configuration or use client-side generation.",
+        "FEATURE_DISABLED"
+      );
+    }
     let lastError: Error | undefined;
 
     // Retry mechanism
@@ -697,6 +706,11 @@ export const backendPdfService = new BackendPdfService();
 // Export convenience function for direct use
 export async function generatePDF(data: ItineraryRequest): Promise<Blob> {
   return backendPdfService.generatePDF(data);
+}
+
+// Export feature check function
+export function isBackendPdfEnabled(): boolean {
+  return backendPdfService.isBackendPdfEnabled();
 }
 
 // Export download function for direct use

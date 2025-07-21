@@ -271,3 +271,16 @@ body {
 .bg-vigovia-light\/20 {
   background-color: rgba(251, 244, 255, 0.2) !important;
 }
+
+/* Progress animation for indeterminate state */
+@keyframes progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

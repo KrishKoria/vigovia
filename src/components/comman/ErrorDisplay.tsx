@@ -6,8 +6,8 @@
  */
 
 import React, { useState } from "react";
-import { Button } from "./button";
-import { Card, CardContent } from "./card";
+import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
 import {
   AlertTriangle,
   Wifi,

@@ -27,7 +27,7 @@ import {
   ErrorDisplay,
   SimpleErrorDisplay,
   SuccessDisplay,
-} from "@/components/ui/ErrorDisplay";
+} from "@/components/comman/ErrorDisplay";
 import {
   validateItineraryForm,
   convertToErrorHandlerFormat,
