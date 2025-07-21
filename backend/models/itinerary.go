@@ -3,14 +3,18 @@ package models
 import "time"
 
 type ItineraryRequest struct {
-	Customer    Customer    `json:"customer" validate:"required"`
-	Trip        Trip        `json:"trip" validate:"required"`
-	Itinerary   Itinerary   `json:"itinerary" validate:"required"`
-	Flights     []Flight    `json:"flights"`
-	Hotels      []Hotel     `json:"hotels"`
-	Payment     Payment     `json:"payment"`
-	Config      PDFConfig   `json:"config"`
-	CompanyInfo CompanyInfo `json:"companyInfo"`
+	Customer       Customer         `json:"customer" validate:"required"`
+	Trip           Trip             `json:"trip" validate:"required"`
+	Itinerary      Itinerary        `json:"itinerary" validate:"required"`
+	Flights        []Flight         `json:"flights"`
+	Hotels         []Hotel          `json:"hotels"`
+	Payment        Payment          `json:"payment"`
+	Config         PDFConfig        `json:"config"`
+	CompanyInfo    CompanyInfo      `json:"companyInfo"`
+	ImportantNotes []ImportantNote  `json:"importantNotes"`
+	ScopeOfService []ServiceScope   `json:"scopeOfService"`
+	Inclusions     []Inclusion      `json:"inclusions"`
+	VisaDetails    VisaDetails      `json:"visaDetails"`
 }
 
 // Customer represents customer information

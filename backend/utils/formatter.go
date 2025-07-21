@@ -30,7 +30,7 @@ func FormatCurrencyString(amountStr string, currency string) string {
 func FormatDate(date interface{}) string {
     switch v := date.(type) {
     case string:
-        return formatDateString(v)
+        return formatDateWithLayout(v, "2 January 2006")
     case time.Time:
         return v.Format("2 January 2006")
     default:
@@ -38,7 +38,7 @@ func FormatDate(date interface{}) string {
     }
 }
 
-func formatDateString(dateStr string) string {
+func formatDateWithLayout(dateStr string, layout string) string {
     formats := []string{
         "2006-01-02",
         "2006-01-02T15:04:05Z",
@@ -49,7 +49,7 @@ func formatDateString(dateStr string) string {
     
     for _, format := range formats {
         if t, err := time.Parse(format, dateStr); err == nil {
-            return t.Format("2 January 2006")
+            return t.Format(layout)
         }
     }
     
@@ -57,21 +57,7 @@ func formatDateString(dateStr string) string {
 }
 
 func FormatDateShort(dateStr string) string {
-	formats := []string{
-		"2006-01-02",
-		"2006-01-02T15:04:05Z",
-		"2006-01-02T15:04:05.000Z",
-		"02/01/2006",
-		"2006/01/02",
-	}
-	
-	for _, format := range formats {
-		if t, err := time.Parse(format, dateStr); err == nil {
-			return t.Format("2 Jan")
-		}
-	}
-	
-	return dateStr
+    return formatDateWithLayout(dateStr, "2 Jan")
 }
 
 func CalculateDuration(startDate, endDate string) string {

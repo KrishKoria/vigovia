@@ -197,28 +197,44 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 
 
 func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *models.TemplateData {
-	importantNotes := []models.ImportantNote{
-		{Point: "General Information", Details: "Please carry valid identification and travel documents."},
-		{Point: "Booking Confirmation", Details: "All bookings are subject to availability and confirmation."},
-		{Point: "Weather Conditions", Details: "Activities may be subject to weather conditions."},
+	// Set default important notes if not provided
+	importantNotes := request.ImportantNotes
+	if len(importantNotes) == 0 {
+		importantNotes = []models.ImportantNote{
+			{Point: "General Information", Details: "Please carry valid identification and travel documents."},
+			{Point: "Booking Confirmation", Details: "All bookings are subject to availability and confirmation."},
+			{Point: "Weather Conditions", Details: "Activities may be subject to weather conditions."},
+		}
 	}
 	
-	scopeOfService := []models.ServiceScope{
-		{Service: "Itinerary Planning", Details: "Custom itinerary based on your preferences"},
-		{Service: "Activity Booking", Details: "Pre-booking of selected activities and experiences"},
-		{Service: "Transfer Arrangements", Details: "Transportation coordination and booking"},
+	// Set default scope of service if not provided
+	scopeOfService := request.ScopeOfService
+	if len(scopeOfService) == 0 {
+		scopeOfService = []models.ServiceScope{
+			{Service: "Itinerary Planning", Details: "Custom itinerary based on your preferences"},
+			{Service: "Activity Booking", Details: "Pre-booking of selected activities and experiences"},
+			{Service: "Transfer Arrangements", Details: "Transportation coordination and booking"},
+		}
 	}
 	
-	inclusions := []models.Inclusion{
-		{Category: "Accommodation", Count: len(request.Hotels), Details: "Hotel bookings as per itinerary", Status: "Included"},
-		{Category: "Activities", Count: s.countTotalActivities(request.Itinerary.Days), Details: "Sightseeing and activities as mentioned", Status: "Included"},
-		{Category: "Transfers", Count: s.countTotalTransfers(request.Itinerary.Days), Details: "Airport and inter-city transfers", Status: "Included"},
+	// Set default inclusions if not provided
+	inclusions := request.Inclusions
+	if len(inclusions) == 0 {
+		inclusions = []models.Inclusion{
+			{Category: "Accommodation", Count: len(request.Hotels), Details: "Hotel bookings as per itinerary", Status: "Included"},
+			{Category: "Activities", Count: s.countTotalActivities(request.Itinerary.Days), Details: "Sightseeing and activities as mentioned", Status: "Included"},
+			{Category: "Transfers", Count: s.countTotalTransfers(request.Itinerary.Days), Details: "Airport and inter-city transfers", Status: "Included"},
+		}
 	}
 	
-	visaDetails := models.VisaDetails{
-		VisaType:       "Tourist Visa",
-		Validity:       "30 Days",
-		ProcessingDate: time.Now().AddDate(0, 0, 14).Format("2006-01-02"),
+	// Set default visa details if not provided
+	visaDetails := request.VisaDetails
+	if (visaDetails == models.VisaDetails{}) {
+		visaDetails = models.VisaDetails{
+			VisaType:       "Tourist Visa",
+			Validity:       "30 Days",
+			ProcessingDate: time.Now().AddDate(0, 0, 14).Format("2006-01-02"),
+		}
 	}
 	
 	enhancedPayment := s.enhancePaymentData(request.Payment)

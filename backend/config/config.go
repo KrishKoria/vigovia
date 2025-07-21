@@ -53,23 +53,9 @@ func LoadConfig() error {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("./config")
 
-	setDefaults()
-
-	viper.AutomaticEnv()
-
-	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
-			return err
-		}
-	}
-
-	AppConfig = &Config{}
-	return viper.Unmarshal(AppConfig)
-}
-
-func setDefaults() {
 	viper.SetDefault("server.port", "8080")
 	viper.SetDefault("server.host", "0.0.0.0")
+	viper.SetDefault("server.template_dir", "./templates")
 	
 	viper.SetDefault("pdf.storage_path", "./storage/pdfs")
 	viper.SetDefault("pdf.max_file_age", "168h") 
@@ -86,4 +72,15 @@ func setDefaults() {
 	
 	viper.SetDefault("logging.level", "info")
 	viper.SetDefault("logging.format", "json")
+
+	viper.AutomaticEnv()
+
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+			return err
+		}
+	}
+
+	AppConfig = &Config{}
+	return viper.Unmarshal(AppConfig)
 }
