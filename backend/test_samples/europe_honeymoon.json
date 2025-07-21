@@ -1,0 +1,368 @@
+{
+  "customer": {
+    "name": "Priya & Rahul Patel",
+    "email": "priya.rahul@example.com",
+    "phone": "+91-98765-43210"
+  },
+  "trip": {
+    "title": "European Honeymoon Tour",
+    "destination": "Multi-Country: France, Italy, Switzerland",
+    "startDate": "2025-06-01",
+    "endDate": "2025-06-15",
+    "duration": "15 Days 14 Nights",
+    "travelers": 2,
+    "departureFrom": "Delhi"
+  },
+  "itinerary": {
+    "days": [
+      {
+        "dayNumber": 1,
+        "date": "2025-06-01",
+        "title": "Arrival in Paris",
+        "image": "/static/activities/paris-eiffel.jpg",
+        "activities": [
+          {
+            "id": "euro001",
+            "name": "Welcome Dinner at Eiffel Tower Restaurant",
+            "description": "Romantic welcome dinner at 58 Tour Eiffel with panoramic views of the city",
+            "location": "Eiffel Tower, Paris",
+            "duration": "2 hours",
+            "price": 18000.0,
+            "type": "Dining",
+            "time": "Evening"
+          }
+        ],
+        "transfers": [
+          {
+            "id": "euro-trans001",
+            "type": "Luxury Sedan",
+            "from": "Charles de Gaulle Airport",
+            "to": "Hotel Le Meurice, Paris",
+            "pickupTime": "14:00",
+            "dropoffTime": "15:15",
+            "duration": "1 hour 15 minutes",
+            "price": 12000.0,
+            "capacity": 2
+          }
+        ],
+        "timeline": [
+          {
+            "time": "13:30",
+            "activities": ["Arrival at Charles de Gaulle Airport"]
+          },
+          {
+            "time": "14:00",
+            "activities": ["Private transfer to hotel"]
+          },
+          {
+            "time": "15:30",
+            "activities": ["Check-in at Hotel Le Meurice", "Welcome drink"]
+          },
+          {
+            "time": "18:00",
+            "activities": ["Transfer to Eiffel Tower"]
+          },
+          {
+            "time": "19:00",
+            "activities": ["Welcome dinner at 58 Tour Eiffel"]
+          }
+        ]
+      },
+      {
+        "dayNumber": 2,
+        "date": "2025-06-02",
+        "title": "Paris Highlights Tour",
+        "image": "/static/activities/louvre.jpg",
+        "activities": [
+          {
+            "id": "euro002",
+            "name": "Private Louvre Museum Tour",
+            "description": "Skip-the-line private guided tour of the Louvre Museum highlights including the Mona Lisa",
+            "location": "Louvre Museum, Paris",
+            "duration": "3 hours",
+            "price": 15000.0,
+            "type": "Cultural",
+            "time": "Morning"
+          },
+          {
+            "id": "euro003",
+            "name": "Seine River Lunch Cruise",
+            "description": "Gourmet lunch while cruising down the Seine River",
+            "location": "Seine River, Paris",
+            "duration": "2 hours",
+            "price": 12000.0,
+            "type": "Leisure",
+            "time": "Afternoon"
+          },
+          {
+            "id": "euro004",
+            "name": "Montmartre and Sacré-Cœur Tour",
+            "description": "Evening walking tour of the artistic Montmartre district and Sacré-Cœur Basilica",
+            "location": "Montmartre, Paris",
+            "duration": "3 hours",
+            "price": 8000.0,
+            "type": "Cultural",
+            "time": "Evening"
+          }
+        ],
+        "timeline": [
+          {
+            "time": "09:00",
+            "activities": ["Breakfast at hotel"]
+          },
+          {
+            "time": "10:00",
+            "activities": ["Private transfer to Louvre Museum"]
+          },
+          {
+            "time": "10:30",
+            "activities": ["Private guided tour of the Louvre"]
+          },
+          {
+            "time": "13:30",
+            "activities": ["Seine River lunch cruise"]
+          },
+          {
+            "time": "16:00",
+            "activities": ["Free time for shopping on Champs-Élysées"]
+          },
+          {
+            "time": "18:00",
+            "activities": ["Montmartre and Sacré-Cœur evening tour"]
+          }
+        ]
+      },
+      {
+        "dayNumber": 5,
+        "date": "2025-06-05",
+        "title": "Paris to Venice",
+        "image": "/static/activities/venice.jpg",
+        "activities": [
+          {
+            "id": "euro010",
+            "name": "First Class Train Journey",
+            "description": "Scenic first-class train journey from Paris to Venice through the Alps",
+            "location": "Paris to Venice",
+            "duration": "10 hours",
+            "price": 35000.0,
+            "type": "Transportation",
+            "time": "All Day"
+          },
+          {
+            "id": "euro011",
+            "name": "Private Evening Gondola Ride",
+            "description": "Romantic private gondola ride through the canals of Venice with serenade",
+            "location": "Grand Canal, Venice",
+            "duration": "1 hour",
+            "price": 22000.0,
+            "type": "Romantic",
+            "time": "Evening"
+          }
+        ],
+        "transfers": [
+          {
+            "id": "euro-trans005",
+            "type": "Private Water Taxi",
+            "from": "Venice Santa Lucia Station",
+            "to": "Hotel Danieli, Venice",
+            "pickupTime": "19:30",
+            "dropoffTime": "20:00",
+            "duration": "30 minutes",
+            "price": 16000.0,
+            "capacity": 2
+          }
+        ]
+      }
+    ]
+  },
+  "flights": [
+    {
+      "id": "euro-flight001",
+      "date": "2025-06-01",
+      "airline": "Air France",
+      "flightNumber": "AF225",
+      "route": "Delhi to Paris",
+      "from": "Delhi (DEL)",
+      "to": "Paris (CDG)",
+      "departure": "02:10",
+      "arrival": "07:40",
+      "class": "Business",
+      "price": 220000.0
+    },
+    {
+      "id": "euro-flight002",
+      "date": "2025-06-15",
+      "airline": "Swiss International",
+      "flightNumber": "LX147",
+      "route": "Zurich to Delhi",
+      "from": "Zurich (ZRH)",
+      "to": "Delhi (DEL)",
+      "departure": "22:45",
+      "arrival": "10:30",
+      "class": "Business",
+      "price": 205000.0
+    }
+  ],
+  "hotels": [
+    {
+      "city": "Paris",
+      "checkIn": "2025-06-01",
+      "checkOut": "2025-06-05",
+      "nights": 4,
+      "hotelName": "Hotel Le Meurice",
+      "roomType": "Junior Suite with Eiffel Tower View",
+      "pricePerNight": 85000.0
+    },
+    {
+      "city": "Venice",
+      "checkIn": "2025-06-05",
+      "checkOut": "2025-06-08",
+      "nights": 3,
+      "hotelName": "Hotel Danieli",
+      "roomType": "Luxury Lagoon View Suite",
+      "pricePerNight": 95000.0
+    },
+    {
+      "city": "Florence",
+      "checkIn": "2025-06-08",
+      "checkOut": "2025-06-11",
+      "nights": 3,
+      "hotelName": "Four Seasons Hotel Firenze",
+      "roomType": "Renaissance Suite with Garden View",
+      "pricePerNight": 78000.0
+    },
+    {
+      "city": "Lucerne",
+      "checkIn": "2025-06-11",
+      "checkOut": "2025-06-15",
+      "nights": 4,
+      "hotelName": "Bürgenstock Resort",
+      "roomType": "Alpine Suite with Lake View",
+      "pricePerNight": 92000.0
+    }
+  ],
+  "payment": {
+    "totalAmount": "2,890,000.00",
+    "tcs": "144,500.00",
+    "installments": [
+      {
+        "installment": "Booking Confirmation (30%)",
+        "amount": "867,000.00",
+        "dueDate": "2024-12-01"
+      },
+      {
+        "installment": "Second Payment (40%)",
+        "amount": "1,156,000.00",
+        "dueDate": "2025-03-01"
+      },
+      {
+        "installment": "Final Payment (30%)",
+        "amount": "867,000.00",
+        "dueDate": "2025-05-01"
+      }
+    ]
+  },
+  "config": {
+    "includeFlights": true,
+    "includeHotels": true,
+    "includeActivities": true,
+    "includePayments": true,
+    "pageFormat": "A4",
+    "orientation": "portrait",
+    "customBranding": {
+      "primaryColor": "#8B0000",
+      "accentColor": "#FFD700",
+      "logoUrl": "/static/final-logo-2.png",
+      "companyName": "Romantic Journeys"
+    }
+  },
+  "companyInfo": {
+    "name": "Romantic Journeys Pvt. Ltd.",
+    "registeredOffice": {
+      "address": "42, Connaught Place",
+      "city": "New Delhi",
+      "state": "Delhi",
+      "country": "India"
+    },
+    "contact": {
+      "phone": "+91-11-4567-8900",
+      "email": "info@romanticjourneys.in"
+    },
+    "logo": "/static/final-logo-2.png"
+  },
+  "importantNotes": [
+    {
+      "point": "Visa Requirements",
+      "details": "A valid Schengen visa is required for this trip. We will assist with the visa application process."
+    },
+    {
+      "point": "Travel Insurance",
+      "details": "Comprehensive travel insurance with minimum coverage of €30,000 is mandatory for all travelers."
+    },
+    {
+      "point": "Special Arrangements",
+      "details": "All special romantic arrangements and anniversary celebrations have been confirmed with the hotels."
+    }
+  ],
+  "scopeOfService": [
+    {
+      "service": "Honeymoon Special",
+      "details": "Romantic decorations, champagne, and flowers in all hotel rooms upon arrival"
+    },
+    {
+      "service": "Luxury Transportation",
+      "details": "All transfers by private luxury vehicles and first-class train travel between cities"
+    },
+    {
+      "service": "Skip-the-Line Access",
+      "details": "VIP access and skip-the-line entry to all major attractions and museums"
+    },
+    {
+      "service": "Personal Concierge",
+      "details": "24/7 concierge service with dedicated trip manager available via WhatsApp"
+    }
+  ],
+  "inclusions": [
+    {
+      "category": "Accommodation",
+      "count": 4,
+      "details": "14 nights in 5-star luxury hotels with breakfast",
+      "status": "Included"
+    },
+    {
+      "category": "Flights",
+      "count": 2,
+      "details": "Return business class flights as per itinerary",
+      "status": "Included"
+    },
+    {
+      "category": "Transfers",
+      "count": 8,
+      "details": "All private airport and train station transfers",
+      "status": "Included"
+    },
+    {
+      "category": "Guided Tours",
+      "count": 12,
+      "details": "Private guided tours with professional English-speaking guides",
+      "status": "Included"
+    },
+    {
+      "category": "Special Experiences",
+      "count": 5,
+      "details": "Romantic experiences including gondola ride, dinner cruises, and wine tastings",
+      "status": "Included"
+    },
+    {
+      "category": "Meals",
+      "count": 26,
+      "details": "Daily breakfast, selected lunches and dinners as per itinerary",
+      "status": "Included"
+    }
+  ],
+  "visaDetails": {
+    "visaType": "Schengen Tourist Visa (Multiple Entry)",
+    "validity": "90 days",
+    "processingDate": "2025-04-15"
+  }
+}

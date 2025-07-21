@@ -1,0 +1,373 @@
+{
+  "customer": {
+    "name": "Emma Johnson",
+    "email": "emma.johnson@example.com",
+    "phone": "+44-7700-900123"
+  },
+  "trip": {
+    "title": "Japanese Cultural Tour",
+    "destination": "Japan",
+    "startDate": "2025-03-10",
+    "endDate": "2025-03-20",
+    "duration": "10 Days 9 Nights",
+    "travelers": 4,
+    "departureFrom": "London"
+  },
+  "itinerary": {
+    "days": [
+      {
+        "dayNumber": 1,
+        "date": "2025-03-10",
+        "title": "Arrival in Tokyo",
+        "image": "/static/activities/tokyo.jpg",
+        "activities": [
+          {
+            "id": "act101",
+            "name": "Airport Transfer to Hotel",
+            "description": "Private transfer from Narita Airport to your Tokyo hotel",
+            "location": "Narita Airport",
+            "duration": "1.5 hours",
+            "price": 12000.0,
+            "type": "Transfer",
+            "time": "Afternoon"
+          },
+          {
+            "id": "act102",
+            "name": "Evening in Shinjuku",
+            "description": "Explore the bright lights and vibrant streets of Shinjuku district",
+            "location": "Shinjuku, Tokyo",
+            "duration": "3 hours",
+            "price": 5000.0,
+            "type": "Leisure",
+            "time": "Evening"
+          }
+        ],
+        "transfers": [
+          {
+            "id": "trans101",
+            "type": "Private Van",
+            "from": "Narita Airport",
+            "to": "Shinjuku Hotel",
+            "pickupTime": "15:30",
+            "dropoffTime": "17:00",
+            "duration": "1.5 hours",
+            "price": 12000.0,
+            "capacity": 6
+          }
+        ]
+      },
+      {
+        "dayNumber": 2,
+        "date": "2025-03-11",
+        "title": "Tokyo Historical Sites",
+        "image": "/static/activities/tokyo-imperial.jpg",
+        "activities": [
+          {
+            "id": "act103",
+            "name": "Tokyo Imperial Palace Tour",
+            "description": "Guided tour of the Imperial Palace and East Gardens",
+            "location": "Central Tokyo",
+            "duration": "3 hours",
+            "price": 8000.0,
+            "type": "Historical",
+            "time": "Morning"
+          },
+          {
+            "id": "act104",
+            "name": "Asakusa and Senso-ji Temple",
+            "description": "Explore Tokyo's oldest temple and traditional Asakusa district",
+            "location": "Asakusa, Tokyo",
+            "duration": "3 hours",
+            "price": 7000.0,
+            "type": "Cultural",
+            "time": "Afternoon"
+          },
+          {
+            "id": "act105",
+            "name": "Tokyo Bay Dinner Cruise",
+            "description": "Evening cruise with traditional Japanese dinner and Tokyo skyline views",
+            "location": "Tokyo Bay",
+            "duration": "2.5 hours",
+            "price": 15000.0,
+            "type": "Dining",
+            "time": "Evening"
+          }
+        ],
+        "transfers": [
+          {
+            "id": "trans102",
+            "type": "Private Car",
+            "from": "Hotel",
+            "to": "Imperial Palace",
+            "pickupTime": "09:00",
+            "dropoffTime": "09:30",
+            "duration": "30 minutes",
+            "price": 4000.0,
+            "capacity": 4
+          },
+          {
+            "id": "trans103",
+            "type": "Subway",
+            "from": "Imperial Palace",
+            "to": "Asakusa",
+            "pickupTime": "12:30",
+            "dropoffTime": "13:00",
+            "duration": "30 minutes",
+            "price": 1000.0,
+            "capacity": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 3,
+        "date": "2025-03-12",
+        "title": "Tokyo to Kyoto",
+        "image": "/static/activities/shinkansen.jpg",
+        "activities": [
+          {
+            "id": "act106",
+            "name": "Shinkansen Bullet Train",
+            "description": "First-class reserved seats on the high-speed Shinkansen to Kyoto",
+            "location": "Tokyo Station to Kyoto Station",
+            "duration": "2.5 hours",
+            "price": 14000.0,
+            "type": "Transportation",
+            "time": "Morning"
+          },
+          {
+            "id": "act107",
+            "name": "Kyoto Gion District Walking Tour",
+            "description": "Afternoon walking tour of Kyoto's historic geisha district",
+            "location": "Gion, Kyoto",
+            "duration": "3 hours",
+            "price": 9000.0,
+            "type": "Cultural",
+            "time": "Afternoon"
+          }
+        ],
+        "transfers": [
+          {
+            "id": "trans104",
+            "type": "Private Car",
+            "from": "Tokyo Hotel",
+            "to": "Tokyo Station",
+            "pickupTime": "08:00",
+            "dropoffTime": "08:30",
+            "duration": "30 minutes",
+            "price": 4000.0,
+            "capacity": 4
+          },
+          {
+            "id": "trans105",
+            "type": "Private Car",
+            "from": "Kyoto Station",
+            "to": "Kyoto Hotel",
+            "pickupTime": "12:00",
+            "dropoffTime": "12:30",
+            "duration": "30 minutes",
+            "price": 3500.0,
+            "capacity": 4
+          }
+        ]
+      }
+    ]
+  },
+  "flights": [
+    {
+      "id": "flight101",
+      "date": "2025-03-10",
+      "airline": "Japan Airlines",
+      "flightNumber": "JL42",
+      "route": "London to Tokyo",
+      "from": "London Heathrow",
+      "to": "Tokyo Narita",
+      "departure": "12:30",
+      "arrival": "09:30",
+      "class": "Business",
+      "price": 380000.0
+    },
+    {
+      "id": "flight102",
+      "date": "2025-03-20",
+      "airline": "ANA All Nippon Airways",
+      "flightNumber": "NH212",
+      "route": "Tokyo to London",
+      "from": "Tokyo Haneda",
+      "to": "London Heathrow",
+      "departure": "11:45",
+      "arrival": "16:30",
+      "class": "Business",
+      "price": 360000.0
+    }
+  ],
+  "hotels": [
+    {
+      "city": "Tokyo",
+      "checkIn": "2025-03-10",
+      "checkOut": "2025-03-12",
+      "nights": 2,
+      "hotelName": "Park Hyatt Tokyo",
+      "roomType": "Deluxe Room with City View",
+      "pricePerNight": 42000.0
+    },
+    {
+      "city": "Kyoto",
+      "checkIn": "2025-03-12",
+      "checkOut": "2025-03-15",
+      "nights": 3,
+      "hotelName": "The Ritz-Carlton Kyoto",
+      "roomType": "Garden Terrace Suite",
+      "pricePerNight": 65000.0
+    },
+    {
+      "city": "Osaka",
+      "checkIn": "2025-03-15",
+      "checkOut": "2025-03-18",
+      "nights": 3,
+      "hotelName": "Conrad Osaka",
+      "roomType": "Executive Suite",
+      "pricePerNight": 48000.0
+    },
+    {
+      "city": "Tokyo",
+      "checkIn": "2025-03-18",
+      "checkOut": "2025-03-20",
+      "nights": 2,
+      "hotelName": "Aman Tokyo",
+      "roomType": "Deluxe Room",
+      "pricePerNight": 72000.0
+    }
+  ],
+  "payment": {
+    "totalAmount": "1850000.0",
+    "tcs": "92500.0",
+    "installments": [
+      {
+        "installment": "Advance Payment",
+        "amount": "555000.0",
+        "dueDate": "2024-12-10"
+      },
+      {
+        "installment": "Second Installment",
+        "amount": "647500.0",
+        "dueDate": "2025-01-10"
+      },
+      {
+        "installment": "Balance Payment",
+        "amount": "647500.0",
+        "dueDate": "2025-02-10"
+      }
+    ]
+  },
+  "config": {
+    "includeFlights": true,
+    "includeHotels": true,
+    "includeActivities": true,
+    "includePayments": true,
+    "pageFormat": "A4",
+    "orientation": "portrait",
+    "customBranding": {
+      "primaryColor": "#800000",
+      "accentColor": "#FFD700",
+      "logoUrl": "/static/final-logo-2.png",
+      "companyName": "Nippon Travel Experts"
+    }
+  },
+  "companyInfo": {
+    "name": "Nippon Travel Experts",
+    "registeredOffice": {
+      "address": "14 Oxford Street",
+      "city": "London",
+      "state": "Greater London",
+      "country": "United Kingdom"
+    },
+    "contact": {
+      "phone": "+44-20-7123-4567",
+      "email": "info@nippontravelexperts.com"
+    },
+    "logo": "/static/final-logo-2.png"
+  },
+  "importantNotes": [
+    {
+      "point": "Passport Validity",
+      "details": "Ensure your passport is valid for at least 6 months beyond your travel dates."
+    },
+    {
+      "point": "Japan Rail Pass",
+      "details": "Your Japan Rail Pass must be purchased before arriving in Japan and cannot be bought locally."
+    },
+    {
+      "point": "Travel Insurance",
+      "details": "Comprehensive travel insurance with medical coverage is strongly recommended."
+    },
+    {
+      "point": "Local Customs",
+      "details": "Tipping is not customary in Japan and may sometimes be considered impolite."
+    }
+  ],
+  "scopeOfService": [
+    {
+      "service": "Premium Travel Planning",
+      "details": "Bespoke itinerary designed based on your preferences and interests"
+    },
+    {
+      "service": "Exclusive Accommodations",
+      "details": "Handpicked luxury hotels with special amenities and upgrades when available"
+    },
+    {
+      "service": "Private Transfers",
+      "details": "All transfers between airports, hotels, and attractions with professional drivers"
+    },
+    {
+      "service": "Guided Experiences",
+      "details": "Private English-speaking guides for all scheduled tours and activities"
+    },
+    {
+      "service": "24/7 Concierge",
+      "details": "Round-the-clock support from our local team during your trip"
+    }
+  ],
+  "inclusions": [
+    {
+      "category": "Premium Accommodation",
+      "count": 4,
+      "details": "Luxury hotel stays as specified in the itinerary",
+      "status": "Included"
+    },
+    {
+      "category": "International Flights",
+      "count": 2,
+      "details": "Business class international flights as per itinerary",
+      "status": "Included"
+    },
+    {
+      "category": "Private Transfers",
+      "count": 5,
+      "details": "All airport transfers and intercity transportation",
+      "status": "Included"
+    },
+    {
+      "category": "Guided Tours",
+      "count": 7,
+      "details": "Private guided tours with expert local guides",
+      "status": "Included"
+    },
+    {
+      "category": "Rail Passes",
+      "count": 1,
+      "details": "First class Japan Rail Pass for 7 days",
+      "status": "Included"
+    },
+    {
+      "category": "Meals",
+      "count": 14,
+      "details": "Daily breakfast at hotels and selected lunches/dinners as mentioned",
+      "status": "Included"
+    }
+  ],
+  "visaDetails": {
+    "visaType": "Tourist Visa",
+    "validity": "90 Days",
+    "processingDate": "2025-02-15"
+  }
+}

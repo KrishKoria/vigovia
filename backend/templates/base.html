@@ -64,7 +64,11 @@
   <body>
     <div class="container">
       {{template "header.html" .}} {{template "day-itinerary.html" .}}
+      <br />
+      <br />
+      <br />
       {{template "flight-summary.html" .}} {{template "hotel-bookings.html" .}}
+      <br />
       {{template "important-notes.html" .}} {{template "scope.html" .}}
       {{template "inclusions.html" .}} {{$hasActivities := false}} {{range
       .Days}} {{if .Activities}} {{$hasActivities = true}} {{end}} {{end}} {{if
