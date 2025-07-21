@@ -6,6 +6,7 @@
  */
 
 import { ItineraryData } from "./types";
+import { ItineraryFormData } from "./schema";
 import {
   ItineraryRequest,
   Customer,
@@ -28,7 +29,7 @@ import {
  * Main transformation function that converts frontend form data to backend format
  */
 export function transformToBackendFormat(
-  frontendData: ItineraryData
+  frontendData: ItineraryData | ItineraryFormData
 ): ItineraryRequest {
   const defaults = generateAllDefaults();
 
@@ -51,7 +52,9 @@ export function transformToBackendFormat(
 /**
  * Transform customer data from frontend format to backend format
  */
-export function transformCustomerData(frontendData: ItineraryData): Customer {
+export function transformCustomerData(
+  frontendData: ItineraryData | ItineraryFormData
+): Customer {
   return {
     name: frontendData.customerName,
     email: frontendData.customerEmail,
@@ -62,7 +65,9 @@ export function transformCustomerData(frontendData: ItineraryData): Customer {
 /**
  * Transform trip data with duration calculation
  */
-export function transformTripData(frontendData: ItineraryData): Trip {
+export function transformTripData(
+  frontendData: ItineraryData | ItineraryFormData
+): Trip {
   const duration = calculateDuration(
     frontendData.startDate,
     frontendData.endDate
@@ -102,7 +107,9 @@ export function calculateDuration(startDate: string, endDate: string): string {
 /**
  * Transform complete itinerary data including all days
  */
-export function transformItineraryData(frontendData: ItineraryData): Itinerary {
+export function transformItineraryData(
+  frontendData: ItineraryData | ItineraryFormData
+): Itinerary {
   return {
     days: frontendData.days.map((day) => transformDayData(day)),
   };
@@ -239,7 +246,9 @@ function transformDayFlights(frontendFlights: any[]): BackendFlight[] {
 /**
  * Extract flights from all days and map them to top-level flights array with dates
  */
-export function extractFlights(frontendData: ItineraryData): BackendFlight[] {
+export function extractFlights(
+  frontendData: ItineraryData | ItineraryFormData
+): BackendFlight[] {
   const flights: BackendFlight[] = [];
 
   frontendData.days.forEach((day) => {
@@ -307,7 +316,7 @@ export function validateTransformedData(data: ItineraryRequest): {
  * Utility function to get transformation summary for debugging
  */
 export function getTransformationSummary(
-  frontendData: ItineraryData,
+  frontendData: ItineraryData | ItineraryFormData,
   backendData: ItineraryRequest
 ) {
   return {

@@ -8,11 +8,38 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { Separator } from "@/components/ui/separator";
-import { MapPin } from "lucide-react";
+import { MapPin, Download, Server } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Header from "./Header";
 import DayCard from "./DayCard";
 import { ItineraryFormData, itinerarySchema } from "@/lib/schema";
+import { transformToBackendFormat } from "@/lib/dataTransformer";
+import {
+  backendPdfService,
+  BackendPdfError,
+  NetworkError,
+  ValidationError,
+  ServerError,
+} from "@/lib/backendPdfService";
+import {
+  ErrorHandler,
+  ErrorRecovery,
+  handlePdfGenerationError,
+  shouldShowFallback,
+  canRetryOperation,
+  ErrorInfo,
+  ErrorCategory,
+} from "@/lib/errorHandler";
+import {
+  ErrorDisplay,
+  SimpleErrorDisplay,
+  SuccessDisplay,
+} from "@/components/ui/ErrorDisplay";
+import { usePdfGenerationWithFallback } from "@/hooks/useErrorRecovery";
+import {
+  validateItineraryForm,
+  convertToErrorHandlerFormat,
+} from "@/lib/formValidation";
 
 const generateItineraryPDF = async (data: ItineraryFormData) => {
   try {
@@ -24,8 +51,15 @@ const generateItineraryPDF = async (data: ItineraryFormData) => {
 };
 
 export default function ItineraryForm() {
+  // Client-side PDF generation state
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Backend PDF generation state
+  const [isGeneratingBackend, setIsGeneratingBackend] = useState(false);
+  const [backendError, setBackendError] = useState<ErrorInfo | null>(null);
+  const [isRetrying, setIsRetrying] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const form = useForm<ItineraryFormData>({
     resolver: zodResolver(itinerarySchema),
@@ -102,6 +136,7 @@ export default function ItineraryForm() {
     }
   };
 
+  // Client-side PDF generation handler
   const onSubmit = async (data: ItineraryFormData) => {
     setIsGenerating(true);
     setError(null);
@@ -117,6 +152,111 @@ export default function ItineraryForm() {
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  // Backend PDF generation handler with comprehensive error handling
+  const handleBackendPdfGeneration = async (data: ItineraryFormData) => {
+    setIsGeneratingBackend(true);
+    setBackendError(null);
+    setSuccessMessage(null);
+
+    try {
+      console.log("Starting backend PDF generation...");
+
+      // Pre-validate form data
+      const validation = validateItineraryForm(data);
+      if (!validation.isValid) {
+        const validationErrorInfo = convertToErrorHandlerFormat(validation);
+        setBackendError(validationErrorInfo);
+        return;
+      }
+
+      // Transform frontend data to backend format
+      const backendData = transformToBackendFormat(data);
+      console.log("Data transformed for backend:", backendData);
+
+      // Use enhanced error handling with context
+      const context = {
+        formData: data,
+        retryAttempt: 0,
+        timestamp: new Date(),
+      };
+
+      // Generate PDF using backend service with enhanced error handling
+      const pdfBlob = await backendPdfService.generatePDF(backendData);
+
+      // Generate filename based on trip data
+      const filename = backendPdfService.generateFilename({
+        destination: data.destination,
+        customerName: data.customerName,
+        startDate: data.startDate,
+      });
+
+      // Download the PDF
+      backendPdfService.downloadPdf(pdfBlob, filename);
+
+      console.log("Backend PDF generation completed successfully");
+      setSuccessMessage(`PDF generated successfully! File: ${filename}`);
+
+      // Clear success message after 5 seconds
+      setTimeout(() => setSuccessMessage(null), 5000);
+    } catch (error) {
+      console.error("Backend PDF generation failed:", error);
+
+      // Enhanced error logging with context
+      ErrorHandler.logError(error, "Backend PDF Generation");
+
+      // Use enhanced error handling with context
+      const errorInfo = handlePdfGenerationError(error);
+
+      // Add additional context-specific suggestions
+      if (errorInfo.category === ErrorCategory.NETWORK) {
+        errorInfo.suggestions.unshift(
+          "Your internet connection may be unstable",
+          "The backend server might be temporarily unavailable"
+        );
+      }
+
+      setBackendError(errorInfo);
+    } finally {
+      setIsGeneratingBackend(false);
+    }
+  };
+
+  // Retry backend PDF generation with recovery mechanism
+  const handleRetryBackendGeneration = async () => {
+    if (!backendError || !canRetryOperation(backendError)) {
+      return;
+    }
+
+    setIsRetrying(true);
+    setBackendError(null);
+
+    try {
+      const formData = form.getValues();
+
+      // Attempt recovery with retry mechanism
+      const recoveryResult = await ErrorRecovery.attemptRecovery(
+        backendError,
+        () => handleBackendPdfGeneration(formData)
+      );
+
+      if (!recoveryResult.success && recoveryResult.error) {
+        setBackendError(recoveryResult.error);
+      }
+    } catch (error) {
+      const errorInfo = handlePdfGenerationError(error);
+      setBackendError(errorInfo);
+    } finally {
+      setIsRetrying(false);
+    }
+  };
+
+  // Fallback to client-side PDF generation
+  const handleFallbackToClient = async () => {
+    setBackendError(null);
+    const formData = form.getValues();
+    await onSubmit(formData);
   };
 
   return (
@@ -362,30 +502,107 @@ export default function ItineraryForm() {
           ))}
 
           <div className="text-center bg-gradient-to-r from-white via-[#FBF4FF]/50 to-white p-8 rounded-2xl border border-[#936FE0]/20">
-            {error && (
-              <div className="mb-6 p-4 bg-red-50 border-2 border-red-200 text-red-700 rounded-xl shadow-sm">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span className="font-medium">{error}</span>
-                </div>
-              </div>
+            {/* Success message display */}
+            {successMessage && (
+              <SuccessDisplay
+                message={successMessage}
+                onDismiss={() => setSuccessMessage(null)}
+                className="mb-6"
+              />
             )}
-            <Button
-              type="submit"
-              disabled={isGenerating}
-              className="bg-gradient-to-r from-[#541C9C] via-[#680099] to-[#936FE0] hover:from-[#680099] hover:via-[#541C9C] hover:to-[#680099] text-white px-16 py-6 text-xl font-bold min-w-[300px] rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
-            >
-              {isGenerating ? (
-                <div className="flex items-center gap-4">
-                  <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  <span className="text-xl">Generating PDF...</span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-4">
-                  <span className="text-xl">Generate Itinerary</span>
-                </div>
-              )}
-            </Button>
+
+            {/* Client-side error display */}
+            {error && (
+              <SimpleErrorDisplay
+                message={error}
+                onRetry={() => {
+                  setError(null);
+                  const formData = form.getValues();
+                  onSubmit(formData);
+                }}
+                onDismiss={() => setError(null)}
+                className="mb-6"
+              />
+            )}
+
+            {/* Enhanced backend error display */}
+            {backendError && (
+              <ErrorDisplay
+                errorInfo={backendError}
+                onRetry={
+                  canRetryOperation(backendError)
+                    ? handleRetryBackendGeneration
+                    : undefined
+                }
+                onFallback={
+                  shouldShowFallback(backendError)
+                    ? handleFallbackToClient
+                    : undefined
+                }
+                onDismiss={() => setBackendError(null)}
+                showRetryButton={!isRetrying}
+                className="mb-6"
+              />
+            )}
+
+            {/* PDF Generation Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              {/* Client-side PDF Generation Button */}
+              <Button
+                type="submit"
+                disabled={isGenerating || isGeneratingBackend}
+                className="bg-gradient-to-r from-[#541C9C] via-[#680099] to-[#936FE0] hover:from-[#680099] hover:via-[#541C9C] hover:to-[#680099] text-white px-12 py-6 text-lg font-bold min-w-[280px] rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                {isGenerating ? (
+                  <div className="flex items-center gap-3">
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span className="text-lg">Generating PDF...</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <Download className="h-5 w-5" />
+                    <span className="text-lg">Generate PDF (Client)</span>
+                  </div>
+                )}
+              </Button>
+
+              {/* Backend PDF Generation Button */}
+              <Button
+                type="button"
+                onClick={() => {
+                  const formData = form.getValues();
+                  // Validate form before backend generation
+                  form.handleSubmit((data) =>
+                    handleBackendPdfGeneration(data)
+                  )();
+                }}
+                disabled={isGenerating || isGeneratingBackend}
+                className="bg-gradient-to-r from-[#2563eb] via-[#1d4ed8] to-[#1e40af] hover:from-[#1d4ed8] hover:via-[#2563eb] hover:to-[#1d4ed8] text-white px-12 py-6 text-lg font-bold min-w-[280px] rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+              >
+                {isGeneratingBackend ? (
+                  <div className="flex items-center gap-3">
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span className="text-lg">Generating PDF...</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <Server className="h-5 w-5" />
+                    <span className="text-lg">Generate PDF (Backend)</span>
+                  </div>
+                )}
+              </Button>
+            </div>
+
+            {/* Help text */}
+            <div className="mt-4 text-sm text-[#680099]/70">
+              <p>Choose your preferred PDF generation method:</p>
+              <p className="mt-1">
+                <span className="font-medium">Client:</span> Generated in your
+                browser (faster, works offline) |
+                <span className="font-medium ml-2">Backend:</span> Generated on
+                server (more features, requires connection)
+              </p>
+            </div>
           </div>
         </form>
       </div>

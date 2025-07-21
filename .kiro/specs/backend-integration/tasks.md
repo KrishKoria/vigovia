@@ -26,7 +26,7 @@
   - Implement transfer data direct mapping
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 5.5_
 
-- [ ] 4. Create backend PDF service
+- [x] 4. Create backend PDF service
 
   - Create `src/lib/backendPdfService.ts` for API communication
   - Implement `generatePDF` function with proper error handling
@@ -36,7 +36,7 @@
   - Add timeout and retry mechanisms
   - _Requirements: 3.1, 3.2, 4.2, 4.3_
 
-- [ ] 5. Enhance form component with dual PDF generation
+- [x] 5. Enhance form component with dual PDF generation
 
   - Modify `src/components/form/ItineraryForm.tsx` to add backend option
   - Add new state variables for backend generation tracking
@@ -46,9 +46,9 @@
   - Maintain existing client-side PDF generation functionality
   - _Requirements: 1.1, 1.2, 1.3, 4.1_
 
-- [ ] 6. Implement comprehensive error handling
+- [-] 6. Implement comprehensive error handling
 
-  - Add error handling in backend PDF service for network failures
+  - Add error handling in backend PDF service for network failures(use only pnpm whenever needed, project is setup using pnpm)
   - Create user-friendly error messages for different error types
   - Implement fallback suggestions when backend fails
   - Add validation error handling with field-specific messages
