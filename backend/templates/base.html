@@ -24,18 +24,33 @@
       }
 
       @media print {
+        @page {
+          margin: 20mm;
+          margin-bottom: 25mm;
+        }
+
         body {
           background-color: white;
           padding: 0;
+          margin: 0;
         }
 
         .container {
           max-width: none;
           margin: 0;
-          padding: 0;
-          padding-bottom: 200px;
+          padding: 20px;
+          padding-bottom: 100px;
           border-radius: 0;
           box-shadow: none;
+        }
+
+        /* Ensure sections don't break awkwardly */
+        .payment-plan,
+        .visa-details,
+        .activity-table,
+        .hotel-bookings,
+        .flight-summary {
+          page-break-inside: avoid;
         }
       }
     </style>
@@ -44,12 +59,13 @@
     <div class="container">
       {{template "header.html" .}} {{template "day-itinerary.html" .}}
       {{template "flight-summary.html" .}} {{template "hotel-bookings.html" .}}
-      {{template "important-notes.html" .}}{{template "scope.html" .}}
+      {{template "important-notes.html" .}} {{template "scope.html" .}}
       {{template "inclusions.html" .}} {{$hasActivities := false}} {{range
       .Days}} {{if .Activities}} {{$hasActivities = true}} {{end}} {{end}} {{if
       $hasActivities}} {{template "activity-table.html" .}} {{end}} {{template
-      "payment-plan.html" .}} {{template "visa-details.html" .}} {{template
-      "footer.html" .}}
+      "payment-plan.html" .}} {{template "visa-details.html" .}}
     </div>
+
+    {{template "footer.html" .}}
   </body>
 </html>

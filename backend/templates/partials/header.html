@@ -1,3 +1,4 @@
+{{/* Header section with company logo and trip information */}}
 <div class="header">
   <div class="company-logo">
     {{if .Config.CustomBranding.LogoURL}}
@@ -28,41 +29,35 @@
     </div>
   </div>
 
-  <div class="trip-info-table">
-    <div class="info-row">
-      <div class="info-cell"><strong>Departure From</strong></div>
-      <div class="info-cell"><strong>Departure</strong></div>
-      <div class="info-cell"><strong>Arrival</strong></div>
-      <div class="info-cell"><strong>Destination</strong></div>
-      <div class="info-cell"><strong>No. Of Travellers</strong></div>
-    </div>
-    <div class="info-row data-row">
-      <div class="info-cell">{{.Trip.DepartureFrom}}</div>
-      <div class="info-cell">{{.Trip.StartDate}}</div>
-      <div class="info-cell">{{.Trip.EndDate}}</div>
-      <div class="info-cell">{{.Trip.Destination}}</div>
-      <div class="info-cell">{{.Trip.Travelers}}</div>
+  <div class="trip-info-container">
+    <div class="trip-info-table">
+      <div class="table-header">
+        <div class="header-cell">Departure From</div>
+        <div class="header-cell">Departure</div>
+        <div class="header-cell">Arrival</div>
+        <div class="header-cell">Destination</div>
+        <div class="header-cell">No. Of Travellers</div>
+      </div>
+      <div class="table-data">
+        <div class="data-cell">{{.Trip.DepartureFrom}}</div>
+        <div class="data-cell">{{.Trip.StartDate}}</div>
+        <div class="data-cell">{{.Trip.EndDate}}</div>
+        <div class="data-cell">{{.Trip.Destination}}</div>
+        <div class="data-cell">{{.Trip.Travelers}}</div>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
   @media print {
-    :root {
-      --cta-color: #541c9c;
-      --hover-purple: #680099;
-      --gradient-purple: #936fe0;
-      --icon-fill: #321e5d;
-      --title-fill: #fbf4ff;
-    }
-
     .header {
       border-radius: 20px;
       padding: 0;
+      margin-bottom: 30px;
       overflow: hidden;
       position: relative;
       page-break-inside: avoid;
-      margin-bottom: 20px;
     }
 
     .company-logo {
@@ -80,7 +75,7 @@
     }
 
     .logo-text {
-      font-size: 24px;
+      font-size: 14px;
       font-weight: bold;
       color: #541c9c;
       display: block;
@@ -102,8 +97,9 @@
         #936fe0 100%
       );
       text-align: center;
-      padding: 15px 30px 20px 30px;
+      padding: 20px 40px 30px 40px;
       color: white;
+      border-radius: 20px 20px 20px 20px;
     }
 
     .greeting {
@@ -139,64 +135,57 @@
       opacity: 0.9;
     }
 
+    .trip-info-container {
+      background: white;
+      padding: 10px;
+      min-width: 400px;
+    }
+
     .trip-info-table {
       background: white;
-      margin: 0 20px 20px 20px;
       border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: 2px solid #7b2cbf;
     }
 
-    .info-row {
+    .table-header {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
+      background: #7b2cbf;
     }
 
-    .info-cell {
-      padding: 15px 10px;
+    .header-cell {
+      padding-right: 30px;
+      padding-left: 30px;
       text-align: center;
-      border-right: 1px solid #eee;
-      color: #333;
-      font-size: 0.9em;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    .info-cell:last-child {
+    .header-cell:last-child {
       border-right: none;
     }
 
-    .info-row:first-child .info-cell {
-      background: #f8f9fa;
-      font-weight: bold;
-      color: #541c9c;
-      border-bottom: 2px solid #541c9c;
+    .table-data {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: #f5e6ff;
     }
 
-    .data-row .info-cell {
+    .data-cell {
       padding: 18px 10px;
+      text-align: center;
       font-weight: 500;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .trip-info-table {
-      margin: 10px;
+      color: #333;
+      font-size: 16px;
+      border-right: 1px solid rgba(123, 44, 191, 0.2);
     }
 
-    .info-cell {
-      padding: 12px 8px;
-      font-size: 0.8em;
-    }
-
-    .hero-section {
-      padding: 15px 20px 25px 20px;
-    }
-
-    .greeting {
-      font-size: 2em;
-    }
-
-    .trip-title {
-      font-size: 1.8em;
+    .data-cell:last-child {
+      border-right: none;
     }
   }
 </style>

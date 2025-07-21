@@ -39,18 +39,24 @@
 
 <style>
   @media print {
+    /* Page setup with footer margin */
+    @page {
+      margin-bottom: 100px;
+    }
+
     .footer-content {
       position: fixed;
-      bottom: 10px;
+      bottom: 0;
       left: 0;
       right: 0;
       width: 100%;
-      padding: 15px 30px;
+      height: 80px;
+      padding: 10px 30px;
       background-color: white;
       font-family: "Arial", sans-serif;
-      page-break-inside: avoid;
-      z-index: 1000;
+      border-top: 2px solid #e0e0e0;
       box-sizing: border-box;
+      z-index: 1000;
     }
 
     .footer-container {
@@ -58,7 +64,7 @@
       justify-content: space-between;
       align-items: flex-start;
       width: 100%;
-      max-width: 100%;
+      height: 100%;
     }
 
     .footer-left {
@@ -78,21 +84,24 @@
       text-align: right;
       padding-left: 20px;
       min-width: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     .company-name {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
       color: #000;
-      margin: 0 0 8px 0;
+      margin: 0 0 4px 0;
       line-height: 1.2;
     }
 
     .registered-office {
-      font-size: 12px;
+      font-size: 10px;
       color: #000;
       margin: 0;
-      line-height: 1.4;
+      line-height: 1.3;
     }
 
     .contact-info {
@@ -101,16 +110,16 @@
 
     .phone,
     .email {
-      font-size: 12px;
+      font-size: 10px;
       color: #000;
-      margin: 0 0 4px 0;
-      line-height: 1.4;
+      margin: 0 0 2px 0;
+      line-height: 1.3;
     }
 
     .footer-logo {
-      height: 80px;
+      height: 50px;
       width: auto;
-      object-fit: cover;
+      object-fit: contain;
     }
 
     .footer-content strong {
@@ -118,7 +127,7 @@
     }
 
     .footer-content p {
-      margin: 0 0 4px 0;
+      margin: 0 0 2px 0;
     }
   }
 

@@ -36,26 +36,28 @@
 
   <!-- Payment Schedule Table -->
   <div class="payment-schedule">
-    <!-- Header row with pill-style design -->
-    <div class="schedule-header">
-      <div class="header-pill">Installment</div>
-      <div class="header-pill">Amount</div>
-      <div class="header-pill">Due Date</div>
-    </div>
-
-    <!-- Data rows -->
-    <div class="schedule-data">
-      {{range $index, $installment := .Payment.Installments}}
-      <div class="schedule-row">
-        <div class="data-cell installment-cell">
-          Installment {{add $index 1}}
-        </div>
-        <div class="data-cell amount-cell">
-          {{formatCurrencyString .Amount "₹"}}
-        </div>
-        <div class="data-cell date-cell">{{.DueDate}}</div>
+    <div class="table-container">
+      <!-- Header row -->
+      <div class="header-row">
+        <div class="header-cell">Installment</div>
+        <div class="header-cell">Amount</div>
+        <div class="header-cell">Due Date</div>
       </div>
-      {{end}}
+
+      <!-- Data rows -->
+      <div class="data-rows">
+        {{range $index, $installment := .Payment.Installments}}
+        <div class="data-row">
+          <div class="data-cell installment-cell">
+            Installment {{add $index 1}}
+          </div>
+          <div class="data-cell amount-cell">
+            {{formatCurrencyString .Amount "₹"}}
+          </div>
+          <div class="data-cell date-cell">{{.DueDate}}</div>
+        </div>
+        {{end}}
+      </div>
     </div>
   </div>
 </div>
@@ -69,10 +71,11 @@
     }
 
     .payment-title {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: bold;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       color: #000;
+      font-family: Arial, sans-serif;
     }
 
     .purple-text {
@@ -133,64 +136,71 @@
       margin-top: 20px;
     }
 
-    .schedule-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 0;
+    .table-container {
+      width: 100%;
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     }
 
-    .schedule-header .header-pill {
-      background-color: #7b2cbf;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 25px;
+    /* Header row */
+    .header-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      background: #7b2cbf;
+    }
+
+    .header-cell {
+      padding: 15px 20px;
       text-align: center;
+      color: white;
       font-weight: 600;
       font-size: 14px;
       font-family: Arial, sans-serif;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    .schedule-data {
-      background-color: #f5e6ff;
-      border-radius: 0 0 15px 15px;
-      padding: 0;
+    .header-cell:last-child {
+      border-right: none;
     }
 
-    .schedule-row {
+    /* Data rows container */
+    .data-rows {
+      background-color: white;
+    }
+
+    .data-row {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      padding: 12px 8px;
       align-items: center;
     }
 
-    .schedule-row:nth-child(even) {
-      background-color: #f0d9ff;
-    }
-
-    .schedule-row:nth-child(odd) {
+    .data-row:nth-child(even) {
       background-color: #f5e6ff;
     }
 
-    .schedule-row:first-child {
-      border-radius: 15px 15px 0 0;
-    }
-
-    .schedule-row:last-child {
-      border-radius: 0 0 15px 15px;
+    .data-row:nth-child(odd) {
+      background-color: white;
     }
 
     .data-cell {
-      padding: 8px 12px;
+      padding: 18px 20px;
       font-size: 14px;
       color: #333;
       text-align: center;
       font-family: Arial, sans-serif;
+      line-height: 1.4;
+      border-right: 1px solid rgba(123, 44, 191, 0.1);
+    }
+
+    .data-cell:last-child {
+      border-right: none;
     }
 
     .installment-cell {
       font-weight: 500;
+      color: #555;
     }
 
     .amount-cell {
@@ -199,7 +209,8 @@
     }
 
     .date-cell {
-      font-weight: 400;
+      font-weight: 500;
+      color: #666;
     }
   }
 </style>

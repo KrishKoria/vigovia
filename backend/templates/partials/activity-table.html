@@ -5,12 +5,12 @@
   </h2>
 
   <div class="table-container">
-    <!-- Header row with pill-style design -->
+    <!-- Header row -->
     <div class="header-row">
-      <div class="header-pill header-city">City</div>
-      <div class="header-pill header-activity">Activity</div>
-      <div class="header-pill header-type">Type</div>
-      <div class="header-pill header-time">Time Required</div>
+      <div class="header-cell">City</div>
+      <div class="header-cell">Activity</div>
+      <div class="header-cell">Type</div>
+      <div class="header-cell">Time Required</div>
     </div>
 
     <!-- Data rows -->
@@ -38,90 +38,116 @@
     .activity-title {
       font-size: 24px;
       font-weight: bold;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       color: #000;
+      font-family: Arial, sans-serif;
     }
 
     .purple-text {
-      color: #7b2cbf;
+      color: #321e5d;
     }
 
     .table-container {
       width: 100%;
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     }
 
     .header-row {
       display: grid;
-      grid-template-columns: 1fr 2fr 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 0;
+      grid-template-columns: 80px 80 80px 80px;
+      background: #321e5d;
+      min-height: 50px;
     }
 
-    .header-pill {
-      background-color: #7b2cbf;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 25px;
+    .header-cell {
+      padding: 8px 6px;
       text-align: center;
+      color: white;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 11px;
       font-family: Arial, sans-serif;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
     }
 
-    /* Data rows */
+    .header-cell:last-child {
+      border-right: none;
+    }
+
     .data-rows {
-      background-color: #f5e6ff;
-      border-radius: 0 0 15px 15px;
-      padding: 0;
+      background-color: white;
     }
 
+    /* Matching grid layout for data consistency */
     .data-row {
       display: grid;
-      grid-template-columns: 1fr 2fr 1fr 1fr;
-      gap: 8px;
-      padding: 12px 8px;
+      grid-template-columns: 80px 80px 80px 80px;
       align-items: center;
+      min-height: 45px;
     }
 
     .data-row:nth-child(even) {
-      background-color: #f0d9ff;
-    }
-
-    .data-row:nth-child(odd) {
       background-color: #f5e6ff;
     }
 
-    .data-row:first-child {
-      border-radius: 15px 15px 0 0;
-    }
-
-    .data-row:last-child {
-      border-radius: 0 0 15px 15px;
+    .data-row:nth-child(odd) {
+      background-color: white;
     }
 
     .data-cell {
-      padding: 8px 12px;
-      font-size: 14px;
+      padding: 8px 6px;
+      font-size: 12px;
       color: #333;
       text-align: center;
       font-family: Arial, sans-serif;
+      line-height: 1.3;
+      border-right: 1px solid rgba(50, 30, 93, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+
+    .data-cell:last-child {
+      border-right: none;
     }
 
     .city-cell {
-      font-weight: 500;
+      font-weight: 600;
+      color: #555;
     }
 
     .activity-cell {
       font-weight: 500;
       text-align: left;
+      color: #333;
+      justify-content: flex-start;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+      padding-left: 4px;
     }
 
     .type-cell {
-      font-weight: 400;
+      font-weight: 500;
+      color: #666;
     }
 
     .time-cell {
-      font-weight: 400;
+      font-weight: 500;
+      color: #321e5d;
     }
   }
 </style>

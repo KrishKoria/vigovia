@@ -240,7 +240,6 @@ func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *
 	
 	enhancedPayment := s.enhancePaymentData(request.Payment)
 	
-	// Set default company info if not provided in request
 	companyInfo := request.CompanyInfo
 	if companyInfo.Name == "" {
 		companyInfo = models.CompanyInfo{
