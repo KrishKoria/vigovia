@@ -42,3 +42,18 @@ func (s *FileService) SavePDF(pdfData []byte, filename string) (string, error) {
 	
 	return filePath, nil
 }
+
+func (s *FileService) ReadPDF(filePath string) ([]byte, error) {
+	pdfData, err := os.ReadFile(filePath)
+	if err != nil {
+		logrus.WithError(err).WithField("filePath", filePath).Error("Failed to read PDF file")
+		return nil, fmt.Errorf("failed to read PDF file: %w", err)
+	}
+	
+	logrus.WithFields(logrus.Fields{
+		"filePath": filePath,
+		"fileSize": len(pdfData),
+	}).Info("PDF file read successfully")
+	
+	return pdfData, nil
+}

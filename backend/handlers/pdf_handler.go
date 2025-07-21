@@ -59,6 +59,30 @@ func (h *PDFHandler) GenerateItinerary(c *gin.Context) {
 		return
 	}
 	
+	// Check if client wants to download the PDF directly
+	if c.Query("download") == "true" {
+		// Read the generated PDF file
+		pdfData, err := h.fileService.ReadPDF(response.FilePath)
+		if err != nil {
+			logrus.WithError(err).Error("Failed to read generated PDF file")
+			c.JSON(http.StatusInternalServerError, models.ErrorResponse{
+				Error:   "Failed to read PDF file",
+				Message: err.Error(),
+			})
+			return
+		}
+		
+		// Set appropriate headers for PDF response
+		c.Header("Content-Type", "application/pdf")
+		c.Header("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", response.FileName))
+		c.Header("Content-Length", fmt.Sprintf("%d", len(pdfData)))
+		
+		// Stream the PDF data directly
+		c.Data(http.StatusOK, "application/pdf", pdfData)
+		return
+	}
+	
+	// Default behavior: return JSON with file info (backward compatible)
 	c.JSON(http.StatusOK, models.APIResponse{
 		Success: true,
 		Message: "PDF generated successfully",

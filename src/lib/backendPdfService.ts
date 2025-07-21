@@ -180,7 +180,7 @@ export class BackendPdfService {
     const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
 
     try {
-      const url = `${this.config.baseUrl}/api/v1/generate-pdf`;
+      const url = `${this.config.baseUrl}/api/v1/generate-pdf?download=true`;
 
       console.log("Sending PDF generation request to:", url);
 
