@@ -56,6 +56,7 @@ type Activity struct {
 	Price       float64 `json:"price" validate:"min=0"`
 	Image       string  `json:"image"`
 	Type        string  `json:"type"`
+	Time        string  `json:"time"`
 }
 
 // Transfer represents a transfer/transportation detail

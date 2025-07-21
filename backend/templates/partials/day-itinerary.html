@@ -1,72 +1,60 @@
 <style>
   .day-itinerary {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
   .day-section {
     display: flex;
-    align-items: center;
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    min-height: 160px;
-    max-height: 180px;
+    align-items: stretch;
+    margin-bottom: 30px;
+    page-break-inside: avoid;
+    min-height: 250px;
+    position: relative;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
   }
 
-  /* Blue border for even days (Day 2, etc.) */
-  .day-section:nth-child(even) {
-    border: 3px solid #4a90e2;
-  }
-
-  /* Left: Image Section with Day Number */
-  .day-image-section {
-    width: 280px;
+  .day-sidebar {
+    width: 70px;
+    background-color: #321e5d;
+    border-radius: 35px;
+    height: 250px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
     flex-shrink: 0;
+    margin-right: 25px;
     position: relative;
   }
 
   .day-number {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    z-index: 10;
-  }
-
-  .day-circle {
-    background: #541c9c;
     color: white;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-family: "Roboto", sans-serif;
     font-weight: bold;
-    font-size: 10px;
+    font-size: 18px;
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    transform: rotate(180deg);
     text-align: center;
-    transform: rotate(-10deg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    line-height: 1.2;
   }
 
-  .day-circle span {
-    transform: rotate(10deg);
-    line-height: 1.1;
+  .day-image-container {
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 180px;
   }
 
   .day-image {
-    width: 140px;
-    height: 140px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     overflow: hidden;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
   .day-image img {
@@ -81,36 +69,38 @@
     background: linear-gradient(135deg, #4a90e2, #541c9c);
   }
 
-  .day-date-title {
+  .day-info {
     text-align: center;
+    max-width: 180px;
   }
 
   .day-date {
-    font-size: 15px;
+    font-family: "Roboto", sans-serif;
     font-weight: bold;
+    font-size: 16px;
+    color: #000;
     margin: 0 0 5px 0;
-    color: #333;
   }
 
   .day-title {
-    font-size: 12px;
-    color: #666;
-    margin: 0;
+    font-family: "Roboto", sans-serif;
     font-weight: normal;
+    font-size: 13px;
+    color: #000;
+    margin: 0;
+    line-height: 1.3;
   }
 
-  /* Right: Timeline */
-  .timeline-section {
+  /* Timeline section */
+  .timeline-container {
     flex: 1;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
+    padding-top: 20px;
     min-width: 0;
   }
 
   .timeline {
     position: relative;
-    width: 100%;
+    padding-left: 20px;
   }
 
   .timeline::before {
@@ -120,13 +110,14 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background: #4a90e2;
+    background-color: #4a90e2;
   }
 
   .timeline-item {
     position: relative;
-    margin-bottom: 15px;
-    padding-left: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: flex-start;
   }
 
   .timeline-item:last-child {
@@ -135,103 +126,288 @@
 
   .time-point {
     position: absolute;
-    left: -14px;
-    top: 1px;
-    width: 12px;
-    height: 12px;
+    left: -18px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: #4a90e2;
+    background-color: #4a90e2;
     border: 2px solid white;
     box-shadow: 0 0 0 1px #4a90e2;
+    z-index: 1;
   }
 
   .time-content {
-    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
   }
 
   .time-label {
+    font-family: "Roboto", sans-serif;
     font-weight: bold;
-    color: #333;
+    font-size: 15px;
+    color: #000;
+    min-width: 100px;
+    margin-right: 15px;
+    padding-top: 1px;
+  }
+
+  .activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+  }
+
+  .activity-item {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: #000;
     margin-bottom: 3px;
-    font-size: 12px;
+    position: relative;
+    padding-left: 15px;
+    line-height: 1.4;
   }
 
-  .time-activities {
-    color: #666;
-    font-size: 10px;
-    line-height: 1.3;
+  .activity-item::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #000;
+    font-weight: normal;
+  }
+  .activity-item:last-child {
+    margin-bottom: 0;
   }
 
-  .time-activities p {
-    margin: 1px 0;
-  }
-
+  /* Print styles */
   @media print {
-    .day-section {
-      page-break-inside: avoid;
+    .day-itinerary {
       margin-bottom: 15px;
-      min-height: 140px;
-      max-height: 160px;
     }
 
-    .day-image-section {
-      width: 240px;
-      padding: 15px;
+    .day-section {
+      display: flex;
+      align-items: stretch;
+      margin-bottom: 25px;
+      page-break-inside: avoid;
+      min-height: 200px;
+      position: relative;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
     }
 
-    .day-circle {
-      width: 45px;
-      height: 45px;
-      font-size: 9px;
+    /* Purple sidebar with Day number */
+    .day-sidebar {
+      width: 50px;
+      background-color: #321e5d;
+      border-radius: 25px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-right: 20px;
+      position: relative;
+    }
+
+    .day-number {
+      color: white;
+      font-family: "Roboto", sans-serif;
+      font-weight: bold;
+      font-size: 14px;
+      writing-mode: vertical-lr;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    /* Image section */
+    .day-image-container {
+      margin-right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 140px;
     }
 
     .day-image {
       width: 120px;
       height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .timeline-section {
-      padding: 15px 20px;
+    .day-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .time-label {
-      font-size: 11px;
+    .placeholder-image {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #4a90e2, #541c9c);
     }
 
-    .time-activities {
-      font-size: 9px;
+    .day-info {
+      text-align: center;
+      max-width: 140px;
     }
 
     .day-date {
-      font-size: 13px;
+      font-family: "Roboto", sans-serif;
+      font-weight: bold;
+      font-size: 14px;
+      color: #000;
+      margin: 0 0 4px 0;
     }
 
     .day-title {
-      font-size: 10px;
+      font-family: "Roboto", sans-serif;
+      font-weight: normal;
+      font-size: 11px;
+      color: #000;
+      margin: 0;
+      line-height: 1.3;
     }
-  }
 
+    /* Timeline section */
+    .timeline-container {
+      flex: 1;
+      padding-top: 15px;
+      min-width: 0;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: #4a90e2;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .time-point {
+      position: absolute;
+      left: -15px;
+      top: 5px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #4a90e2;
+      border: 2px solid white;
+      box-shadow: 0 0 0 1px #4a90e2;
+      z-index: 1;
+    }
+
+    .time-content {
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .time-label {
+      font-family: "Roboto", sans-serif;
+      font-weight: bold;
+      font-size: 13px;
+      color: #000;
+      min-width: 80px;
+      margin-right: 12px;
+      padding-top: 1px;
+    }
+
+    .activity-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex: 1;
+    }
+
+    .activity-item {
+      font-family: "Roboto", sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      color: #000;
+      margin-bottom: 2px;
+      position: relative;
+      padding-left: 12px;
+      line-height: 1.4;
+    }
+
+    .activity-item::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #000;
+      font-weight: normal;
+    }
+
+    .activity-item:last-child {
+      margin-bottom: 0;
+    }
+  } /* Mobile responsive */
   @media (max-width: 768px) {
     .day-section {
       flex-direction: column;
+      align-items: center;
       min-height: auto;
-      max-height: none;
     }
 
-    .day-image-section {
+    .day-sidebar {
       width: 100%;
-      padding: 20px;
+      height: 60px;
+      border-radius: 30px;
+      margin-right: 0;
+      margin-bottom: 20px;
+      flex-direction: row;
     }
 
     .day-number {
-      position: relative;
-      top: auto;
-      left: auto;
-      margin-bottom: 15px;
+      writing-mode: horizontal-tb;
+      transform: none;
     }
 
-    .timeline-section {
-      padding: 20px;
+    .day-image-container {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+
+    .timeline-container {
+      width: 100%;
+    }
+
+    .time-content {
+      flex-direction: column;
+    }
+
+    .time-label {
+      min-width: auto;
+      margin-right: 0;
+      margin-bottom: 10px;
     }
   }
 </style>
@@ -239,13 +415,13 @@
 <div class="day-itinerary">
   {{range $dayIndex, $day := .Days}}
   <div class="day-section">
-    <!-- Left: Image and Date -->
-    <div class="day-image-section">
-      <div class="day-number">
-        <div class="day-circle">
-          <span>Day<br />{{$day.DayNumber}}</span>
-        </div>
-      </div>
+    <!-- Purple sidebar with day number -->
+    <div class="day-sidebar">
+      <div class="day-number">Day {{$day.DayNumber}}</div>
+    </div>
+
+    <!-- Image and date section -->
+    <div class="day-image-container">
       <div class="day-image">
         {{if $day.Image}}
         <img src="{{$day.Image}}" alt="Day {{$day.DayNumber}} Activity" />
@@ -253,38 +429,103 @@
         <div class="placeholder-image"></div>
         {{end}}
       </div>
-      <div class="day-date-title">
+      <div class="day-info">
         <h3 class="day-date">{{formatDate $day.Date}}</h3>
         <p class="day-title">{{$day.Title}}</p>
       </div>
     </div>
 
-    <!-- Right: Timeline -->
-    <div class="timeline-section">
+    <!-- Timeline section -->
+    <div class="timeline-container">
       <div class="timeline">
-        {{if $day.Activities}} {{range $actIndex, $activity := $day.Activities}}
+        {{if $day.Activities}} {{$hasMorning := false}} {{$hasAfternoon :=
+        false}} {{$hasEvening := false}}
+
+        <!-- Check if we have morning/afternoon/evening activities -->
+        {{range $actIndex, $activity := $day.Activities}} {{if eq $activity.Time
+        "Morning"}} {{$hasMorning = true}} {{else if eq $activity.Time
+        "Afternoon"}} {{$hasAfternoon = true}} {{else if eq $activity.Time
+        "Evening"}} {{$hasEvening = true}} {{end}} {{end}}
+
+        <!-- Morning section -->
+        {{if $hasMorning}}
+        <div class="timeline-item">
+          <div class="time-point"></div>
+          <div class="time-content">
+            <div class="time-label">Morning</div>
+            <ul class="activity-list">
+              {{range $actIndex, $activity := $day.Activities}} {{if eq
+              $activity.Time "Morning"}}
+              <li class="activity-item">{{$activity.Description}}</li>
+              {{end}} {{end}}
+            </ul>
+          </div>
+        </div>
+        {{end}}
+
+        <!-- Afternoon section -->
+        {{if $hasAfternoon}}
+        <div class="timeline-item">
+          <div class="time-point"></div>
+          <div class="time-content">
+            <div class="time-label">Afternoon</div>
+            <ul class="activity-list">
+              {{range $actIndex, $activity := $day.Activities}} {{if eq
+              $activity.Time "Afternoon"}}
+              <li class="activity-item">{{$activity.Description}}</li>
+              {{end}} {{end}}
+            </ul>
+          </div>
+        </div>
+        {{end}}
+
+        <!-- Evening section -->
+        {{if $hasEvening}}
+        <div class="timeline-item">
+          <div class="time-point"></div>
+          <div class="time-content">
+            <div class="time-label">Evening</div>
+            <ul class="activity-list">
+              {{range $actIndex, $activity := $day.Activities}} {{if eq
+              $activity.Time "Evening"}}
+              <li class="activity-item">{{$activity.Description}}</li>
+              {{end}} {{end}}
+            </ul>
+          </div>
+        </div>
+        {{end}}
+
+        <!-- If none of the activities have a time property, show them in default format -->
+        {{if and (not $hasMorning) (not $hasAfternoon) (not $hasEvening)}}
+        {{range $actIndex, $activity := $day.Activities}}
         <div class="timeline-item">
           <div class="time-point"></div>
           <div class="time-content">
             <div class="time-label">{{$activity.Name}}</div>
-            <div class="time-activities">
-              <p>{{$activity.Description}}</p>
-              <p><strong>Location:</strong> {{$activity.Location}}</p>
-              <p><strong>Duration:</strong> {{$activity.Duration}}</p>
+            <ul class="activity-list">
+              <li class="activity-item">{{$activity.Description}}</li>
+              <li class="activity-item">
+                <strong>Location:</strong> {{$activity.Location}}
+              </li>
+              <li class="activity-item">
+                <strong>Duration:</strong> {{$activity.Duration}}
+              </li>
               {{if $activity.Type}}
-              <p><strong>Type:</strong> {{$activity.Type}}</p>
+              <li class="activity-item">
+                <strong>Type:</strong> {{$activity.Type}}
+              </li>
               {{end}}
-            </div>
+            </ul>
           </div>
         </div>
-        {{end}} {{else}}
+        {{end}} {{end}} {{else}}
         <div class="timeline-item">
           <div class="time-point"></div>
           <div class="time-content">
             <div class="time-label">Full Day</div>
-            <div class="time-activities">
-              <p>Activities planned for this day</p>
-            </div>
+            <ul class="activity-list">
+              <li class="activity-item">Activities planned for this day</li>
+            </ul>
           </div>
         </div>
         {{end}}

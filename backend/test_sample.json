@@ -28,7 +28,8 @@
             "location": "Auckland Airport",
             "duration": "1 hour",
             "price": 5000.0,
-            "type": "Transfer"
+            "type": "Transfer",
+            "time": "Morning"
           },
           {
             "id": "act002",
@@ -37,7 +38,8 @@
             "location": "Auckland City",
             "duration": "3 hours",
             "price": 8000.0,
-            "type": "Sightseeing"
+            "type": "Sightseeing",
+            "time": "Afternoon"
           }
         ],
         "transfers": [
@@ -67,7 +69,8 @@
             "location": "Rotorua",
             "duration": "3 hours",
             "price": 12000.0,
-            "type": "Cultural"
+            "type": "Cultural",
+            "time": "Morning"
           }
         ]
       }
