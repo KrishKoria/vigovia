@@ -1,261 +1,166 @@
 {{/* Inclusions section */}}
-<div class="inclusions">
-  <h3>Package Inclusions</h3>
-
-  <div class="inclusions-grid">
-    {{range .Inclusions}}
-    <div class="inclusion-item">
-      <div class="inclusion-header">
-        <h4>{{.Category}}</h4>
-        <span class="inclusion-status status-{{lower .Status}}"
-          >{{.Status}}</span
-        >
-      </div>
-      <div class="inclusion-details">
-        <div class="count">{{.Count}} item{{if ne .Count 1}}s{{end}}</div>
-        <p>{{.Details}}</p>
-      </div>
-    </div>
-    {{end}}
+<div class="inclusions-container">
+  <!-- Title Section -->
+  <div class="inclusions-title-section">
+    <h2 class="inclusions-main-title">
+      <span class="title-inclusion">Inclusion</span>
+      <span class="title-summary">Summary</span>
+    </h2>
   </div>
 
-  <div class="inclusions-summary">
-    <h4>What's Included in Your Package</h4>
-    <div class="summary-grid">
-      <div class="included-section">
-        <h5>✅ Included</h5>
-        <ul>
-          <li>All mentioned accommodation with breakfast</li>
-          <li>Airport transfers and sightseeing transportation</li>
-          <li>Professional tour guide services</li>
-          <li>All entrance fees to mentioned attractions</li>
-          <li>Comprehensive travel insurance</li>
-          <li>24/7 customer support during travel</li>
-        </ul>
-      </div>
-
-      <div class="excluded-section">
-        <h5>❌ Not Included</h5>
-        <ul>
-          <li>International and domestic airfare</li>
-          <li>Visa fees and travel documents</li>
-          <li>Meals not mentioned in the itinerary</li>
-          <li>Personal expenses and shopping</li>
-          <li>Tips and gratuities</li>
-          <li>Any activities not mentioned in the itinerary</li>
-        </ul>
-      </div>
-    </div>
+  <!-- Inclusions Table -->
+  <div class="inclusions-table-wrapper">
+    <table class="inclusions-table">
+      <thead>
+        <tr class="inclusions-header-row">
+          <th class="inclusions-header-cell category-header">Category</th>
+          <th class="inclusions-header-cell count-header">Count</th>
+          <th class="inclusions-header-cell details-header">Details</th>
+          <th class="inclusions-header-cell status-header">
+            Status / Comments
+          </th>
+        </tr>
+      </thead>
+      <tbody class="inclusions-table-body">
+        {{range .Inclusions}}
+        <tr class="inclusions-row">
+          <td class="inclusions-data-cell category-cell">{{.Category}}</td>
+          <td class="inclusions-data-cell count-cell">{{.Count}}</td>
+          <td class="inclusions-data-cell details-cell">{{.Details}}</td>
+          <td class="inclusions-data-cell status-cell">{{.Status}}</td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
   </div>
 
-  <div class="additional-info">
-    <h5>Additional Information</h5>
-    <div class="info-cards">
-      <div class="info-card">
-        <strong>Best Time to Visit</strong>
-        <p>
-          {{.Trip.Destination}} offers great experiences year-round. Check
-          seasonal variations for optimal planning.
-        </p>
-      </div>
-      <div class="info-card">
-        <strong>Packing Suggestions</strong>
-        <p>
-          Comfortable walking shoes, weather-appropriate clothing, and essential
-          travel documents are recommended.
-        </p>
-      </div>
-      <div class="info-card">
-        <strong>Health & Safety</strong>
-        <p>
-          Travel insurance is included. Consult your doctor for any required
-          vaccinations or health precautions.
-        </p>
-      </div>
-    </div>
-  </div>
+  <style>
+    @media print {
+      .inclusions-container {
+        width: 100%;
+        margin: 24px 0;
+        font-family: "Roboto", sans-serif;
+        color: #333;
+        page-break-inside: avoid;
+      }
+
+      /* Title section styling */
+      .inclusions-title-section {
+        margin-bottom: 20px;
+      }
+
+      .inclusions-main-title {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.3;
+        margin: 0;
+        color: #321e5d;
+      }
+
+      .title-inclusion {
+        color: #321e5d;
+      }
+
+      .title-summary {
+        color: #680099;
+        margin-left: 8px;
+      }
+
+      /* Table wrapper */
+      .inclusions-table-wrapper {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 24px;
+      }
+
+      /* Main table styling */
+      .inclusions-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        background: white;
+      }
+
+      /* Header row styling */
+      .inclusions-header-row {
+        background: #321e5d;
+      }
+
+      .inclusions-header-cell {
+        padding: 16px 20px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 14px;
+        color: white;
+        border: none;
+        position: relative;
+      }
+
+      .category-header {
+        width: 15%;
+      }
+
+      .count-header {
+        width: 10%;
+        text-align: center;
+      }
+
+      .details-header {
+        width: 50%;
+      }
+
+      .status-header {
+        width: 25%;
+      }
+
+      /* Table body styling */
+      .inclusions-table-body {
+        background: #f9eeff;
+      }
+
+      /* Data row styling */
+      .inclusions-row {
+        border-bottom: 1px solid #e5d3f0;
+      }
+
+      .inclusions-row:last-child {
+        border-bottom: none;
+      }
+
+      .inclusions-data-cell {
+        padding: 16px 20px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #333;
+        vertical-align: top;
+        border: none;
+      }
+
+      .category-cell {
+        font-weight: 600;
+        color: #321e5d;
+      }
+
+      .count-cell {
+        text-align: center;
+        font-weight: 600;
+        color: #680099;
+      }
+
+      .details-cell {
+        line-height: 1.6;
+      }
+
+      .status-cell {
+        font-weight: 500;
+        color: #666;
+      }
+
+      /* Responsive adjustments for smaller print areas */
+      @page {
+        margin: 0.75in;
+      }
+    }
+  </style>
 </div>
-
-<style>
-  .inclusions {
-    margin-bottom: 30px;
-  }
-
-  .inclusions h3 {
-    margin-bottom: 20px;
-    color: #007bff;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 10px;
-  }
-
-  .inclusions-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 15px;
-    margin-bottom: 25px;
-  }
-
-  .inclusion-item {
-    background: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 15px;
-    border-left: 4px solid #28a745;
-  }
-
-  .inclusion-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .inclusion-header h4 {
-    margin: 0;
-    color: #333;
-    font-size: 1.1em;
-  }
-
-  .inclusion-status {
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 0.8em;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  .status-included {
-    background: #d4edda;
-    color: #155724;
-  }
-
-  .status-optional {
-    background: #fff3cd;
-    color: #856404;
-  }
-
-  .status-excluded {
-    background: #f8d7da;
-    color: #721c24;
-  }
-
-  .inclusion-details .count {
-    font-weight: bold;
-    color: #007bff;
-    margin-bottom: 5px;
-  }
-
-  .inclusion-details p {
-    margin: 0;
-    font-size: 0.9em;
-    color: #666;
-    line-height: 1.4;
-  }
-
-  .inclusions-summary {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 25px;
-  }
-
-  .inclusions-summary h4 {
-    margin: 0 0 15px 0;
-    color: #333;
-    text-align: center;
-  }
-
-  .summary-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-
-  .included-section,
-  .excluded-section {
-    background: white;
-    padding: 15px;
-    border-radius: 6px;
-  }
-
-  .included-section h5 {
-    color: #28a745;
-    margin: 0 0 10px 0;
-    font-size: 1em;
-  }
-
-  .excluded-section h5 {
-    color: #dc3545;
-    margin: 0 0 10px 0;
-    font-size: 1em;
-  }
-
-  .included-section ul,
-  .excluded-section ul {
-    margin: 0;
-    padding-left: 18px;
-  }
-
-  .included-section li,
-  .excluded-section li {
-    margin-bottom: 5px;
-    font-size: 0.9em;
-    line-height: 1.3;
-  }
-
-  .additional-info h5 {
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-
-  .info-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
-  }
-
-  .info-card {
-    background: #e9ecef;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 3px solid #6c757d;
-  }
-
-  .info-card strong {
-    display: block;
-    color: #495057;
-    margin-bottom: 8px;
-    font-size: 0.95em;
-  }
-
-  .info-card p {
-    margin: 0;
-    font-size: 0.85em;
-    color: #666;
-    line-height: 1.4;
-  }
-
-  @media print {
-    .inclusions-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .summary-grid {
-      grid-template-columns: 1fr;
-      gap: 15px;
-    }
-
-    .info-cards {
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .inclusion-item,
-    .inclusions-summary,
-    .info-card {
-      page-break-inside: avoid;
-    }
-  }
-</style>

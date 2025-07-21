@@ -47,148 +47,133 @@
 </div>
 
 <style>
-  :root {
-    --cta-color: #541c9c;
-    --hover-purple: #680099;
-    --gradient-purple: #936fe0;
-    --icon-fill: #321e5d;
-    --title-fill: #fbf4ff;
-  }
-
-  .header {
-    border-radius: 20px;
-    padding: 0;
-    margin-bottom: 30px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .company-logo {
-    text-align: center;
-    padding: 20px 0 10px 0;
-    background: white;
-  }
-
-  .logo {
-    max-height: 80px;
-  }
-
-  .logo-placeholder {
-    display: inline-block;
-  }
-
-  .logo-text {
-    font-size: 24px;
-    font-weight: bold;
-    color: #541c9c;
-    display: block;
-    margin-bottom: 2px;
-  }
-
-  .tagline {
-    font-size: 10px;
-    color: #936fe0;
-    letter-spacing: 2px;
-    display: block;
-  }
-
-  .hero-section {
-    background: linear-gradient(135deg, #4a90e2 0%, #541c9c 50%, #936fe0 100%);
-    text-align: center;
-    padding: 20px 40px 30px 40px;
-    color: white;
-  }
-
-  .greeting {
-    font-size: 2.5em;
-    margin: 0 0 10px 0;
-    color: white;
-    font-weight: 300;
-  }
-
-  .trip-title {
-    font-size: 2.2em;
-    margin: 0 0 10px 0;
-    color: white;
-    font-weight: bold;
-  }
-
-  .duration {
-    font-size: 1.3em;
-    margin: 0 0 20px 0;
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 300;
-  }
-
-  .travel-icons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 20px 0;
-  }
-
-  .travel-icons .icon {
-    font-size: 24px;
-    opacity: 0.9;
-  }
-
-  .trip-info-table {
-    background: white;
-    margin: 0 20px 20px 20px;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
-
-  .info-row {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-  }
-
-  .info-cell {
-    padding: 15px 10px;
-    text-align: center;
-    border-right: 1px solid #eee;
-    color: #333;
-    font-size: 0.9em;
-  }
-
-  .info-cell:last-child {
-    border-right: none;
-  }
-
-  .info-row:first-child .info-cell {
-    background: #f8f9fa;
-    font-weight: bold;
-    color: #541c9c;
-    border-bottom: 2px solid #541c9c;
-  }
-
-  .data-row .info-cell {
-    padding: 18px 10px;
-    font-weight: 500;
-  }
-
   @media print {
+    :root {
+      --cta-color: #541c9c;
+      --hover-purple: #680099;
+      --gradient-purple: #936fe0;
+      --icon-fill: #321e5d;
+      --title-fill: #fbf4ff;
+    }
+
     .header {
+      border-radius: 20px;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
       page-break-inside: avoid;
       margin-bottom: 20px;
     }
 
+    .company-logo {
+      text-align: center;
+      padding: 20px 0 10px 0;
+      background: white;
+    }
+
+    .logo {
+      max-height: 80px;
+    }
+
+    .logo-placeholder {
+      display: inline-block;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: bold;
+      color: #541c9c;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .tagline {
+      font-size: 10px;
+      color: #936fe0;
+      letter-spacing: 2px;
+      display: block;
+    }
+
     .hero-section {
+      background: linear-gradient(
+        135deg,
+        #4a90e2 0%,
+        #541c9c 50%,
+        #936fe0 100%
+      );
+      text-align: center;
       padding: 15px 30px 20px 30px;
+      color: white;
     }
 
     .greeting {
       font-size: 2em;
+      margin: 0 0 10px 0;
+      color: white;
+      font-weight: 300;
     }
 
     .trip-title {
       font-size: 1.8em;
+      margin: 0 0 10px 0;
+      color: white;
+      font-weight: bold;
     }
 
     .duration {
       font-size: 1.1em;
+      margin: 0 0 20px 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 300;
+    }
+
+    .travel-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .travel-icons .icon {
+      font-size: 24px;
+      opacity: 0.9;
+    }
+
+    .trip-info-table {
+      background: white;
+      margin: 0 20px 20px 20px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .info-cell {
+      padding: 15px 10px;
+      text-align: center;
+      border-right: 1px solid #eee;
+      color: #333;
+      font-size: 0.9em;
+    }
+
+    .info-cell:last-child {
+      border-right: none;
+    }
+
+    .info-row:first-child .info-cell {
+      background: #f8f9fa;
+      font-weight: bold;
+      color: #541c9c;
+      border-bottom: 2px solid #541c9c;
+    }
+
+    .data-row .info-cell {
+      padding: 18px 10px;
+      font-weight: 500;
     }
   }
 

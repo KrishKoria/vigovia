@@ -22,201 +22,113 @@
     </div>
     {{end}}
   </div>
-
-  <!-- Note Section -->
-  <div class="flight-note-container">
-    <p class="flight-note-text">
-      Note: All Flights Include Meals, Seat Choice (Excluding XL), And 20kg/25Kg
-      Checked Baggage.
-    </p>
-  </div>
 </div>
 {{end}}
 
 <style>
-  .flight-summary-container {
-    margin: 40px 0;
-    font-family: "Roboto", "Arial", sans-serif;
-  }
-
-  /* Title Styling */
-  .flight-title-section {
-    margin-bottom: 30px;
-  }
-
-  .main-title {
-    font-size: 3.5rem;
-    font-weight: bold;
-    margin: 0;
-    line-height: 1.2;
-  }
-
-  .title-flight {
-    color: #000000;
-    font-weight: bold;
-  }
-
-  .title-summary {
-    color: #680099;
-    font-weight: bold;
-  }
-
-  /* Flight Cards Container */
-  .flight-cards-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 30px;
-  }
-
-  /* Individual Flight Card */
-  .flight-card {
-    display: flex;
-    align-items: stretch;
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border: 1px solid #e0e0e0;
-    min-height: 90px;
-  }
-
-  /* Purple Arrow Date Tab */
-  .flight-date-arrow {
-    background: linear-gradient(135deg, #680099 0%, #8b4fb3 100%);
-    color: white;
-    padding: 25px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    font-size: 1.2rem;
-    position: relative;
-    min-width: 200px;
-    text-align: center;
-  }
-
-  /* Arrow Effect */
-  .flight-date-arrow::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: -20px;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 45px 0 45px 20px;
-    border-color: transparent transparent transparent #680099;
-    z-index: 2;
-  }
-
-  .flight-date {
-    font-weight: 500;
-    letter-spacing: 0.5px;
-  }
-
-  /* Flight Content Area */
-  .flight-content-area {
-    flex: 1;
-    padding: 25px 35px;
-    display: flex;
-    align-items: center;
-    background: white;
-  }
-
-  .airline-name {
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: #000000;
-    margin-right: 10px;
-  }
-
-  .flight-route {
-    font-weight: 300;
-    font-size: 1.2rem;
-    color: #000000;
-  }
-
-  /* Note Section */
-  .flight-note-container {
-    margin-top: 25px;
-    padding: 18px 20px;
-    background: #f8f9fa;
-    border-radius: 10px;
-    border-left: 5px solid #680099;
-  }
-
-  .flight-note-text {
-    margin: 0;
-    font-size: 1rem;
-    color: #666666;
-    line-height: 1.5;
-    font-weight: 400;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .flight-card {
-      flex-direction: column;
-    }
-
-    .flight-date-arrow {
-      min-width: auto;
-      width: 100%;
-      border-radius: 0;
-      padding: 20px;
-    }
-
-    .flight-date-arrow::after {
-      display: none;
-    }
-
-    .flight-content-area {
-      padding: 20px 25px;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 5px;
-    }
-
-    .main-title {
-      font-size: 2.5rem;
-    }
-
-    .airline-name,
-    .flight-route {
-      font-size: 1.1rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .main-title {
-      font-size: 2rem;
-    }
-
-    .flight-content-area {
-      padding: 15px 20px;
-    }
-
-    .airline-name,
-    .flight-route {
-      font-size: 1rem;
-    }
-  }
-
-  /* Print Styles */
   @media print {
+    .flight-summary-container {
+      margin: 20px 0;
+      font-family: "Roboto", "Arial", sans-serif;
+    }
+
+    /* Title Styling */
+    .flight-title-section {
+      margin-bottom: 30px;
+    }
+
+    .main-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .title-flight {
+      color: #000000;
+      font-weight: bold;
+    }
+
+    .title-summary {
+      color: #680099;
+      font-weight: bold;
+    }
+
+    /* Flight Cards Container */
+    .flight-cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    /* Individual Flight Card */
     .flight-card {
+      display: flex;
+      align-items: stretch;
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      min-height: 90px;
       page-break-inside: avoid;
       box-shadow: none;
       border: 1px solid #ddd;
     }
 
-    .flight-date-arrow::after {
-      border-color: transparent transparent transparent #680099;
+    /* Purple Arrow Date Tab */
+    .flight-date-arrow {
+      background: linear-gradient(135deg, #680099 0%, #8b4fb3 100%);
+      color: white;
+      padding: 25px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      font-size: 1.2rem;
+      position: relative;
+      min-width: 200px;
+      text-align: center;
     }
 
-    .flight-summary-container {
-      margin: 20px 0;
+    /* Arrow Effect */
+    .flight-date-arrow::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: -20px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 45px 0 45px 20px;
+      border-color: transparent transparent transparent #680099;
+      z-index: 2;
+    }
+
+    .flight-date {
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* Flight Content Area */
+    .flight-content-area {
+      flex: 1;
+      padding: 25px 35px;
+      display: flex;
+      align-items: center;
+      background: white;
+    }
+
+    .airline-name {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #000000;
+      margin-right: 10px;
+    }
+
+    .flight-route {
+      font-weight: 300;
+      font-size: 1.2rem;
+      color: #000000;
     }
   }
 </style>

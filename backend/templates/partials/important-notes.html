@@ -1,291 +1,139 @@
 {{/* Important notes section */}}
-<div class="important-notes">
-  <h3>Important Information</h3>
-
-  <div class="notes-container">
-    {{range .ImportantNotes}}
-    <div class="note-item">
-      <div class="note-header">
-        <span class="note-icon">ℹ️</span>
-        <h4>{{.Point}}</h4>
-      </div>
-      <p>{{.Details}}</p>
-    </div>
-    {{end}}
+<div class="important-notes-container">
+  <!-- Title Section -->
+  <div class="notes-title-section">
+    <h2 class="notes-main-title">
+      <span class="title-important">Important</span>
+      <span class="title-notes">Notes</span>
+    </h2>
   </div>
 
-  <div class="travel-guidelines">
-    <h4>General Travel Guidelines</h4>
-
-    <div class="guidelines-grid">
-      <div class="guideline-section">
-        <h5>📋 Documentation Required</h5>
-        <ul>
-          <li>Valid passport with minimum 6 months validity</li>
-          <li>Appropriate visa for {{.Trip.Destination}}</li>
-          <li>Travel insurance documents</li>
-          <li>Vaccination certificates (if required)</li>
-          <li>Emergency contact information</li>
-        </ul>
-      </div>
-
-      <div class="guideline-section">
-        <h5>🧳 Packing Essentials</h5>
-        <ul>
-          <li>Comfortable walking shoes</li>
-          <li>Weather-appropriate clothing</li>
-          <li>Sunscreen and personal medications</li>
-          <li>Power adapters and chargers</li>
-          <li>Copies of important documents</li>
-        </ul>
-      </div>
-
-      <div class="guideline-section">
-        <h5>💰 Financial Guidelines</h5>
-        <ul>
-          <li>Inform bank about international travel</li>
-          <li>Carry some local currency</li>
-          <li>Keep receipts for tax purposes</li>
-          <li>Budget for tips and personal expenses</li>
-          <li>Check currency exchange rates</li>
-        </ul>
-      </div>
-
-      <div class="guideline-section">
-        <h5>🏥 Health & Safety</h5>
-        <ul>
-          <li>Check required vaccinations</li>
-          <li>Carry prescription medications</li>
-          <li>Know emergency contact numbers</li>
-          <li>Follow local safety guidelines</li>
-          <li>Stay hydrated and rest well</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="emergency-contacts">
-    <h4>Emergency Contacts</h4>
-    <div class="contact-grid">
-      <div class="contact-item">
-        <strong>24/7 Travel Support</strong>
-        <p>📞 +1-800-VIGOVIA</p>
-        <p>📧 emergency@vigovia.com</p>
-      </div>
-      <div class="contact-item">
-        <strong>Local Office ({{.Trip.Destination}})</strong>
-        <p>📞 Available upon arrival</p>
-        <p>📧 {{lower .Trip.Destination}}@vigovia.com</p>
-      </div>
-      <div class="contact-item">
-        <strong>Medical Emergency</strong>
-        <p>📞 Local emergency number: 911</p>
-        <p>🏥 Insurance hotline in travel documents</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="cancellation-policy">
-    <h4>Cancellation & Changes Policy</h4>
-    <div class="policy-content">
-      <div class="policy-item">
-        <strong>Free Cancellation:</strong> Up to 30 days before departure
-      </div>
-      <div class="policy-item">
-        <strong>Partial Refund:</strong> 15-29 days before departure (50%
-        refund)
-      </div>
-      <div class="policy-item">
-        <strong>No Refund:</strong> Less than 14 days before departure
-      </div>
-      <div class="policy-item">
-        <strong>Changes:</strong> Subject to availability and additional charges
-      </div>
-    </div>
+  <!-- Important Notes Table -->
+  <div class="notes-table-wrapper">
+    <table class="notes-table">
+      <thead>
+        <tr class="notes-header-row">
+          <th class="notes-header-cell point-header">Point</th>
+          <th class="notes-header-cell details-header">Details</th>
+        </tr>
+      </thead>
+      <tbody class="notes-table-body">
+        {{range .ImportantNotes}}
+        <tr class="notes-row">
+          <td class="notes-data-cell point-cell">{{.Point}}</td>
+          <td class="notes-data-cell details-cell">{{.Details}}</td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
   </div>
 </div>
 
 <style>
-  .important-notes {
-    margin-bottom: 30px;
-    background: #fff3cd;
-    border: 1px solid #ffeaa7;
-    border-radius: 10px;
-    padding: 25px;
-  }
-
-  .important-notes h3 {
-    margin: 0 0 20px 0;
-    color: #856404;
-    border-bottom: 2px solid #ffc107;
-    padding-bottom: 10px;
-  }
-
-  .notes-container {
-    margin-bottom: 25px;
-  }
-
-  .note-item {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    border-left: 4px solid #ffc107;
-  }
-
-  .note-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
-  .note-icon {
-    font-size: 1.2em;
-    margin-right: 10px;
-  }
-
-  .note-header h4 {
-    margin: 0;
-    color: #856404;
-    font-size: 1em;
-  }
-
-  .note-item p {
-    margin: 0;
-    color: #495057;
-    font-size: 0.9em;
-    line-height: 1.4;
-  }
-
-  .travel-guidelines {
-    margin-bottom: 25px;
-  }
-
-  .travel-guidelines h4 {
-    color: #856404;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-
-  .guidelines-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
-  }
-
-  .guideline-section {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    border-radius: 8px;
-    border-top: 3px solid #ffc107;
-  }
-
-  .guideline-section h5 {
-    margin: 0 0 10px 0;
-    color: #495057;
-    font-size: 0.95em;
-  }
-
-  .guideline-section ul {
-    margin: 0;
-    padding-left: 18px;
-  }
-
-  .guideline-section li {
-    margin-bottom: 4px;
-    font-size: 0.85em;
-    color: #666;
-    line-height: 1.3;
-  }
-
-  .emergency-contacts {
-    margin-bottom: 25px;
-  }
-
-  .emergency-contacts h4 {
-    color: #856404;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-  }
-
-  .contact-item {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    border: 1px solid #ffd54f;
-  }
-
-  .contact-item strong {
-    display: block;
-    color: #495057;
-    margin-bottom: 8px;
-    font-size: 0.9em;
-  }
-
-  .contact-item p {
-    margin: 3px 0;
-    font-size: 0.85em;
-    color: #666;
-  }
-
-  .cancellation-policy h4 {
-    color: #856404;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-
-  .policy-content {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #ffd54f;
-  }
-
-  .policy-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #f0f0f0;
-    font-size: 0.9em;
-  }
-
-  .policy-item:last-child {
-    border-bottom: none;
-  }
-
-  .policy-item strong {
-    color: #495057;
-    min-width: 140px;
-  }
-
   @media print {
-    .important-notes {
-      background: white !important;
-      border: 1px solid #ccc !important;
+    .important-notes-container {
+      width: 100%;
+      margin: 24px 0;
+      font-family: "Roboto", sans-serif;
+      color: #333;
       page-break-inside: avoid;
     }
 
-    .guidelines-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+    .notes-title-section {
+      margin-bottom: 20px;
     }
 
-    .contact-grid {
-      grid-template-columns: 1fr;
-      gap: 8px;
+    .notes-main-title {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin: 0;
+      color: #321e5d;
     }
 
-    .guideline-section,
-    .contact-item,
-    .policy-content {
-      background: #f9f9f9 !important;
+    .title-important {
+      color: #321e5d;
+    }
+
+    .title-notes {
+      color: #680099;
+      margin-left: 8px;
+    }
+
+    /* Table wrapper */
+    .notes-table-wrapper {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Main table styling */
+    .notes-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      background: white;
+    }
+
+    /* Header row styling */
+    .notes-header-row {
+      background: #321e5d;
+    }
+
+    .notes-header-cell {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 14px;
+      color: white;
+      border: none;
+      position: relative;
+    }
+
+    .point-header {
+      width: 30%;
+    }
+
+    .details-header {
+      width: 70%;
+    }
+
+    /* Table body styling */
+    .notes-table-body {
+      background: #f9eeff;
+    }
+
+    /* Data row styling */
+    .notes-row {
+      border-bottom: 1px solid #e5d3f0;
+    }
+
+    .notes-row:last-child {
+      border-bottom: none;
+    }
+
+    .notes-data-cell {
+      padding: 16px 20px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #333;
+      vertical-align: top;
+      border: none;
+    }
+
+    .point-cell {
+      font-weight: 600;
+      color: #321e5d;
+    }
+
+    .details-cell {
+      line-height: 1.6;
+      color: #555;
+    }
+
+    /* Responsive adjustments for smaller print areas */
+    @page {
+      margin: 0.75in;
     }
   }
 </style>

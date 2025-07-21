@@ -1,326 +1,140 @@
 {{/* Scope of service section */}}
-<div class="scope-of-service">
-  <h3>Scope of Service</h3>
-
-  <div class="scope-intro">
-    <p>
-      {{default "Vigovia Travel Services" .Config.CustomBranding.CompanyName}}
-      is committed to providing comprehensive travel services to ensure your
-      journey to {{.Trip.Destination}} is memorable and hassle-free. Below is
-      the detailed scope of our services for your trip.
-    </p>
+<div class="scope-of-service-container">
+  <!-- Title Section -->
+  <div class="scope-title-section">
+    <h2 class="scope-main-title">
+      <span class="title-scope">Scope Of</span>
+      <span class="title-service">Service</span>
+    </h2>
   </div>
 
-  <div class="services-grid">
-    {{range .ScopeOfService}}
-    <div class="service-item">
-      <div class="service-header">
-        <span class="service-icon">🔹</span>
-        <h4>{{.Service}}</h4>
-      </div>
-      <p>{{.Details}}</p>
-    </div>
-    {{end}}
-  </div>
-
-  <div class="service-categories">
-    <div class="category-section">
-      <h4>🗓️ Pre-Travel Services</h4>
-      <ul>
-        <li>Customized itinerary planning based on your preferences</li>
-        <li>Flight and accommodation booking assistance</li>
-        <li>Visa guidance and documentation support</li>
-        <li>Travel insurance arrangement</li>
-        <li>Pre-departure briefing and travel tips</li>
-        <li>24/7 customer support for any queries</li>
-      </ul>
-    </div>
-
-    <div class="category-section">
-      <h4>✈️ During Travel Services</h4>
-      <ul>
-        <li>Airport meet and greet services</li>
-        <li>Professional local guide services</li>
-        <li>Transportation as per itinerary</li>
-        <li>Activity coordination and management</li>
-        <li>24/7 emergency support hotline</li>
-        <li>Real-time assistance for any changes</li>
-      </ul>
-    </div>
-
-    <div class="category-section">
-      <h4>🏨 Accommodation Services</h4>
-      <ul>
-        <li>Handpicked hotels based on quality and location</li>
-        <li>Room upgrades subject to availability</li>
-        <li>Special requests accommodation</li>
-        <li>Check-in and check-out assistance</li>
-        <li>Hotel liaison for any issues</li>
-        <li>Alternative arrangements if needed</li>
-      </ul>
-    </div>
-
-    <div class="category-section">
-      <h4>🎯 Activity Management</h4>
-      <ul>
-        <li>Pre-booking of all mentioned activities</li>
-        <li>Skip-the-line tickets where available</li>
-        <li>Professional guide services</li>
-        <li>Group coordination and management</li>
-        <li>Safety briefings for adventure activities</li>
-        <li>Backup plans for weather dependencies</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="service-standards">
-    <h4>Our Service Standards</h4>
-    <div class="standards-grid">
-      <div class="standard-item">
-        <strong>Quality Assurance</strong>
-        <p>
-          All services are vetted and regularly audited to maintain high
-          standards
-        </p>
-      </div>
-      <div class="standard-item">
-        <strong>Transparent Pricing</strong>
-        <p>
-          No hidden costs - all charges are clearly mentioned in your package
-        </p>
-      </div>
-      <div class="standard-item">
-        <strong>Local Expertise</strong>
-        <p>
-          Our local partners provide authentic experiences and insider knowledge
-        </p>
-      </div>
-      <div class="standard-item">
-        <strong>Flexibility</strong>
-        <p>
-          We accommodate reasonable changes and special requests when possible
-        </p>
-      </div>
-      <div class="standard-item">
-        <strong>Safety First</strong>
-        <p>All activities and accommodations meet strict safety standards</p>
-      </div>
-      <div class="standard-item">
-        <strong>Sustainability</strong>
-        <p>We promote responsible tourism and support local communities</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="limitations">
-    <h4>Service Limitations</h4>
-    <div class="limitation-content">
-      <p>
-        <strong>Please note:</strong> While we strive to provide exceptional
-        service, certain factors beyond our control may affect service delivery:
-      </p>
-      <ul>
-        <li>Weather conditions affecting outdoor activities</li>
-        <li>Government regulations and policy changes</li>
-        <li>Natural disasters or force majeure events</li>
-        <li>Third-party service provider limitations</li>
-        <li>Local infrastructure or transportation delays</li>
-      </ul>
-      <p>
-        In such cases, we will provide alternative arrangements or appropriate
-        compensation as per our terms and conditions.
-      </p>
-    </div>
+  <!-- Scope of Service Table -->
+  <div class="scope-table-wrapper">
+    <table class="scope-table">
+      <thead>
+        <tr class="scope-header-row">
+          <th class="scope-header-cell service-header">Service</th>
+          <th class="scope-header-cell details-header">Details</th>
+        </tr>
+      </thead>
+      <tbody class="scope-table-body">
+        {{range .ScopeOfService}}
+        <tr class="scope-row">
+          <td class="scope-data-cell service-cell">{{.Service}}</td>
+          <td class="scope-data-cell details-cell">{{.Details}}</td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
   </div>
 </div>
 
 <style>
-  .scope-of-service {
-    margin-bottom: 30px;
-  }
-
-  .scope-of-service h3 {
-    margin-bottom: 20px;
-    color: #007bff;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 10px;
-  }
-
-  .scope-intro {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 25px;
-    border-left: 4px solid #007bff;
-  }
-
-  .scope-intro p {
-    margin: 0;
-    color: #495057;
-    line-height: 1.5;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 15px;
-    margin-bottom: 25px;
-  }
-
-  .service-item {
-    background: #e9ecef;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid #6c757d;
-  }
-
-  .service-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .service-icon {
-    font-size: 1.1em;
-    margin-right: 8px;
-    color: #007bff;
-  }
-
-  .service-header h4 {
-    margin: 0;
-    color: #333;
-    font-size: 1em;
-  }
-
-  .service-item p {
-    margin: 0;
-    color: #666;
-    font-size: 0.9em;
-    line-height: 1.4;
-  }
-
-  .service-categories {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-bottom: 25px;
-  }
-
-  .category-section {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    border-top: 3px solid #007bff;
-  }
-
-  .category-section h4 {
-    margin: 0 0 12px 0;
-    color: #495057;
-    font-size: 1em;
-  }
-
-  .category-section ul {
-    margin: 0;
-    padding-left: 18px;
-  }
-
-  .category-section li {
-    margin-bottom: 6px;
-    font-size: 0.9em;
-    color: #666;
-    line-height: 1.3;
-  }
-
-  .service-standards {
-    margin-bottom: 25px;
-  }
-
-  .service-standards h4 {
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-
-  .standards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 12px;
-  }
-
-  .standard-item {
-    background: #e3f2fd;
-    padding: 12px;
-    border-radius: 6px;
-    text-align: center;
-    border: 1px solid #bbdefb;
-  }
-
-  .standard-item strong {
-    display: block;
-    color: #1976d2;
-    margin-bottom: 6px;
-    font-size: 0.9em;
-  }
-
-  .standard-item p {
-    margin: 0;
-    font-size: 0.8em;
-    color: #666;
-    line-height: 1.3;
-  }
-
-  .limitations {
-    background: #fff3cd;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #ffeaa7;
-  }
-
-  .limitations h4 {
-    margin: 0 0 12px 0;
-    color: #856404;
-  }
-
-  .limitation-content p {
-    margin: 0 0 10px 0;
-    color: #495057;
-    font-size: 0.9em;
-    line-height: 1.4;
-  }
-
-  .limitation-content ul {
-    margin: 10px 0;
-    padding-left: 20px;
-  }
-
-  .limitation-content li {
-    margin-bottom: 4px;
-    font-size: 0.85em;
-    color: #666;
-    line-height: 1.3;
-  }
-
   @media print {
-    .services-grid {
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .service-categories {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
-
-    .standards-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-
-    .category-section,
-    .service-item,
-    .standard-item,
-    .limitations {
+    .scope-of-service-container {
+      width: 100%;
+      margin: 24px 0;
+      font-family: "Roboto", sans-serif;
+      color: #333;
       page-break-inside: avoid;
+    }
+
+    /* Title section styling */
+    .scope-title-section {
+      margin-bottom: 20px;
+    }
+
+    .scope-main-title {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin: 0;
+      color: #321e5d;
+    }
+
+    .title-scope {
+      color: #321e5d;
+    }
+
+    .title-service {
+      color: #680099;
+      margin-left: 8px;
+    }
+
+    /* Table wrapper */
+    .scope-table-wrapper {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Main table styling */
+    .scope-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      background: white;
+    }
+
+    /* Header row styling */
+    .scope-header-row {
+      background: #321e5d;
+    }
+
+    .scope-header-cell {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 14px;
+      color: white;
+      border: none;
+      position: relative;
+    }
+
+    .service-header {
+      width: 35%;
+    }
+
+    .details-header {
+      width: 65%;
+    }
+
+    /* Table body styling */
+    .scope-table-body {
+      background: #f9eeff;
+    }
+
+    /* Data row styling */
+    .scope-row {
+      border-bottom: 1px solid #e5d3f0;
+    }
+
+    .scope-row:last-child {
+      border-bottom: none;
+    }
+
+    .scope-data-cell {
+      padding: 16px 20px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #333;
+      vertical-align: top;
+      border: none;
+    }
+
+    .service-cell {
+      font-weight: 600;
+      color: #321e5d;
+    }
+
+    .details-cell {
+      line-height: 1.6;
+      color: #555;
+    }
+
+    /* Responsive adjustments for smaller print areas */
+    @page {
+      margin: 0.75in;
     }
   }
 </style>

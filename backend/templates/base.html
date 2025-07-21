@@ -44,11 +44,11 @@
     <div class="container">
       {{template "header.html" .}} {{template "day-itinerary.html" .}}
       {{template "flight-summary.html" .}} {{template "hotel-bookings.html" .}}
-      {{$hasActivities := false}} {{range .Days}} {{if .Activities}}
-      {{$hasActivities = true}} {{end}} {{end}} {{if $hasActivities}} {{template
-      "activity-table.html" .}} {{end}} {{template "payment-plan.html" .}}
-      {{template "inclusions.html" .}} {{template "important-notes.html" .}}
-      {{template "visa-details.html" .}} {{template "scope.html" .}} {{template
+      {{template "important-notes.html" .}}{{template "scope.html" .}}
+      {{template "inclusions.html" .}} {{$hasActivities := false}} {{range
+      .Days}} {{if .Activities}} {{$hasActivities = true}} {{end}} {{end}} {{if
+      $hasActivities}} {{template "activity-table.html" .}} {{end}} {{template
+      "payment-plan.html" .}} {{template "visa-details.html" .}} {{template
       "footer.html" .}}
     </div>
   </body>
