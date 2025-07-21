@@ -1,10 +1,3 @@
-/**
- * Data Transformation Layer for Backend Integration
- *
- * This module handles the conversion of frontend ItineraryData to backend ItineraryRequest format.
- * It includes comprehensive data mapping, default value injection, and data enhancement.
- */
-
 import { ItineraryData } from "./types";
 import { ItineraryFormData } from "./schema";
 import {
@@ -25,9 +18,6 @@ import {
   getDefaultActivityTime,
 } from "./defaultValues";
 
-/**
- * Main transformation function that converts frontend form data to backend format
- */
 export function transformToBackendFormat(
   frontendData: ItineraryData | ItineraryFormData
 ): ItineraryRequest {
@@ -38,7 +28,7 @@ export function transformToBackendFormat(
     trip: transformTripData(frontendData),
     itinerary: transformItineraryData(frontendData),
     flights: extractFlights(frontendData),
-    hotels: defaults.hotels, // Empty array as per requirements
+    hotels: defaults.hotels,
     payment: defaults.payment,
     config: defaults.config,
     companyInfo: defaults.companyInfo,
@@ -49,9 +39,6 @@ export function transformToBackendFormat(
   };
 }
 
-/**
- * Transform customer data from frontend format to backend format
- */
 export function transformCustomerData(
   frontendData: ItineraryData | ItineraryFormData
 ): Customer {
@@ -62,9 +49,6 @@ export function transformCustomerData(
   };
 }
 
-/**
- * Transform trip data with duration calculation
- */
 export function transformTripData(
   frontendData: ItineraryData | ItineraryFormData
 ): Trip {
@@ -85,28 +69,19 @@ export function transformTripData(
   };
 }
 
-/**
- * Calculate duration string in "X Days Y Nights" format
- */
 export function calculateDuration(startDate: string, endDate: string): string {
   const start = new Date(startDate);
   const end = new Date(endDate);
 
-  // Calculate the difference in milliseconds
   const diffTime = Math.abs(end.getTime() - start.getTime());
 
-  // Convert to days
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-  // Nights are typically one less than days
   const nights = Math.max(0, diffDays - 1);
 
   return `${diffDays} Days ${nights} Nights`;
 }
 
-/**
- * Transform complete itinerary data including all days
- */
 export function transformItineraryData(
   frontendData: ItineraryData | ItineraryFormData
 ): Itinerary {
@@ -115,9 +90,6 @@ export function transformItineraryData(
   };
 }
 
-/**
- * Transform individual day data to backend format
- */
 export function transformDayData(frontendDay: any): BackendDay {
   return {
     dayNumber: frontendDay.dayNumber,
@@ -131,9 +103,6 @@ export function transformDayData(frontendDay: any): BackendDay {
   };
 }
 
-/**
- * Generate appropriate title for a day based on activities
- */
 function generateDayTitle(day: any): string {
   if (day.activities && day.activities.length > 0) {
     return day.activities[0].name || `Day ${day.dayNumber} Activities`;
@@ -141,20 +110,13 @@ function generateDayTitle(day: any): string {
   return `Day ${day.dayNumber}`;
 }
 
-/**
- * Generate appropriate image for a day
- */
 function generateDayImage(day: any): string {
   if (day.activities && day.activities.length > 0 && day.activities[0].image) {
     return day.activities[0].image;
   }
-  // Default image
   return "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=300&fit=crop&auto=format";
 }
 
-/**
- * Generate timeline for a day based on activities
- */
 function generateTimeline(day: any): Timeline[] {
   if (!day.activities || day.activities.length === 0) {
     return [
@@ -176,9 +138,6 @@ function generateTimeline(day: any): Timeline[] {
   ];
 }
 
-/**
- * Transform activities with enhanced backend fields
- */
 export function transformActivities(
   frontendActivities: any[]
 ): BackendActivity[] {
@@ -205,9 +164,6 @@ export function transformActivities(
   });
 }
 
-/**
- * Transform transfers with direct mapping (no changes needed)
- */
 export function transformTransfers(
   frontendTransfers: any[]
 ): BackendTransfer[] {
@@ -224,13 +180,10 @@ export function transformTransfers(
   }));
 }
 
-/**
- * Transform day-level flights (used within day transformation)
- */
 function transformDayFlights(frontendFlights: any[]): BackendFlight[] {
   return frontendFlights.map((flight) => ({
     id: flight.id,
-    date: "", // Will be set during flight extraction
+    date: "",
     airline: flight.airline,
     flightNumber: flight.flightNumber,
     route: `${flight.from} to ${flight.to}`,
@@ -243,9 +196,6 @@ function transformDayFlights(frontendFlights: any[]): BackendFlight[] {
   }));
 }
 
-/**
- * Extract flights from all days and map them to top-level flights array with dates
- */
 export function extractFlights(
   frontendData: ItineraryData | ItineraryFormData
 ): BackendFlight[] {
@@ -274,34 +224,27 @@ export function extractFlights(
   return flights;
 }
 
-/**
- * Utility function to validate transformed data
- */
 export function validateTransformedData(data: ItineraryRequest): {
   isValid: boolean;
   errors: string[];
 } {
   const errors: string[] = [];
 
-  // Validate customer data
   if (!data.customer.name) errors.push("Customer name is required");
   if (!data.customer.email) errors.push("Customer email is required");
   if (!data.customer.phone) errors.push("Customer phone is required");
 
-  // Validate trip data
   if (!data.trip.title) errors.push("Trip title is required");
   if (!data.trip.destination) errors.push("Trip destination is required");
   if (!data.trip.startDate) errors.push("Trip start date is required");
   if (!data.trip.endDate) errors.push("Trip end date is required");
 
-  // Validate dates
   const startDate = new Date(data.trip.startDate);
   const endDate = new Date(data.trip.endDate);
   if (startDate >= endDate) {
     errors.push("End date must be after start date");
   }
 
-  // Validate travelers count
   if (data.trip.travelers <= 0) {
     errors.push("Number of travelers must be greater than 0");
   }
@@ -312,9 +255,6 @@ export function validateTransformedData(data: ItineraryRequest): {
   };
 }
 
-/**
- * Utility function to get transformation summary for debugging
- */
 export function getTransformationSummary(
   frontendData: ItineraryData | ItineraryFormData,
   backendData: ItineraryRequest

@@ -87,7 +87,6 @@ export function SuccessNotification({
         )}
 
         <div className="flex items-start gap-3">
-          {/* Success icon with method indicator */}
           <div className="flex-shrink-0 relative">
             <div className="p-2 bg-green-100 rounded-full">
               <CheckCircle className="h-6 w-6 text-green-600" />
@@ -102,7 +101,6 @@ export function SuccessNotification({
             </div>
           </div>
 
-          {/* Content */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <h3 className="font-semibold text-green-800">
@@ -124,7 +122,6 @@ export function SuccessNotification({
             )}
           </div>
 
-          {/* Dismiss button */}
           {onDismiss && (
             <Button
               variant="ghost"
@@ -137,7 +134,6 @@ export function SuccessNotification({
           )}
         </div>
 
-        {/* Additional info */}
         <div className="mt-3 pt-3 border-t border-green-200">
           <div className="flex items-center justify-between text-xs text-green-600">
             <span>

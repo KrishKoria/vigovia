@@ -1,10 +1,3 @@
-/**
- * Enhanced Error Display Component
- *
- * Provides comprehensive error display with user-friendly messages,
- * suggestions, retry options, and fallback recommendations.
- */
-
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
@@ -23,7 +16,6 @@ import {
   ErrorInfo,
   ErrorCategory,
   ErrorSeverity,
-  ValidationErrorInfo,
   isValidationErrorInfo,
 } from "@/lib/errorHandler";
 
@@ -108,7 +100,6 @@ export function ErrorDisplay({
   return (
     <Card className={`border-2 shadow-lg ${getErrorColor()} ${className}`}>
       <CardContent className="p-6">
-        {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="flex-shrink-0">{getErrorIcon()}</div>
@@ -130,7 +121,6 @@ export function ErrorDisplay({
           )}
         </div>
 
-        {/* Field Errors (for validation errors) */}
         {isValidationErrorInfo(errorInfo) &&
           errorInfo.fieldErrors.length > 0 && (
             <div className="mb-4 p-3 bg-white/50 rounded-lg border border-current/20">
@@ -148,7 +138,6 @@ export function ErrorDisplay({
             </div>
           )}
 
-        {/* Suggestions */}
         {errorInfo.suggestions.length > 0 && (
           <div className="mb-4">
             <h4 className="font-medium text-sm mb-2">Suggested solutions:</h4>
@@ -198,7 +187,6 @@ export function ErrorDisplay({
           </div>
         )}
 
-        {/* Action Buttons */}
         <div className="flex flex-wrap gap-3">
           {showRetryButton && errorInfo.canRetry && onRetry && (
             <Button
@@ -234,7 +222,6 @@ export function ErrorDisplay({
           )}
         </div>
 
-        {/* Technical Details (collapsible) */}
         {(errorInfo.technicalDetails || errorInfo.errorCode) && (
           <div className="mt-4 pt-4 border-t border-current/20">
             <Button
@@ -279,9 +266,6 @@ export function ErrorDisplay({
   );
 }
 
-/**
- * Simplified error display for inline use
- */
 interface SimpleErrorDisplayProps {
   message: string;
   onRetry?: () => void;
@@ -334,9 +318,6 @@ export function SimpleErrorDisplay({
   );
 }
 
-/**
- * Success message display for consistency
- */
 interface SuccessDisplayProps {
   message: string;
   onDismiss?: () => void;

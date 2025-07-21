@@ -1,20 +1,11 @@
-/**
- * Backend PDF Service
- *
- * This service handles communication with the Go backend API for PDF generation.
- * It includes proper error handling, environment configuration, response processing,
- * file download functionality, and timeout/retry mechanisms.
- */
-
 import {
   ItineraryRequest,
   APIResponse,
   PDFResponse,
   ErrorResponse,
 } from "./types/backend";
-import { getBackendConfig, getFeatureFlags, isFeatureEnabled } from "./config";
+import { config } from "./config";
 
-// Configuration interface
 interface BackendConfig {
   baseUrl: string;
   timeout: number;
@@ -22,7 +13,6 @@ interface BackendConfig {
   retryDelay: number;
 }
 
-// Error types for better error handling
 export class BackendPdfError extends Error {
   constructor(
     message: string,
@@ -56,81 +46,35 @@ export class ServerError extends BackendPdfError {
   }
 }
 
-/**
- * Backend PDF Service Class
- */
 export class BackendPdfService {
   private config: BackendConfig;
 
   constructor() {
-    this.config = this.getConfiguration();
-  }
-
-  /**
-   * Get backend configuration from centralized config system
-   */
-  private getConfiguration(): BackendConfig {
-    const backendConfig = getBackendConfig();
-    return {
-      baseUrl: backendConfig.url,
-      timeout: backendConfig.timeout,
-      maxRetries: backendConfig.maxRetries,
-      retryDelay: backendConfig.retryDelay,
+    this.config = {
+      baseUrl: config.backend.url,
+      timeout: config.backend.timeout,
+      maxRetries: 3,
+      retryDelay: 1000,
     };
   }
 
-  /**
-   * Get backend URL from centralized configuration
-   */
   public getBackendUrl(): string {
-    return getBackendConfig().url;
+    return config.backend.url;
   }
 
-  /**
-   * Check if backend PDF generation is enabled
-   */
   public isBackendPdfEnabled(): boolean {
-    // Check feature flag first
-    if (!isFeatureEnabled("backendPdfGeneration")) {
-      return false;
-    }
-
-    // In production, also check if we have a valid backend URL
-    if (process.env.NODE_ENV === "production") {
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-      if (!backendUrl || backendUrl === "https://api.example.com") {
-        return false;
-      }
-    }
-
-    return true;
+    return config.features.backendPdfGeneration;
   }
 
-  /**
-   * Main function to generate PDF from backend API
-   */
   public async generatePDF(data: ItineraryRequest): Promise<Blob> {
-    // Check if backend PDF generation is enabled
     if (!this.isBackendPdfEnabled()) {
       throw new BackendPdfError(
         "Backend PDF generation is disabled. Please enable it in configuration or use client-side generation.",
         "FEATURE_DISABLED"
       );
     }
-
-    // Runtime validation for production environment
-    if (process.env.NODE_ENV === "production") {
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-      if (!backendUrl || backendUrl === "https://api.example.com") {
-        throw new BackendPdfError(
-          "NEXT_PUBLIC_BACKEND_URL must be set in production environment",
-          "CONFIGURATION_ERROR"
-        );
-      }
-    }
     let lastError: Error | undefined;
 
-    // Retry mechanism
     for (let attempt = 1; attempt <= this.config.maxRetries; attempt++) {
       try {
         console.log(
@@ -144,7 +88,6 @@ export class BackendPdfService {
         lastError = error as Error;
         console.warn(`PDF generation attempt ${attempt} failed:`, error);
 
-        // Don't retry for validation errors or client errors
         if (
           error instanceof ValidationError ||
           (error instanceof BackendPdfError &&
@@ -154,14 +97,12 @@ export class BackendPdfService {
           throw error;
         }
 
-        // Wait before retrying (except on last attempt)
         if (attempt < this.config.maxRetries) {
           await this.delay(this.config.retryDelay * attempt);
         }
       }
     }
 
-    // All retries failed
     throw new BackendPdfError(
       `PDF generation failed after ${
         this.config.maxRetries
@@ -172,9 +113,6 @@ export class BackendPdfService {
     );
   }
 
-  /**
-   * Single attempt at PDF generation with enhanced network failure handling
-   */
   private async attemptPdfGeneration(data: ItineraryRequest): Promise<Blob> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
@@ -184,7 +122,6 @@ export class BackendPdfService {
 
       console.log("Sending PDF generation request to:", url);
 
-      // Pre-flight connection check
       await this.checkNetworkConnectivity();
 
       const response = await fetch(url, {
@@ -250,9 +187,6 @@ export class BackendPdfService {
     }
   }
 
-  /**
-   * Check network connectivity before making requests
-   */
   private async checkNetworkConnectivity(): Promise<void> {
     if (typeof navigator !== "undefined" && !navigator.onLine) {
       throw new NetworkError(
@@ -279,9 +213,6 @@ export class BackendPdfService {
     }
   }
 
-  /**
-   * Detect if error is network-related
-   */
   private isNetworkError(error: Error): boolean {
     const networkErrorPatterns = [
       "fetch",
@@ -301,9 +232,6 @@ export class BackendPdfService {
     );
   }
 
-  /**
-   * Get user-friendly network error message
-   */
   private getNetworkErrorMessage(error: Error): string {
     const message = error.message.toLowerCase();
 
@@ -322,16 +250,10 @@ export class BackendPdfService {
     return `Connection failed: ${error.message}. Please check your network connection and try the client-side PDF generation as an alternative.`;
   }
 
-  /**
-   * Generate unique request ID for tracking
-   */
   private generateRequestId(): string {
     return `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
-  /**
-   * Handle API response and convert to blob
-   */
   private async handleApiResponse(response: Response): Promise<Blob> {
     const contentType = response.headers.get("content-type") || "";
 
@@ -371,9 +293,6 @@ export class BackendPdfService {
     );
   }
 
-  /**
-   * Handle error responses from the API with enhanced error parsing
-   */
   private async handleErrorResponse(
     response: Response,
     contentType: string
@@ -482,9 +401,6 @@ export class BackendPdfService {
     }
   }
 
-  /**
-   * Get user-friendly error message based on HTTP status code
-   */
   private getStatusBasedErrorMessage(status: number): string {
     switch (status) {
       case 400:
@@ -512,9 +428,6 @@ export class BackendPdfService {
     }
   }
 
-  /**
-   * Download PDF blob as file with proper naming
-   */
   public downloadPdf(blob: Blob, filename?: string): void {
     try {
       const url = window.URL.createObjectURL(blob);
@@ -543,9 +456,6 @@ export class BackendPdfService {
     }
   }
 
-  /**
-   * Generate default filename for PDF
-   */
   private generateDefaultFilename(): string {
     const timestamp = new Date()
       .toISOString()
@@ -554,9 +464,6 @@ export class BackendPdfService {
     return `itinerary-${timestamp}.pdf`;
   }
 
-  /**
-   * Generate filename based on trip data
-   */
   public generateFilename(tripData?: {
     destination?: string;
     customerName?: string;
@@ -587,16 +494,10 @@ export class BackendPdfService {
     return `${filename}.pdf`;
   }
 
-  /**
-   * Utility function to add delay for retry mechanism
-   */
   private delay(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  /**
-   * Check if backend is available with detailed health information
-   */
   public async checkBackendHealth(): Promise<{
     isHealthy: boolean;
     responseTime?: number;
@@ -666,9 +567,6 @@ export class BackendPdfService {
     }
   }
 
-  /**
-   * Validate backend connection and configuration
-   */
   public async validateConnection(): Promise<{
     isValid: boolean;
     issues: string[];
@@ -716,9 +614,6 @@ export class BackendPdfService {
     };
   }
 
-  /**
-   * Get service configuration for debugging
-   */
   public getConfig(): BackendConfig {
     return { ...this.config };
   }

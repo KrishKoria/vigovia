@@ -1,11 +1,3 @@
-/**
- * Default Values Provider for Backend Integration
- *
- * This module provides comprehensive default values for backend-specific fields
- * that are not present in the frontend form data structure.
- */
-
-// Backend-specific interfaces based on Go models
 export interface Payment {
   totalAmount: string;
   tcs: string;
@@ -90,9 +82,6 @@ export interface Hotel {
   pricePerNight: number;
 }
 
-/**
- * Generate default payment structure with placeholder values
- */
 export function getDefaultPayment(): Payment {
   return {
     totalAmount: "0.00",
@@ -110,9 +99,6 @@ export function getDefaultPayment(): Payment {
   };
 }
 
-/**
- * Generate default PDF configuration
- */
 export function getDefaultPDFConfig(): PDFConfig {
   return {
     includeFlights: true,
@@ -130,9 +116,6 @@ export function getDefaultPDFConfig(): PDFConfig {
   };
 }
 
-/**
- * Generate default company information
- */
 export function getDefaultCompanyInfo(): CompanyInfo {
   return {
     name: "Travel Agency",
@@ -150,9 +133,6 @@ export function getDefaultCompanyInfo(): CompanyInfo {
   };
 }
 
-/**
- * Generate default important notes
- */
 export function getDefaultImportantNotes(): ImportantNote[] {
   return [
     {
@@ -174,9 +154,6 @@ export function getDefaultImportantNotes(): ImportantNote[] {
   ];
 }
 
-/**
- * Generate default scope of service
- */
 export function getDefaultScopeOfService(): ServiceScope[] {
   return [
     {
@@ -198,9 +175,6 @@ export function getDefaultScopeOfService(): ServiceScope[] {
   ];
 }
 
-/**
- * Generate default inclusions
- */
 export function getDefaultInclusions(): Inclusion[] {
   return [
     {
@@ -230,9 +204,6 @@ export function getDefaultInclusions(): Inclusion[] {
   ];
 }
 
-/**
- * Generate default visa details
- */
 export function getDefaultVisaDetails(): VisaDetails {
   return {
     visaType: "Tourist Visa",
@@ -241,22 +212,15 @@ export function getDefaultVisaDetails(): VisaDetails {
   };
 }
 
-/**
- * Generate default hotels array (empty but with proper structure)
- */
 export function getDefaultHotels(): Hotel[] {
   return [];
 }
 
-/**
- * Generate context-aware default departure location based on destination
- */
 export function getDefaultDepartureFrom(destination?: string): string {
   if (!destination) {
     return "Not specified";
   }
 
-  // Common departure cities based on destination
   const departureMappings: Record<string, string> = {
     singapore: "New Delhi",
     thailand: "Mumbai",
@@ -278,24 +242,19 @@ export function getDefaultDepartureFrom(destination?: string): string {
 
   const destinationLower = destination.toLowerCase();
 
-  // Check for exact matches first
   if (departureMappings[destinationLower]) {
     return departureMappings[destinationLower];
   }
 
-  // Check for partial matches
   for (const [key, value] of Object.entries(departureMappings)) {
     if (destinationLower.includes(key) || key.includes(destinationLower)) {
       return value;
     }
   }
 
-  return "Delhi"; // Default fallback
+  return "Delhi";
 }
 
-/**
- * Generate default activity type based on activity name/description
- */
 export function getDefaultActivityType(
   activityName?: string,
   description?: string
@@ -306,7 +265,6 @@ export function getDefaultActivityType(
 
   const text = `${activityName || ""} ${description || ""}`.toLowerCase();
 
-  // Activity type mappings
   if (
     text.includes("museum") ||
     text.includes("gallery") ||
@@ -357,12 +315,9 @@ export function getDefaultActivityType(
     return "nature";
   }
 
-  return "sightseeing"; // Default fallback
+  return "sightseeing";
 }
 
-/**
- * Generate default activity time based on activity type
- */
 export function getDefaultActivityTime(activityType?: string): string {
   const timeMappings: Record<string, string> = {
     cultural: "10:00",
@@ -378,9 +333,6 @@ export function getDefaultActivityTime(activityType?: string): string {
   return timeMappings[activityType || "sightseeing"] || "09:00";
 }
 
-/**
- * Generate comprehensive default values for all backend-specific fields
- */
 export function generateAllDefaults() {
   return {
     payment: getDefaultPayment(),
@@ -394,9 +346,6 @@ export function generateAllDefaults() {
   };
 }
 
-/**
- * Utility function to merge user-provided values with defaults
- */
 export function mergeWithDefaults<T>(
   userValues: Partial<T>,
   defaultValues: T

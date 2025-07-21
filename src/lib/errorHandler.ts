@@ -1,10 +1,3 @@
-/**
- * Comprehensive Error Handler for Backend Integration
- *
- * This module provides centralized error handling, user-friendly error messages,
- * fallback suggestions, validation error handling, and error recovery mechanisms.
- */
-
 import {
   BackendPdfError,
   NetworkError,
@@ -43,25 +36,17 @@ export interface ErrorInfo {
   errorCode?: string;
 }
 
-// Field-specific validation error
 export interface FieldError {
   field: string;
   message: string;
   value?: any;
 }
 
-// Validation error response
 export interface ValidationErrorInfo extends ErrorInfo {
   fieldErrors: FieldError[];
 }
 
-/**
- * Main Error Handler Class
- */
 export class ErrorHandler {
-  /**
-   * Process any error and return structured error information
-   */
   static handleError(error: unknown): ErrorInfo {
     console.error("Processing error:", error);
 
@@ -88,9 +73,6 @@ export class ErrorHandler {
     return this.handleUnknownError(error);
   }
 
-  /**
-   * Handle network-related errors
-   */
   private static handleNetworkError(error: NetworkError): ErrorInfo {
     let userMessage = "Connection failed. ";
     let suggestions: string[] = [];
@@ -133,9 +115,6 @@ export class ErrorHandler {
     };
   }
 
-  /**
-   * Handle validation errors with field-specific information
-   */
   private static handleValidationError(
     error: ValidationError
   ): ValidationErrorInfo {
@@ -170,9 +149,6 @@ export class ErrorHandler {
     };
   }
 
-  /**
-   * Handle server errors
-   */
   private static handleServerError(error: ServerError): ErrorInfo {
     let userMessage = "Server error occurred. ";
     let severity = ErrorSeverity.HIGH;
@@ -220,9 +196,6 @@ export class ErrorHandler {
     };
   }
 
-  /**
-   * Handle backend PDF specific errors
-   */
   private static handleBackendPdfError(error: BackendPdfError): ErrorInfo {
     let category = ErrorCategory.CLIENT;
     let severity = ErrorSeverity.MEDIUM;
@@ -266,9 +239,6 @@ export class ErrorHandler {
     };
   }
 
-  /**
-   * Handle generic JavaScript errors
-   */
   private static handleGenericError(error: Error): ErrorInfo {
     let category = ErrorCategory.CLIENT;
     let suggestions = [
@@ -297,9 +267,6 @@ export class ErrorHandler {
     };
   }
 
-  /**
-   * Handle completely unknown errors
-   */
   private static handleUnknownError(error: unknown): ErrorInfo {
     return {
       category: ErrorCategory.UNKNOWN,
@@ -318,13 +285,9 @@ export class ErrorHandler {
     };
   }
 
-  /**
-   * Extract field-specific errors from validation error message
-   */
   private static extractFieldErrors(message: string): FieldError[] {
     const fieldErrors: FieldError[] = [];
 
-    // Common validation patterns
     const patterns = [
       { regex: /(\w+)\s+is\s+required/gi, type: "required" },
       { regex: /(\w+)\s+must\s+be\s+a\s+valid\s+email/gi, type: "email" },
@@ -348,9 +311,6 @@ export class ErrorHandler {
     return fieldErrors;
   }
 
-  /**
-   * Get user-friendly field error message
-   */
   private static getFieldErrorMessage(field: string, type: string): string {
     const fieldName = this.formatFieldName(field);
 
@@ -372,9 +332,6 @@ export class ErrorHandler {
     }
   }
 
-  /**
-   * Format field name for display
-   */
   private static formatFieldName(field: string): string {
     return field
       .replace(/([A-Z])/g, " $1")
@@ -382,9 +339,6 @@ export class ErrorHandler {
       .trim();
   }
 
-  /**
-   * Get retry configuration based on error
-   */
   static getRetryConfig(errorInfo: ErrorInfo): {
     shouldRetry: boolean;
     maxRetries: number;
@@ -406,9 +360,6 @@ export class ErrorHandler {
     }
   }
 
-  /**
-   * Log error for debugging and monitoring
-   */
   static logError(error: unknown, context?: string): void {
     const errorInfo = this.handleError(error);
 
@@ -430,17 +381,9 @@ export class ErrorHandler {
 
     console.error("Suggestions:", errorInfo.suggestions);
     console.groupEnd();
-
-    // In production, you might want to send this to a monitoring service
-    if (process.env.NODE_ENV === "production") {
-      // Example: sendToMonitoringService(errorInfo, context);
-    }
   }
 }
 
-/**
- * Type guard to check if ErrorInfo is ValidationErrorInfo
- */
 export function isValidationErrorInfo(
   errorInfo: ErrorInfo
 ): errorInfo is ValidationErrorInfo {
@@ -449,10 +392,6 @@ export function isValidationErrorInfo(
     "fieldErrors" in errorInfo
   );
 }
-
-/**
- * Convenience functions for common error handling scenarios
- */
 
 export function handlePdfGenerationError(error: unknown): ErrorInfo {
   return ErrorHandler.handleError(error);
@@ -476,13 +415,7 @@ export function getErrorSuggestions(errorInfo: ErrorInfo): string[] {
   return errorInfo.suggestions;
 }
 
-/**
- * Error recovery mechanisms
- */
 export class ErrorRecovery {
-  /**
-   * Attempt automatic recovery based on error type
-   */
   static async attemptRecovery(
     errorInfo: ErrorInfo,
     retryFunction: () => Promise<any>
@@ -497,7 +430,6 @@ export class ErrorRecovery {
       try {
         console.log(`Recovery attempt ${attempt}/${retryConfig.maxRetries}`);
 
-        // Wait before retry
         if (attempt > 1) {
           await new Promise((resolve) =>
             setTimeout(resolve, retryConfig.retryDelay * attempt)
@@ -512,12 +444,10 @@ export class ErrorRecovery {
 
         const newErrorInfo = ErrorHandler.handleError(error);
 
-        // If it's a validation error, don't continue retrying
         if (newErrorInfo.category === ErrorCategory.VALIDATION) {
           return { success: false, error: newErrorInfo };
         }
 
-        // If this is the last attempt, return the error
         if (attempt === retryConfig.maxRetries) {
           return { success: false, error: newErrorInfo };
         }
@@ -527,9 +457,6 @@ export class ErrorRecovery {
     return { success: false, error: errorInfo };
   }
 
-  /**
-   * Provide fallback suggestions based on error
-   */
   static getFallbackSuggestions(errorInfo: ErrorInfo): {
     primary: string;
     secondary: string[];

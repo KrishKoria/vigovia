@@ -1,10 +1,3 @@
-/**
- * Enhanced Form Validation Utilities
- *
- * Provides comprehensive form validation with field-specific error messages
- * and user-friendly validation feedback.
- */
-
 import { ItineraryFormData } from "./schema";
 import { ErrorCategory, ErrorSeverity } from "./errorHandler";
 
@@ -21,15 +14,11 @@ export interface FieldValidationError {
   severity: "error" | "warning";
 }
 
-/**
- * Comprehensive form validation with detailed error reporting
- */
 export function validateItineraryForm(
   data: ItineraryFormData
 ): ValidationResult {
   const errors: FieldValidationError[] = [];
 
-  // Trip Information Validation
   if (!data.tripTitle?.trim()) {
     errors.push({
       field: "tripTitle",
@@ -87,7 +76,6 @@ export function validateItineraryForm(
       });
     }
 
-    // Check if dates are in the past (warning, not error)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -101,7 +89,6 @@ export function validateItineraryForm(
     }
   }
 
-  // Number Validation
   if (!data.numberOfDays || data.numberOfDays < 1) {
     errors.push({
       field: "numberOfDays",
@@ -134,7 +121,6 @@ export function validateItineraryForm(
     });
   }
 
-  // Customer Information Validation
   if (!data.customerName?.trim()) {
     errors.push({
       field: "customerName",
@@ -179,11 +165,10 @@ export function validateItineraryForm(
       field: "customerPhone",
       message: "Please enter a valid phone number",
       value: data.customerPhone,
-      severity: "warning", // Warning because phone formats vary
+      severity: "warning",
     });
   }
 
-  // Days and Activities Validation
   if (!data.days || data.days.length === 0) {
     errors.push({
       field: "days",
@@ -224,7 +209,6 @@ export function validateItineraryForm(
     });
   }
 
-  // Generate summary
   const errorCount = errors.filter((e) => e.severity === "error").length;
   const warningCount = errors.filter((e) => e.severity === "warning").length;
 
@@ -247,28 +231,17 @@ export function validateItineraryForm(
   };
 }
 
-/**
- * Email validation
- */
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-/**
- * Phone validation (flexible to accommodate different formats)
- */
 function isValidPhone(phone: string): boolean {
-  // Remove all non-digit characters
   const digitsOnly = phone.replace(/\D/g, "");
 
-  // Check if it has a reasonable number of digits (7-15)
   return digitsOnly.length >= 7 && digitsOnly.length <= 15;
 }
 
-/**
- * Get user-friendly field name for display
- */
 export function getFieldDisplayName(fieldPath: string): string {
   const fieldMappings: Record<string, string> = {
     tripTitle: "Trip Title",
@@ -282,23 +255,18 @@ export function getFieldDisplayName(fieldPath: string): string {
     customerPhone: "Customer Phone",
   };
 
-  // Handle nested field paths like "days[0].activities[0].name"
   const baseField = fieldPath.split("[")[0].split(".")[0];
 
   if (fieldMappings[baseField]) {
     return fieldMappings[baseField];
   }
 
-  // Convert camelCase to Title Case
   return fieldPath
     .replace(/([A-Z])/g, " $1")
     .replace(/^./, (str) => str.toUpperCase())
     .trim();
 }
 
-/**
- * Convert validation errors to error handler format
- */
 export function convertToErrorHandlerFormat(
   validationResult: ValidationResult
 ) {
@@ -316,7 +284,6 @@ export function convertToErrorHandlerFormat(
     userMessage: `Form validation failed: ${validationResult.summary}`,
     suggestions: [
       "Please fix all required fields",
-      "Check date formats and ranges",
       "Verify email addresses are valid",
       "Ensure all required information is provided",
     ],

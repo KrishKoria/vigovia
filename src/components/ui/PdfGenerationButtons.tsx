@@ -42,7 +42,6 @@ export function PdfGenerationButtons({
   const [clientStage, setClientStage] = useState("");
   const [backendStage, setBackendStage] = useState("");
 
-  // Simulate progress for client generation
   useEffect(() => {
     if (isGeneratingClient) {
       setClientProgress(0);
@@ -68,7 +67,6 @@ export function PdfGenerationButtons({
     }
   }, [isGeneratingClient]);
 
-  // Simulate progress for backend generation
   useEffect(() => {
     if (isGeneratingBackend) {
       setBackendProgress(0);
@@ -100,7 +98,6 @@ export function PdfGenerationButtons({
   return (
     <TooltipProvider>
       <div className={cn("space-y-6", className)}>
-        {/* Progress indicators */}
         {(isGeneratingClient || isGeneratingBackend) && (
           <div className="space-y-4 p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-[#936FE0]/20">
             {isGeneratingClient && (
@@ -141,9 +138,7 @@ export function PdfGenerationButtons({
           </div>
         )}
 
-        {/* PDF Generation Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          {/* Client PDF Button */}
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -181,7 +176,6 @@ export function PdfGenerationButtons({
             </TooltipContent>
           </Tooltip>
 
-          {/* Backend PDF Button */}
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -220,7 +214,6 @@ export function PdfGenerationButtons({
           </Tooltip>
         </div>
 
-        {/* Help text with enhanced styling */}
         <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-2 text-sm text-[#680099]/80">
             <Info className="h-4 w-4" />

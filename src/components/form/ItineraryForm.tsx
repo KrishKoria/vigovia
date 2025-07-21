@@ -135,7 +135,6 @@ export default function ItineraryForm() {
     try {
       await generateItineraryPDF(data);
 
-      // Show success notification for client generation
       const filename = `${
         data.destination
       }_Itinerary_${data.customerName.replace(/\s+/g, "_")}_${
@@ -147,7 +146,6 @@ export default function ItineraryForm() {
       setSuccessFilename(filename);
       setSuccessMethod("client");
 
-      // Auto-dismiss after 5 seconds
       setTimeout(() => {
         setSuccessMessage(null);
         setSuccessFilename(null);
@@ -199,7 +197,6 @@ export default function ItineraryForm() {
       setSuccessFilename(filename);
       setSuccessMethod("backend");
 
-      // Auto-dismiss after 5 seconds
       setTimeout(() => {
         setSuccessMessage(null);
         setSuccessFilename(null);
@@ -500,7 +497,6 @@ export default function ItineraryForm() {
           ))}
 
           <div className="text-center bg-gradient-to-r from-white via-[#FBF4FF]/50 to-white p-8 rounded-2xl border border-[#936FE0]/20">
-            {/* Success Notification */}
             {successMessage && (
               <SuccessNotification
                 message={successMessage}
@@ -514,7 +510,6 @@ export default function ItineraryForm() {
               />
             )}
 
-            {/* Error Displays */}
             {error && (
               <SimpleErrorDisplay
                 message={error}
@@ -547,7 +542,6 @@ export default function ItineraryForm() {
               />
             )}
 
-            {/* Enhanced PDF Generation Buttons */}
             <PdfGenerationButtons
               onClientGeneration={async () => {
                 const formData = form.getValues();

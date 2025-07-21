@@ -1,9 +1,3 @@
-/**
- * TypeScript interfaces that match the Go backend models
- * These types ensure type safety for data transformation between frontend and backend
- */
-
-// Main request interface that matches Go's ItineraryRequest
 export interface ItineraryRequest {
   customer: Customer;
   trip: Trip;
@@ -19,14 +13,12 @@ export interface ItineraryRequest {
   visaDetails: VisaDetails;
 }
 
-// Customer information
 export interface Customer {
   name: string;
   email: string;
   phone: string;
 }
 
-// Trip details
 export interface Trip {
   title: string;
   destination: string;
@@ -37,12 +29,10 @@ export interface Trip {
   departureFrom: string;
 }
 
-// Complete itinerary with days
 export interface Itinerary {
   days: Day[];
 }
 
-// Single day in the itinerary
 export interface Day {
   dayNumber: number;
   date: string;
@@ -54,7 +44,6 @@ export interface Day {
   timeline: Timeline[];
 }
 
-// Activity details (enhanced from frontend version)
 export interface Activity {
   id: string;
   name: string;
@@ -63,11 +52,10 @@ export interface Activity {
   duration: string;
   price: number;
   image: string;
-  type: string; // Added for backend
-  time: string; // Added for backend
+  type: string;
+  time: string;
 }
 
-// Transfer/transportation details
 export interface Transfer {
   id: string;
   type: string;
@@ -80,13 +68,12 @@ export interface Transfer {
   capacity: number;
 }
 
-// Flight information (enhanced from frontend version)
 export interface Flight {
   id: string;
-  date: string; // Added for backend
+  date: string;
   airline: string;
   flightNumber: string;
-  route: string; // Added for backend
+  route: string;
   from: string;
   to: string;
   departure: string;
@@ -95,7 +82,6 @@ export interface Flight {
   price: number;
 }
 
-// Hotel booking information
 export interface Hotel {
   city: string;
   checkIn: string;
@@ -106,7 +92,6 @@ export interface Hotel {
   pricePerNight: number;
 }
 
-// Payment information
 export interface Payment {
   totalAmount: string;
   tcs: string;
@@ -116,20 +101,17 @@ export interface Payment {
   installments: Installment[];
 }
 
-// Payment installment
 export interface Installment {
   installment: string;
   amount: string;
   dueDate: string;
 }
 
-// Timeline activities for a day
 export interface Timeline {
   time: string;
   activities: string[];
 }
 
-// PDF generation configuration
 export interface PDFConfig {
   includeFlights: boolean;
   includeHotels: boolean;
@@ -140,7 +122,6 @@ export interface PDFConfig {
   customBranding: CustomBranding;
 }
 
-// Custom branding options
 export interface CustomBranding {
   primaryColor: string;
   accentColor: string;
@@ -148,7 +129,6 @@ export interface CustomBranding {
   companyName: string;
 }
 
-// Company information
 export interface CompanyInfo {
   name: string;
   registeredOffice: RegisteredOffice;
@@ -156,7 +136,6 @@ export interface CompanyInfo {
   logo: string;
 }
 
-// Company registered office address
 export interface RegisteredOffice {
   address: string;
   city: string;
@@ -164,25 +143,21 @@ export interface RegisteredOffice {
   country: string;
 }
 
-// Contact information
 export interface ContactInfo {
   phone: string;
   email: string;
 }
 
-// Important notes in the PDF
 export interface ImportantNote {
   point: string;
   details: string;
 }
 
-// Scope of service
 export interface ServiceScope {
   service: string;
   details: string;
 }
 
-// Package inclusions
 export interface Inclusion {
   category: string;
   count: number;
@@ -190,14 +165,12 @@ export interface Inclusion {
   status: string;
 }
 
-// Visa information
 export interface VisaDetails {
   visaType: string;
   validity: string;
   processingDate: string;
 }
 
-// API Response types
 export interface APIResponse<T = any> {
   success: boolean;
   message: string;
