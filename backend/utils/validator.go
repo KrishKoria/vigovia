@@ -15,7 +15,6 @@ func init() {
 	validate = validator.New()
 }
 
-// ValidateStruct validates a struct using validator tags
 func ValidateStruct(s interface{}) []models.APIError {
 	var errors []models.APIError
 	
@@ -34,7 +33,6 @@ func ValidateStruct(s interface{}) []models.APIError {
 	return errors
 }
 
-// getJSONFieldName gets the JSON field name from struct field name
 func getJSONFieldName(s interface{}, fieldName string) string {
 	t := reflect.TypeOf(s)
 	if t.Kind() == reflect.Ptr {
@@ -51,12 +49,10 @@ func getJSONFieldName(s interface{}, fieldName string) string {
 		return fieldName
 	}
 	
-	// Handle cases like "field_name,omitempty"
 	parts := strings.Split(jsonTag, ",")
 	return parts[0]
 }
 
-// getValidationMessage converts validator error to human-readable message
 func getValidationMessage(err validator.FieldError) string {
 	switch err.Tag() {
 	case "required":

@@ -31,7 +31,6 @@ func (s *TemplateService) LoadTemplate(templateName string) (*template.Template,
 		return tmpl, nil
 	}
 	
-	// If loading base.html, include all partials
 	if templateName == "base.html" {
 		return s.loadBaseTemplateWithPartials()
 	}
@@ -51,7 +50,6 @@ func (s *TemplateService) LoadTemplate(templateName string) (*template.Template,
 }
 
 func (s *TemplateService) loadBaseTemplateWithPartials() (*template.Template, error) {
-	// Define all template files to load together
 	templateFiles := []string{
 		filepath.Join(s.templatePath, "base.html"),
 		filepath.Join(s.templatePath, "partials", "header.html"),

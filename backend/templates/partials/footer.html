@@ -1,6 +1,5 @@
 <footer class="footer-content">
   <div class="footer-container">
-    <!-- Left Section: Company Info -->
     <div class="footer-left">
       <h3 class="company-name">{{.CompanyInfo.Name}}</h3>
       <div class="company-details">
@@ -14,7 +13,6 @@
       </div>
     </div>
 
-    <!-- Center Section: Contact Info -->
     <div class="footer-center">
       <div class="contact-info">
         <p class="phone">
@@ -26,7 +24,6 @@
       </div>
     </div>
 
-    <!-- Right Section: Logo -->
     <div class="footer-right">
       <img
         src="/static/final-logo-2.png"
@@ -51,7 +48,6 @@
       box-sizing: border-box;
     }
 
-    /* Fallback for browsers that don't support running() */
     @supports not (position: running(footer)) {
       .footer-content {
         position: fixed;
@@ -62,7 +58,6 @@
       }
     }
 
-    /* Rest of your styles remain the same */
     .footer-container {
       display: flex;
       justify-content: space-between;

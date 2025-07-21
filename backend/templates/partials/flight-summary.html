@@ -1,6 +1,5 @@
-{{/* Flight summary section */}} {{if .Flights}}
+{{if .Flights}}
 <div class="flight-summary-container">
-  <!-- Title Section -->
   <div class="flight-title-section">
     <h2 class="main-title">
       <span class="title-flight">Flight</span>
@@ -8,7 +7,6 @@
     </h2>
   </div>
 
-  <!-- Flight Cards -->
   <div class="flight-cards-container">
     {{range .Flights}}
     <div class="flight-card">
@@ -32,7 +30,6 @@
       font-family: "Roboto", "Arial", sans-serif;
     }
 
-    /* Title Styling */
     .flight-title-section {
       margin-bottom: 30px;
     }

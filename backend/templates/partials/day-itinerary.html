@@ -188,12 +188,10 @@
 <div class="day-itinerary">
   {{range $dayIndex, $day := .Days}}
   <div class="day-section">
-    <!-- Purple sidebar with day number -->
     <div class="day-sidebar">
       <div class="day-number">Day {{$day.DayNumber}}</div>
     </div>
 
-    <!-- Image and date section -->
     <div class="day-image-container">
       <div class="day-image">
         {{if $day.Image}}
@@ -208,20 +206,14 @@
       </div>
     </div>
 
-    <!-- Timeline section -->
     <div class="timeline-container">
       <div class="timeline">
         {{if $day.Activities}} {{$hasMorning := false}} {{$hasAfternoon :=
-        false}} {{$hasEvening := false}}
-
-        <!-- Check if we have morning/afternoon/evening activities -->
-        {{range $actIndex, $activity := $day.Activities}} {{if eq $activity.Time
-        "Morning"}} {{$hasMorning = true}} {{else if eq $activity.Time
-        "Afternoon"}} {{$hasAfternoon = true}} {{else if eq $activity.Time
-        "Evening"}} {{$hasEvening = true}} {{end}} {{end}}
-
-        <!-- Morning section -->
-        {{if $hasMorning}}
+        false}} {{$hasEvening := false}} {{range $actIndex, $activity :=
+        $day.Activities}} {{if eq $activity.Time "Morning"}} {{$hasMorning =
+        true}} {{else if eq $activity.Time "Afternoon"}} {{$hasAfternoon =
+        true}} {{else if eq $activity.Time "Evening"}} {{$hasEvening = true}}
+        {{end}} {{end}} {{if $hasMorning}}
         <div class="timeline-item">
           <div class="time-point"></div>
           <div class="time-content">
@@ -234,10 +226,7 @@
             </ul>
           </div>
         </div>
-        {{end}}
-
-        <!-- Afternoon section -->
-        {{if $hasAfternoon}}
+        {{end}} {{if $hasAfternoon}}
         <div class="timeline-item">
           <div class="time-point"></div>
           <div class="time-content">
@@ -250,10 +239,7 @@
             </ul>
           </div>
         </div>
-        {{end}}
-
-        <!-- Evening section -->
-        {{if $hasEvening}}
+        {{end}} {{if $hasEvening}}
         <div class="timeline-item">
           <div class="time-point"></div>
           <div class="time-content">
@@ -266,11 +252,8 @@
             </ul>
           </div>
         </div>
-        {{end}}
-
-        <!-- If none of the activities have a time property, show them in default format -->
-        {{if and (not $hasMorning) (not $hasAfternoon) (not $hasEvening)}}
-        {{range $actIndex, $activity := $day.Activities}}
+        {{end}} {{if and (not $hasMorning) (not $hasAfternoon) (not
+        $hasEvening)}} {{range $actIndex, $activity := $day.Activities}}
         <div class="timeline-item">
           <div class="time-point"></div>
           <div class="time-content">

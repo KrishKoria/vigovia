@@ -1,8 +1,7 @@
-{{/* Payment plan section */}} {{if .Payment}}
+{{if .Payment}}
 <div class="payment-plan">
   <h2 class="payment-title">Payment <span class="purple-text">Plan</span></h2>
 
-  <!-- Total Amount Section -->
   <div class="total-amount-section">
     <div class="arrow-box total-box">
       <div class="label">Total Amount</div>
@@ -17,7 +16,6 @@
     </div>
   </div>
 
-  <!-- TCS Section -->
   {{if .Payment.TCS}}
   <div class="tcs-section">
     <div class="arrow-box tcs-box">
@@ -34,17 +32,14 @@
   </div>
   {{end}}
 
-  <!-- Payment Schedule Table -->
   <div class="payment-schedule">
     <div class="table-container">
-      <!-- Header row -->
       <div class="header-row">
         <div class="header-cell">Installment</div>
         <div class="header-cell">Amount</div>
         <div class="header-cell">Due Date</div>
       </div>
 
-      <!-- Data rows -->
       <div class="data-rows">
         {{range $index, $installment := .Payment.Installments}}
         <div class="data-row">
@@ -82,7 +77,6 @@
       color: #7b2cbf;
     }
 
-    /* Arrow box styles */
     .total-amount-section,
     .tcs-section {
       margin-bottom: 15px;
@@ -131,7 +125,6 @@
       font-weight: normal;
     }
 
-    /* Payment Schedule Table */
     .payment-schedule {
       margin-top: 20px;
     }
@@ -144,7 +137,6 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     }
 
-    /* Header row */
     .header-row {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -165,7 +157,6 @@
       border-right: none;
     }
 
-    /* Data rows container */
     .data-rows {
       background-color: white;
     }

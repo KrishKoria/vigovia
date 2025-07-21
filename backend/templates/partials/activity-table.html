@@ -4,14 +4,12 @@
   </h2>
 
   <div class="table-container">
-    <!-- Table Header -->
     <div class="table-row table-header">
       <div class="table-cell city-header">City</div>
       <div class="table-cell activity-header">Activity</div>
       <div class="table-cell type-header">Type</div>
       <div class="table-cell time-header">Time Required</div>
     </div>
-    <!-- Data Rows -->
     {{range $dayIndex, $day := .Days}} {{range $activityIndex, $activity :=
     $day.Activities}}
     <div class="table-row">
