@@ -1,17 +1,5 @@
 # Vigovia PDF Generation API
 
-## 🚀 Features
-
-- **PDF Generation**: Convert travel itineraries to professional PDF documents
-- **Template Engine**: Flexible HTML templating with Go templates
-- **ChromeDP Integration**: Headless Chrome for high-quality PDF rendering
-- **Configurable Branding**: Custom colors, logos, and company information
-- **Comprehensive Data Support**: Flights, hotels, activities, payments, and more
-- **Validation**: Request validation with detailed error messages
-- **Logging**: Structured logging with Logrus
-- **CORS Support**: Cross-origin resource sharing enabled
-- **Health Checks**: Built-in health monitoring endpoints
-
 ## 📋 Table of Contents
 
 - [Installation](#installation)
