@@ -1,44 +1,17 @@
-# 🏔️ Vigovia - New Zealand Travel Itinerary Generator
-
-## Your Gateway to New Zealand Adventures
-
-A comprehensive travel itinerary generator for creating personalized New Zealand travel experiences with professional PDF output.
-
-[![Next.js](https://img.shields.io/badge/Next.js-15.4.1-black)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-06B6D4)](https://tailwindcss.com/)
-[![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-7.60.0-EC5990)](https://react-hook-form.com/)
+# 🏔️ Vigovia - Travel Itinerary Generator
 
 ---
 
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Core Components](#core-components)
 - [API Documentation](#api-documentation)
-- [Design System](#design-system)
 - [Usage Guide](#usage-guide)
 - [Configuration](#configuration)
 - [Deployment](#deployment)
-- [Contributing](#contributing)
 - [Troubleshooting](#troubleshooting)
-- [License](#license)
-
----
-
-### Key Highlights
-
-- **🎨 Modern UI/UX**: Beautiful gradient-based design with Vigovia's purple brand theme
-- **📱 Fully Responsive**: Optimized for desktop, tablet, and mobile devices
-- **📄 PDF Generation**: High-quality PDF output using Puppeteer with custom styling
-- **🔧 Type-Safe**: Built with TypeScript and Zod validation for robust data handling
-- **⚡ Performance**: Next.js 15 with Turbopack for fast development and production builds
-- **🎯 User-Friendly**: Intuitive form design with dynamic field management
-
 ---
 
 ## 🛠️ Tech Stack
@@ -51,22 +24,10 @@ A comprehensive travel itinerary generator for creating personalized New Zealand
 - **[Tailwind CSS 4](https://tailwindcss.com/)** - Utility-first CSS framework
 - **[shadcn/ui](https://ui.shadcn.com/)** - Beautiful component library
 
-### Form Management
-
-- **[React Hook Form 7](https://react-hook-form.com/)** - Performant form library
-- **[Zod 4](https://zod.dev/)** - TypeScript-first schema validation
-- **[@hookform/resolvers](https://github.com/react-hook-form/resolvers)** - Validation resolvers
-
 ### PDF Processing
 
 - **[Puppeteer Core](https://pptr.dev/)** - Headless Chrome automation
 - **[@sparticuz/chromium](https://github.com/Sparticuz/chromium)** - Chrome binary for serverless
-
-### UI Components
-
-- **[Radix UI](https://www.radix-ui.com/)** - Unstyled, accessible components
-- **[Lucide React](https://lucide.dev/)** - Beautiful SVG icons
-- **[Class Variance Authority](https://cva.style/)** - Component variant management
 
 ### DevOps & Deployment
 
@@ -145,120 +106,9 @@ You can also run the application using Docker Compose:
 docker-compose up --build
 
 # Run only the backend
-docker-compose -f docker-compose.backend.yml up --build
+cd backend
+docker-compose up --build
 ```
-
-This is especially useful for ensuring consistent development environments across team members.
-
----
-
-## 📁 Project Structure
-
-```text
-vigovia-assignment/
-├── public/                     # Static assets
-│   ├── activities/            # Activity images
-│   ├── explore/              # Exploration images
-│   ├── final-logo-2.png      # Main logo
-│   └── nz-hero.jpeg          # Hero background
-├── src/
-│   ├── app/                   # Next.js App Router
-│   │   ├── api/              # API routes
-│   │   │   └── generate-pdf/ # PDF generation endpoint
-│   │   ├── form/             # Itinerary form page
-│   │   ├── preview-itinerary/ # PDF preview page
-│   │   ├── globals.css       # Global styles
-│   │   ├── layout.tsx        # Root layout
-│   │   └── page.tsx          # Landing page
-│   ├── components/           # React components
-│   │   ├── comman/           # Common components
-│   │   ├── form/             # Form-related components
-│   │   ├── landing/          # Landing page components
-│   │   ├── pdf/              # PDF template components
-│   │   └── ui/               # UI component library
-│   ├── hooks/                # Custom React hooks
-│   ├── lib/                  # Utility libraries
-│   │   ├── pdfGenerator.ts   # PDF generation logic
-│   │   ├── schema.ts         # Zod validation schemas
-│   │   ├── types.ts          # TypeScript type definitions
-│   │   └── utils.ts          # Utility functions
-├── components.json           # shadcn/ui configuration
-├── next.config.ts            # Next.js configuration
-├── tailwind.config.ts        # Tailwind CSS configuration
-├── tsconfig.json             # TypeScript configuration
-└── package.json              # Project dependencies
-```
-
----
-
-## 🧩 Core Components
-
-### Landing Page Components
-
-#### Header.tsx
-
-- Navigation with Vigovia branding
-- User authentication placeholder
-- Generate Itinerary CTA button
-- Responsive mobile menu
-
-#### Hero.tsx
-
-- Full-screen hero section with New Zealand imagery
-- Compelling headline and description
-- Background image optimization
-
-#### AboutSection.tsx
-
-- Interactive feature showcase
-- Dynamic image switching
-- Three main features: Food & Wine, Adventure, Nature
-
-#### ActivitySection.tsx
-
-- Modal-based activity exploration
-- 10 different New Zealand activities
-- Detailed descriptions and pricing
-- Image gallery with fallback colors
-
-### Form Components
-
-#### ItineraryForm.tsx
-
-- Main form component with React Hook Form
-- Zod validation integration
-- Dynamic day management
-- Customer information collection
-- PDF generation trigger
-
-#### DayCard.tsx
-
-- Individual day planning interface
-- Activity, transfer, and flight management
-- Add/remove functionality for dynamic content
-
-#### ActivityCard.tsx, TransferCard.tsx, FlightCard.tsx
-
-- Specialized input cards for different content types
-- Consistent styling and validation
-- Remove functionality with confirmation
-
-### PDF Components
-
-#### TravelItinerary.tsx
-
-- Main PDF template component
-- Structured layout for professional output
-- Integration with all sub-components
-
-#### PDF Sub-components
-
-- `ItineraryHeader.tsx` - PDF header with branding
-- `DayItinerary.tsx` - Daily schedule layout
-- `FlightSummary.tsx` - Flight information table
-- `HotelBookings.tsx` - Accommodation details
-- `PaymentPlan.tsx` - Payment schedule
-- `Footer.tsx` - PDF footer with contact info
 
 ---
 
@@ -289,52 +139,6 @@ interface ItineraryFormData {
 
 - **Success**: PDF file with appropriate headers
 - **Error**: JSON error response with details
-
-#### Features
-
-- Headless Chrome rendering
-- Print-optimized CSS injection
-- Intelligent filename generation
-- Error handling and logging
-- Development/production environment detection
-
----
-
-## 🎨 Design System
-
-### Color Palette
-
-```css
-/* Vigovia Brand Colors */
---vigovia-cta: #541C9C      /* Primary CTA color */
---vigovia-accent: #936FE0   /* Accent purple */
---vigovia-hover: #680099    /* Hover states */
---vigovia-light: #FBF4FF    /* Light background */
---vigovia-dark: #321E5D     /* Dark text */
-```
-
-### Typography
-
-- **Primary Font**: Geist Sans (Vercel's font family)
-- **Monospace**: Geist Mono
-- **Fallbacks**: System font stack for reliability
-
-### Button Variants
-
-```typescript
-// Custom Vigovia button variants
-"vigovia"; // Primary brand button
-"vigovia-outline"; // Outlined version
-"vigovia-accent"; // Accent color button
-"vigovia-gradient"; // Gradient background
-```
-
-### Spacing & Layout
-
-- **Container**: Max-width 7xl (1280px) with centered layout
-- **Spacing**: Consistent 8px base unit system
-- **Breakpoints**: Mobile-first responsive design
-- **Grid**: CSS Grid and Flexbox for modern layouts
 
 ---
 
@@ -400,14 +204,6 @@ Key configurations in `next.config.ts`:
 - Image optimization settings
 - Custom webpack configurations if needed
 
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. **Connect Repository**: Import your GitHub repository to Vercel
-2. **Environment Variables**: Set production environment variables
-3. **Deploy**: Automatic deployment on every push to main branch
-
 ### Docker Deployment
 
 The application is fully dockerized and can be run using Docker Compose. This setup includes both the frontend and backend services.
@@ -456,7 +252,6 @@ The Docker setup uses the following environment variables:
 #### Docker Files
 
 - `docker-compose.yml`: Configuration for running both frontend and backend
-- `docker-compose.backend.yml`: Configuration for running only the backend
 - `Dockerfile.frontend`: Dockerfile for building the frontend application
 - `backend/Dockerfile`: Dockerfile for building the backend service
 
@@ -468,31 +263,6 @@ pnpm build
 
 # Start production server
 pnpm start
-```
-
----
-
-## 🤝 Contributing
-
-### Code Standards
-
-- **TypeScript**: Use strict typing throughout
-- **ESLint**: Follow configured linting rules
-- **Prettier**: Code formatting consistency
-- **Component Structure**: Follow established patterns
-- **Naming Conventions**: Use descriptive, consistent names
-
-### Testing
-
-```bash
-# Run type checking
-npm run type-check
-
-# Run linting
-npm run lint
-
-# Run tests (when implemented)
-npm run test
 ```
 
 ---
@@ -552,15 +322,5 @@ nvm install 22
 - Increase memory limits for Puppeteer
 - Implement PDF generation queue
 - Use external PDF service for scale
-
----
-
-## 🙏 Acknowledgments
-
-- **Next.js Team** for the amazing React framework
-- **Vercel** for hosting and deployment platform
-- **shadcn** for the beautiful UI component library
-- **Tailwind CSS** for the utility-first CSS framework
-- **New Zealand Tourism** for inspiration and imagery
 
 ---
