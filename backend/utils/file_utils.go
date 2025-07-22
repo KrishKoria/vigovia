@@ -39,12 +39,6 @@ func GetFileSize(filePath string) (string, error) {
 	}
 }
 
-
-func FileExists(filePath string) bool {
-	_, err := os.Stat(filePath)
-	return !os.IsNotExist(err)
-}
-
 func sanitizeForFilename(s string) string {
 	replacements := map[rune]string{
 		' ':  "_",

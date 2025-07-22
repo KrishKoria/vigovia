@@ -64,8 +64,7 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 	
 	pdfData, err := s.convertHTMLToPDF(html)
 	if err != nil {
-		logrus.WithError(err).Error("Failed to convert HTML to PDF")
-		return nil, fmt.Errorf("failed to convert HTML to PDF: %w", err)
+		return nil, logrus.WithError(err).Error("Failed to convert HTML to PDF")
 	}
 	
 	logrus.WithFields(logrus.Fields{
@@ -160,12 +159,6 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 		chromedp.Text("body", &bodyText, chromedp.ByQuery),
 		chromedp.Sleep(3*time.Second), 
 		chromedp.ActionFunc(func(ctx context.Context) error {
-			logrus.WithFields(logrus.Fields{
-				"pageTitle": pageTitle,
-				"bodyTextLength": len(bodyText),
-				"bodyPreview": bodyText[:min(100, len(bodyText))],
-			}).Info("Page loaded, generating PDF")
-			
 			buf, _, err := page.PrintToPDF().
 				WithPaperWidth(8.27).  
 				WithPaperHeight(11.7). 
@@ -197,7 +190,6 @@ func (s *PDFService) convertHTMLToPDF(html string) ([]byte, error) {
 
 
 func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *models.TemplateData {
-	// Set default important notes if not provided
 	importantNotes := request.ImportantNotes
 	if len(importantNotes) == 0 {
 		importantNotes = []models.ImportantNote{
@@ -207,7 +199,6 @@ func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *
 		}
 	}
 	
-	// Set default scope of service if not provided
 	scopeOfService := request.ScopeOfService
 	if len(scopeOfService) == 0 {
 		scopeOfService = []models.ServiceScope{
@@ -217,7 +208,6 @@ func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *
 		}
 	}
 	
-	// Set default inclusions if not provided
 	inclusions := request.Inclusions
 	if len(inclusions) == 0 {
 		inclusions = []models.Inclusion{
@@ -227,7 +217,6 @@ func (s *PDFService) transformToTemplateData(request *models.ItineraryRequest) *
 		}
 	}
 	
-	// Set default visa details if not provided
 	visaDetails := request.VisaDetails
 	if (visaDetails == models.VisaDetails{}) {
 		visaDetails = models.VisaDetails{

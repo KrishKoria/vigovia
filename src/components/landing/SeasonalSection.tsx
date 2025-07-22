@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Leaf, Sun, TreePine, Snowflake, X } from "lucide-react";
+import { Leaf, Sun, TreePine, Snowflake } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -18,25 +18,21 @@ const SeasonalSection = () => {
       id: "spring",
       name: "SPRING",
       icon: <Leaf className="h-16 w-16 text-white" />,
-      color: "bg-[#321E5D]",
     },
     {
       id: "summer",
       name: "SUMMER",
       icon: <Sun className="h-16 w-16 text-white" />,
-      color: "bg-[#321E5D]",
     },
     {
       id: "autumn",
       name: "AUTUMN",
       icon: <TreePine className="h-16 w-16 text-white" />,
-      color: "bg-[#321E5D]",
     },
     {
       id: "winter",
       name: "WINTER",
       icon: <Snowflake className="h-16 w-16 text-white" />,
-      color: "bg-[#321E5D]",
     },
   ];
 
@@ -56,10 +52,7 @@ const SeasonalSection = () => {
                 </div>
               </div>
 
-              <Card
-                className="bg-white rounded-4xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 pt-12"
-                onClick={() => setSelectedSeason(season.id)}
-              >
+              <Card className="bg-white rounded-4xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 pt-12">
                 <CardContent className="mt-4 flex flex-col justify-end min-h-24">
                   <h3 className="text-lg font-semibold text-foreground mb-2">
                     {season.name}

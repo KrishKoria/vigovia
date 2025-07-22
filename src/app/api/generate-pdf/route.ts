@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
 
     await page.setRequestInterception(true);
 
-    let pendingRequests = new Set();
+    const pendingRequests = new Set();
 
     page.on("request", (request) => {
       pendingRequests.add(request.url());
@@ -99,7 +99,7 @@ export async function POST(req: NextRequest) {
     console.log("Page loaded successfully");
 
     console.log("Injecting form data...");
-    await page.evaluate((data) => {
+    await page.evaluate((data: any) => {
       console.log("Injecting data into page:", data);
       (window as any).ITINERARY_DATA = data;
       window.dispatchEvent(
@@ -164,13 +164,13 @@ export async function POST(req: NextRequest) {
         timeout: 20000,
       });
       console.log("Itinerary content found");
-    } catch (selectorError) {
+    } catch (_) {
       console.log("Primary selector not found, trying fallbacks...");
 
       const isLoading = await page.$('[data-testid="loading-state"]');
       if (isLoading) {
         console.log("Page is still in loading state, waiting more...");
-        await page.evaluate((data) => {
+        await page.evaluate((data: any) => {
           console.log("Re-injecting data:", data);
           (window as any).ITINERARY_DATA = data;
           window.dispatchEvent(
@@ -185,7 +185,7 @@ export async function POST(req: NextRequest) {
             timeout: 10000,
           });
           console.log("Itinerary content found after retry");
-        } catch (retryError) {
+        } catch (_) {
           console.log("Still no content, checking for error state");
         }
       }
@@ -196,7 +196,7 @@ export async function POST(req: NextRequest) {
           timeout: 5000,
         });
         console.log("Loading state disappeared");
-      } catch (loadingError) {
+      } catch (_) {
         console.log("Loading state selector also failed");
       }
 
@@ -218,7 +218,7 @@ export async function POST(req: NextRequest) {
           { timeout: 5000 }
         );
         console.log("Page has substantial content");
-      } catch (contentError) {
+      } catch (_) {
         console.log("Content check also failed, proceeding anyway");
       }
     }

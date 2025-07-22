@@ -25,7 +25,12 @@ export function SuccessNotification({
 }: SuccessNotificationProps) {
   const [progress, setProgress] = useState(100);
   const [isVisible, setIsVisible] = useState(true);
-
+  const handleDismiss = () => {
+    setIsVisible(false);
+    setTimeout(() => {
+      onDismiss?.();
+    }, 300);
+  };
   useEffect(() => {
     if (duration > 0) {
       const interval = setInterval(() => {
@@ -42,14 +47,7 @@ export function SuccessNotification({
 
       return () => clearInterval(interval);
     }
-  }, [duration]);
-
-  const handleDismiss = () => {
-    setIsVisible(false);
-    setTimeout(() => {
-      onDismiss?.();
-    }, 300);
-  };
+  }, [duration, handleDismiss]);
 
   const getMethodColor = () => {
     return generationMethod === "backend"

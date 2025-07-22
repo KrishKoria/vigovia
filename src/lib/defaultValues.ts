@@ -345,10 +345,3 @@ export function generateAllDefaults() {
     hotels: getDefaultHotels(),
   };
 }
-
-export function mergeWithDefaults<T>(
-  userValues: Partial<T>,
-  defaultValues: T
-): T {
-  return { ...defaultValues, ...userValues };
-}

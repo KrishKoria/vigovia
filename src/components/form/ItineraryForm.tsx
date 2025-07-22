@@ -548,7 +548,6 @@ export default function ItineraryForm() {
                 await onSubmit(formData);
               }}
               onBackendGeneration={async () => {
-                const formData = form.getValues();
                 await form.handleSubmit((data) =>
                   handleBackendPdfGeneration(data)
                 )();

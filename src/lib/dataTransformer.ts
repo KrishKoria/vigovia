@@ -254,35 +254,3 @@ export function validateTransformedData(data: ItineraryRequest): {
     errors,
   };
 }
-
-export function getTransformationSummary(
-  frontendData: ItineraryData | ItineraryFormData,
-  backendData: ItineraryRequest
-) {
-  return {
-    customer: {
-      frontend: `${frontendData.customerName} (${frontendData.customerEmail})`,
-      backend: `${backendData.customer.name} (${backendData.customer.email})`,
-    },
-    trip: {
-      frontend: `${frontendData.tripTitle} - ${frontendData.destination}`,
-      backend: `${backendData.trip.title} - ${backendData.trip.destination}`,
-      duration: backendData.trip.duration,
-    },
-    activities: {
-      total: backendData.itinerary.days.reduce(
-        (total, day) => total + day.activities.length,
-        0
-      ),
-      enhanced: "Added type and time fields to all activities",
-    },
-    flights: {
-      total: backendData.flights.length,
-      extracted: "Extracted from days and mapped with dates",
-    },
-    defaults: {
-      added:
-        "Payment, config, company info, notes, services, inclusions, visa details",
-    },
-  };
-}
