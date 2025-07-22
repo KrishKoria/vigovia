@@ -199,7 +199,7 @@ export class BackendPdfService {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 3000);
 
-      await fetch(`${this.config.baseUrl}/health`, {
+      await fetch(`${this.config.baseUrl}/api/v1/health`, {
         method: "HEAD",
         signal: controller.signal,
         cache: "no-cache",
@@ -207,8 +207,6 @@ export class BackendPdfService {
 
       clearTimeout(timeoutId);
     } catch (error) {
-      // If health check fails, we'll still try the main request
-      // but log the connectivity issue
       console.warn("Connectivity pre-check failed:", error);
     }
   }

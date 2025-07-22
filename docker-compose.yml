@@ -1,0 +1,47 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vigovia-backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/storage/pdfs:/root/storage/pdfs
+    environment:
+      - SERVER_PORT=8080
+      - SERVER_HOST=0.0.0.0
+      - LOGGING_LEVEL=info
+      - LOGGING_FORMAT=json
+    networks:
+      - vigovia-network
+    healthcheck:
+      test:
+        ["CMD", "wget", "--spider", "-q", "http://localhost:8080/api/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: vigovia-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_BACKEND_URL=http://localhost:8080
+      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+      - CHROME_BIN=/usr/bin/chromium-browser
+      - CHROME_PATH=/usr/lib/chromium/
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - vigovia-network
+
+networks:
+  vigovia-network:
+    driver: bridge

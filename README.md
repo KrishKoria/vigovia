@@ -68,6 +68,11 @@ A comprehensive travel itinerary generator for creating personalized New Zealand
 - **[Lucide React](https://lucide.dev/)** - Beautiful SVG icons
 - **[Class Variance Authority](https://cva.style/)** - Component variant management
 
+### DevOps & Deployment
+
+- **[Docker](https://www.docker.com/)** - Containerization platform
+- **[Docker Compose](https://docs.docker.com/compose/)** - Multi-container Docker applications
+
 ---
 
 ## 🚀 Getting Started
@@ -119,17 +124,31 @@ A comprehensive travel itinerary generator for creating personalized New Zealand
 
 ```bash
 # Start development server with Turbopack
-npm run dev
+pnpm dev
 
 # Build for production
-npm run build
+pnpm build
 
 # Start production server
-npm run start
+pnpm start
 
 # Run ESLint
-npm run lint
+pnpm lint
 ```
+
+### Docker Development
+
+You can also run the application using Docker Compose:
+
+```bash
+# Run both frontend and backend
+docker-compose up --build
+
+# Run only the backend
+docker-compose -f docker-compose.backend.yml up --build
+```
+
+This is especially useful for ensuring consistent development environments across team members.
 
 ---
 
@@ -391,26 +410,64 @@ Key configurations in `next.config.ts`:
 
 ### Docker Deployment
 
-```dockerfile
-# Create Dockerfile for containerized deployment
-FROM node:22-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "start"]
-```
+The application is fully dockerized and can be run using Docker Compose. This setup includes both the frontend and backend services.
+
+#### Prerequisites
+
+- Docker installed on your system
+- Docker Compose installed on your system
+
+#### Running with Docker Compose
+
+1. **Run both frontend and backend services**:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+   This will:
+
+   - Build and start the frontend service (available at http://localhost:3000)
+   - Build and start the backend service (available at http://localhost:8080)
+   - Set up the necessary network for communication between services
+
+2. **Run only the backend service**:
+
+   ```bash
+   docker-compose -f docker-compose.backend.yml up --build
+   ```
+
+   This is useful when you want to run the backend independently.
+
+#### Environment Variables
+
+The Docker setup uses the following environment variables:
+
+- Frontend:
+
+  - `NEXT_PUBLIC_BACKEND_URL`: URL of the backend service (default: http://localhost:8080)
+
+- Backend:
+  - `SERVER_PORT`: Port on which the backend server runs (default: 8080)
+  - `SERVER_HOST`: Host on which the backend server runs (default: 0.0.0.0)
+  - `LOGGING_LEVEL`: Logging level (default: info)
+  - `LOGGING_FORMAT`: Logging format (default: json)
+
+#### Docker Files
+
+- `docker-compose.yml`: Configuration for running both frontend and backend
+- `docker-compose.backend.yml`: Configuration for running only the backend
+- `Dockerfile.frontend`: Dockerfile for building the frontend application
+- `backend/Dockerfile`: Dockerfile for building the backend service
 
 ### Manual Deployment
 
 ```bash
 # Build for production
-npm run build
+pnpm build
 
 # Start production server
-npm run start
+pnpm start
 ```
 
 ---

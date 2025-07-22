@@ -16,7 +16,31 @@ export async function POST(req: NextRequest) {
 
     const isDevelopment = process.env.NODE_ENV === "development";
 
-    const browserOptions = isDevelopment
+    // Check if we're running in Docker
+    const isDocker = process.env.PUPPETEER_EXECUTABLE_PATH ? true : false;
+
+    const browserOptions = isDocker
+      ? {
+          headless: true,
+          executablePath:
+            process.env.PUPPETEER_EXECUTABLE_PATH ||
+            "/usr/bin/chromium-browser",
+          args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-web-security",
+            "--disable-features=VizDisplayCompositor",
+            "--allow-running-insecure-content",
+            "--disable-extensions",
+            "--no-first-run",
+            "--disable-default-apps",
+            "--force-color-profile=srgb",
+            "--enable-print-background",
+          ],
+          timeout: 60000,
+        }
+      : isDevelopment
       ? {
           headless: true,
           args: [

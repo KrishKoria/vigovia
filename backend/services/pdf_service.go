@@ -64,7 +64,8 @@ func (s *PDFService) GenerateItinerary(request *models.ItineraryRequest) (*model
 	
 	pdfData, err := s.convertHTMLToPDF(html)
 	if err != nil {
-		return nil, logrus.WithError(err).Error("Failed to convert HTML to PDF")
+		logrus.WithError(err).Error("Failed to convert HTML to PDF")
+		return nil, err 
 	}
 	
 	logrus.WithFields(logrus.Fields{
