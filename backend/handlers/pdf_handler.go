@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/KrishKoria/Vigovia/models"
 	"github.com/KrishKoria/Vigovia/services"
@@ -47,8 +48,6 @@ func (h *PDFHandler) GenerateItinerary(c *gin.Context) {
 		"hasPayment": request.Payment.TotalAmount != "",
 	}).Info("Received PDF generation request")
 	
-	logrus.WithField("requestStructure", fmt.Sprintf("%+v", request)).Debug("Full request structure")
-	
 	response, err := h.pdfService.GenerateItinerary(&request)
 	if err != nil {
 		logrus.WithError(err).Error("Failed to generate PDF")
@@ -90,7 +89,7 @@ func (h *PDFHandler) HealthCheck(c *gin.Context) {
 		Message: "Service is healthy",
 		Data: map[string]interface{}{
 			"status":    "ok",
-			"timestamp": "2024-01-01T00:00:00Z",
+			"timestamp": time.Now().Format(time.RFC3339),
 			"version":   "1.0.0",
 		},
 	})
